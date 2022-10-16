@@ -17,10 +17,13 @@ enum Players {
     Black
 }
 const squarePieces = [[{ piece: ChessPieces.Rook, player: Players.Black }, { piece: ChessPieces.Rook, player: Players.White }]];
+const lightSquareColor = "#fcf9e6";
+const darkSquareColor = "#c7b3a3";
 export default {
     data() {
         return {
-            length, squarePieces, selectedSquareX, selectedSquareY, ChessPieces, Players
+            length, squarePieces, selectedSquareX, selectedSquareY, ChessPieces, Players, lightSquareColor,
+            darkSquareColor
         }
     },
 
@@ -43,7 +46,7 @@ export default {
             <g class="chessSquare" :onClick="() => handleClick(xPlusOne - 1, yPlusOne - 1)" v-for="yPlusOne in 8"
                 v-bind:key="`square-${xPlusOne}-${yPlusOne}`">
                 <rect :height="length/8" :width="length/8" :x="(xPlusOne-1)*length/8" :y="(yPlusOne-1)*length/8"
-                    :fill="((xPlusOne + yPlusOne) % 2) ? '#d3e2e3' : '#c7b3a3'" />
+                    :fill="((xPlusOne + yPlusOne) % 2) ? lightSquareColor : darkSquareColor" />
                 <rect :height="(length * 0.9)/8" :width="(length * 0.9)/8" :x="(xPlusOne-0.95)*length/8"
                     :y="(yPlusOne-0.95)*length/8"
                     :fill="selectedSquareX === (xPlusOne-1) && selectedSquareY === (yPlusOne-1) ? '#a34b9a' : 'transparent'" />
