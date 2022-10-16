@@ -17,7 +17,9 @@ export const translate = (
     return [lookupWord];
   }
   if (fromLanguage === Languages.English && toLanguage === Languages.French) {
-    return englishToFrench[lookupWord] ?? [];
+    return lookupWord in englishToFrench
+      ? englishToFrench[lookupWord as keyof typeof englishToFrench]
+      : [];
   }
   return [];
 };

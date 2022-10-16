@@ -1,4 +1,5 @@
 <script lang="ts">
+import { defineComponent } from "vue";
 import BlackRook from "../vue-svgs/chess/BlackRook.vue";
 import WhiteRook from "../vue-svgs/chess/WhiteRook.vue";
 const length = 400;
@@ -19,7 +20,7 @@ enum Players {
 const squarePieces = [[{ piece: ChessPieces.Rook, player: Players.Black }, { piece: ChessPieces.Rook, player: Players.White }]];
 const lightSquareColor = "#fcf9e6";
 const darkSquareColor = "#c7b3a3";
-export default {
+export default defineComponent({
     data() {
         return {
             length, squarePieces, selectedSquareX, selectedSquareY, ChessPieces, Players, lightSquareColor,
@@ -37,7 +38,7 @@ export default {
     components: {
         BlackRook, WhiteRook
     }
-}
+});
 </script>
 
 <template>
