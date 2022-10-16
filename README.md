@@ -1,6 +1,6 @@
-# midlys-comics
+# napoleonic-chess-simulator-3000
 
-View the comics at https://mit1mit1.github.io/midlys-marvelous-comics/dist/index.html. This project was set up with Vite - so far, it's pretty fun.
+View the comics at https://mit1mit1.github.io/napoleonic-chess-simulator-3000/dist/index.html. This project was set up with Vite - so far, it's pretty fun.
 
 ## Customize configuration
 
