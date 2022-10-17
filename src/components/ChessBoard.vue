@@ -24,7 +24,7 @@ export default defineComponent({
     data() {
         return {
             length, squarePieces, selectedSquareX, selectedSquareY, ChessPieces, Players, lightSquareColor,
-            darkSquareColor
+            darkSquareColor, squareIndicies: [...Array(8).keys()],
         }
     },
 
@@ -43,19 +43,18 @@ export default defineComponent({
 
 <template>
     <svg :height="length" :width="length">
-        <g v-for="xPlusOne in 8" v-bind:key="`row-${xPlusOne}`">
-            <g class="chessSquare" :onClick="() => handleClick(xPlusOne - 1, yPlusOne - 1)" v-for="yPlusOne in 8"
-                v-bind:key="`square-${xPlusOne}-${yPlusOne}`">
-                <rect :height="length/8" :width="length/8" :x="(xPlusOne-1)*length/8" :y="(yPlusOne-1)*length/8"
-                    :fill="((xPlusOne + yPlusOne) % 2) ? lightSquareColor : darkSquareColor" />
-                <rect :height="(length * 0.9)/8" :width="(length * 0.9)/8" :x="(xPlusOne-0.95)*length/8"
-                    :y="(yPlusOne-0.95)*length/8"
-                    :fill="selectedSquareX === (xPlusOne-1) && selectedSquareY === (yPlusOne-1) ? '#a34b9a' : 'transparent'" />
-                <g :transform="`translate(${(xPlusOne-1)*length/8 + 2}, ${(yPlusOne-1)*length/8})`">
+        <g v-for="x in squareIndicies" v-bind:key="`row-${x}`">
+            <g class="chessSquare" :onClick="() => handleClick(x, y)" v-for="y in squareIndicies"
+                v-bind:key="`square-${x}-${y}`">
+                <rect :height="length/8" :width="length/8" :x="(x)*length/8" :y="(y)*length/8"
+                    :fill="((x + y) % 2) ? lightSquareColor : darkSquareColor" />
+                <rect :height="(length * 0.9)/8" :width="(length * 0.9)/8" :x="(x+0.05)*length/8" :y="(y+0.05)*length/8"
+                    :fill="selectedSquareX === (x) && selectedSquareY === (y) ? '#a34b9a' : 'transparent'" />
+                <g :transform="`translate(${(x)*length/8 + 2}, ${(y)*length/8})`">
                     <BlackRook
-                        v-if="squarePieces[(xPlusOne-1)] && squarePieces[(xPlusOne-1)][(yPlusOne-1)] && squarePieces[(xPlusOne-1)][(yPlusOne-1)].piece === ChessPieces.Rook && squarePieces[(xPlusOne-1)][(yPlusOne-1)].player === Players.Black" />
+                        v-if="squarePieces[(x)] && squarePieces[(x)][(y)] && squarePieces[(x)][(y)].piece === ChessPieces.Rook && squarePieces[(x)][(y)].player === Players.Black" />
                     <WhiteRook
-                        v-if="squarePieces[(xPlusOne-1)] && squarePieces[(xPlusOne-1)][(yPlusOne-1)] && squarePieces[(xPlusOne-1)][(yPlusOne-1)].piece === ChessPieces.Rook && squarePieces[(xPlusOne-1)][(yPlusOne-1)].player === Players.White" />
+                        v-if="squarePieces[(x)] && squarePieces[(x)][(y)] && squarePieces[(x)][(y)].piece === ChessPieces.Rook && squarePieces[(x)][(y)].player === Players.White" />
                 </g>
             </g>
         </g>

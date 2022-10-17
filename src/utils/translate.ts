@@ -3,6 +3,7 @@ import { Languages } from "../constants";
 const englishToFrench = {
   chess: ["jeu d'échecs"],
   simulator: ["simulatrice", "simulateur"],
+  ["3000"]: ["trois mille", "trois milles"],
 };
 
 export const translate = (
