@@ -1,4 +1,4 @@
-import { Languages } from "../constants";
+import { Languages } from "../types";
 
 const englishToFrench = {
   chess: ["jeu d'échecs"],

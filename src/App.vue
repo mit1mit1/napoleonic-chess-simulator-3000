@@ -3,7 +3,7 @@ import NapoleonFigure from './vue-svgs/NapoleonFigure.vue';
 import SoldierFigure from './vue-svgs/SoldierFigure.vue';
 import ChessBoard from './components/ChessBoard.vue';
 import TranslatableText from './components/TranslatableText.vue';
-import { Languages } from "./constants";
+import { Languages } from "./types";
 </script>
 
 <template>
