@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import type { Languages } from "../constants";
+import type { Languages } from "../types";
 import { translate } from "../utils/translate";
 
 export default defineComponent({

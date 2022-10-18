@@ -62,7 +62,7 @@ export default defineComponent({
 
                 <g v-if="squarePieces[x] && squarePieces[x][y]?.piece"
                     :transform="`translate(${x*length/8 + 2}, ${y*length/8})`">
-                    <ChessPieceFigure :piece="squarePieces[x][y].piece" :player="squarePieces[x][y].player" />
+                    <ChessPieceFigure :piece="squarePieces[x][y]?.piece" :player="squarePieces[x][y]?.player" />
                 </g>
             </g>
         </g>
