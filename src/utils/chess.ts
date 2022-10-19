@@ -183,46 +183,56 @@ export const isValidMove = (
   return false;
 };
 
-const calculateValue = (square?: Square) => {
-  if (!square) {
-    return 0;
-  }
-  if (square.piece === ChessPieces.Rook) {
+const pieceValue = (piece: ChessPieces) => {
+  if (piece === ChessPieces.Rook) {
     return 5;
   }
-  if (square.piece === ChessPieces.Knight) {
+  if (piece === ChessPieces.Knight) {
     return 2.5;
   }
-  if (square.piece === ChessPieces.Bishop) {
+  if (piece === ChessPieces.Bishop) {
     return 3;
   }
-  if (square.piece === ChessPieces.Queen) {
+  if (piece === ChessPieces.Queen) {
     return 9;
   }
-  if (square.piece === ChessPieces.King) {
+  if (piece === ChessPieces.King) {
     return 4;
   }
-  if (square.piece === ChessPieces.Pawn) {
+  if (piece === ChessPieces.Pawn) {
     return 1;
   }
   return 0;
 };
 
+const greedyMoveValue = (toSquare?: Square) => {
+  if (!toSquare) {
+    return 0;
+  }
+  return pieceValue(toSquare.piece);
+};
+
 const getCoprimeWithEight = () => {
   const randomNumber = Math.floor(Math.random() * 17);
-  console.log(1 + randomNumber + (randomNumber % 2))
   return 1 + randomNumber + (randomNumber % 2);
 };
 const getFirstValue = () => {
   return Math.floor(Math.random() * 8);
 };
 
-export const getAIMove = (
+export const getGreediestMove = (
   squares: Array<Array<Square | undefined>>,
-  currentPlayer: Players
+  currentPlayer: Players,
+  recursionDepth: number,
+  maxRecursionDepth: number,
 ) => {
-  let bestMove = [-1, -1, -1, -1];
-  let bestValue = -1;
+  const bestMove = {
+    startX: -1,
+    startY: -1,
+    endX: -1,
+    endY: -1,
+    moveValue: -9999,
+  };
   const firstX = getFirstValue();
   const firstY = getFirstValue();
   const xCoprime = getCoprimeWithEight();
@@ -239,15 +249,24 @@ export const getAIMove = (
       startYMultiplier++
     ) {
       const startY = ((startYMultiplier + firstY) * yCoprime) % 8;
-      console.log(startX, startY);
       if (hasPieceOfColor(startX, startY, currentPlayer, squares)) {
         for (let endX = 0; endX < squares.length; endX++) {
           for (let endY = 0; endY < squares.length; endY++) {
             if (isValidMove(squares, startX, startY, endX, endY)) {
-              const currentValue = calculateValue(squares[endX][endY]);
-              if (currentValue > bestValue) {
-                bestValue = currentValue;
-                bestMove = [startX, startY, endX, endY];
+              let currentValue = greedyMoveValue(squares[endX][endY]);
+              if (recursionDepth <= maxRecursionDepth) {
+                const copiedSquares = JSON.parse(JSON.stringify(squares));
+                copiedSquares[endX][endY] = copiedSquares[startX][startY];
+                delete copiedSquares[startX][startY];
+                const nextPlayer = currentPlayer === Players.White ? Players.Black : Players.White;
+                currentValue = currentValue - getGreediestMove(copiedSquares, nextPlayer, recursionDepth + 1, maxRecursionDepth).moveValue;
+              }
+              if (currentValue > bestMove.moveValue) {
+                bestMove.moveValue = currentValue;
+                bestMove.startX = startX;
+                bestMove.startY = startY;
+                bestMove.endX = endX;
+                bestMove.endY = endY;
               }
             }
           }

@@ -1,7 +1,7 @@
 <script lang="ts">
 import { ChessPieces, Players } from "@/types";
 import { normalStartingChessBoard } from "@/constants";
-import { getAIMove, hasPieceOfColor, isValidMove } from "@/utils/chess";
+import { getGreediestMove, hasPieceOfColor, isValidMove } from "@/utils/chess";
 import { defineComponent } from "vue";
 import ChessPieceFigure from "./ChessPieceFigure.vue";
 const length = 400;
@@ -42,7 +42,6 @@ export default defineComponent({
                 this.selectedSquareX = x;
                 this.selectedSquareY = y;
             }
-            this.attemptAIMove();
         },
         makeMove(x: number, y: number) {
             this.squares[x][y] = this.squares[this.selectedSquareX][this.selectedSquareY];
@@ -53,13 +52,11 @@ export default defineComponent({
         },
         attemptAIMove() {
             if (this.aiPlayers.includes(this.currentPlayer)) {
-                const [startX, startY, endX, endY] = getAIMove(this.squares, this.currentPlayer);
+                const { startX, startY, endX, endY } = getGreediestMove(this.squares, this.currentPlayer, 0, 1);
                 if (isValidMove(this.squares, startX, startY, endX, endY)) {
-                    setTimeout(() => {
-                        this.selectedSquareX = startX;
-                        this.selectedSquareY = startY;
-                        this.makeMove(endX, endY);
-                    }, 100);
+                    this.selectedSquareX = startX;
+                    this.selectedSquareY = startY;
+                    this.makeMove(endX, endY);
 
                 }
             }
