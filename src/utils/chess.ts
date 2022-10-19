@@ -177,6 +177,7 @@ export const isValidMove = (
     if (xDistance <= 1 && yDistance <= 1) {
       return true;
     }
+    if (xDistance === 2 && yDistance === 0)
     return false;
   }
 
@@ -254,7 +255,7 @@ export const getGreediestMove = (
           for (let endY = 0; endY < squares.length; endY++) {
             if (isValidMove(squares, startX, startY, endX, endY)) {
               let currentValue = greedyMoveValue(squares[endX][endY]);
-              if (recursionDepth <= maxRecursionDepth) {
+              if (recursionDepth <= maxRecursionDepth && (currentValue > bestMove.moveValue || recursionDepth === 0)) {
                 const copiedSquares = JSON.parse(JSON.stringify(squares));
                 copiedSquares[endX][endY] = copiedSquares[startX][startY];
                 delete copiedSquares[startX][startY];

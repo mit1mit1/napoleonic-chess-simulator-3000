@@ -9,6 +9,7 @@ let selectedSquareX = -1;
 let selectedSquareY = -1;
 let currentPlayer = Players.White;
 let aiPlayers = [Players.White];
+let startedGame = false;
 
 const squares = normalStartingChessBoard;
 const lightSquareColor = "#fcf9e6";
@@ -17,12 +18,13 @@ export default defineComponent({
     data() {
         return {
             length, squares, selectedSquareX, selectedSquareY, ChessPieces, Players, lightSquareColor,
-            darkSquareColor, squareIndicies: [...Array(8).keys()], currentPlayer, aiPlayers
+            darkSquareColor, squareIndicies: [...Array(8).keys()], currentPlayer, aiPlayers, startedGame
         }
     },
 
     methods: {
         handleSquareClick(x: number, y: number) {
+            this.startedGame = true;
             if (this.aiPlayers.includes(this.currentPlayer)) {
                 this.attemptAIMove();
                 return;
@@ -53,7 +55,7 @@ export default defineComponent({
         },
         attemptAIMove() {
             if (this.aiPlayers.includes(this.currentPlayer)) {
-                const { startX, startY, endX, endY } = getGreediestMove(this.squares, this.currentPlayer, 0, 1);
+                const { startX, startY, endX, endY } = getGreediestMove(this.squares, this.currentPlayer, 0, 2);
                 if (isValidMove(this.squares, startX, startY, endX, endY)) {
                     this.selectedSquareX = startX;
                     this.selectedSquareY = startY;
@@ -73,7 +75,7 @@ export default defineComponent({
 <template>
     <svg :height="length" :width="length">
         <g v-for="x in squareIndicies" v-bind:key="`row-${x}`">
-            <g class="chessSquare" :onClick="() => handleSquareClick(x, y)" v-for="y in squareIndicies"
+            <g :class="!(aiPlayers.includes(currentPlayer) && startedGame) && 'chessSquare'" :onClick="() => handleSquareClick(x, y)" v-for="y in squareIndicies"
                 v-bind:key="`square-${x}-${y}`">
                 <rect :height="length/8" :width="length/8" :x="x*length/8" :y="y*length/8"
                     :fill="((x + y) % 2) ? lightSquareColor : darkSquareColor" />
@@ -86,10 +88,16 @@ export default defineComponent({
             </g>
         </g>
     </svg>
+    <div class="loadingMessage" v-if="aiPlayers.includes(currentPlayer) && startedGame">Thinking...</div>
+    <div class="loadingMessage" v-if="aiPlayers.includes(currentPlayer) && !startedGame">Click to start</div>
 </template>
 
 <style>
-.chessSquare {
+.clickable {
     cursor: pointer;
+}
+
+.loadingMessage {
+    position: absolute;
 }
 </style>

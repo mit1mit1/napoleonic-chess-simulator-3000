@@ -21,3 +21,9 @@ export interface Square {
   piece: ChessPieces;
   player: Players;
 }
+
+export interface chessState {
+  squares: Array<Array<Square | undefined>>;
+  kingsMoved: Array<Players>;
+  enPassantableSquare: [number, number];
+}
