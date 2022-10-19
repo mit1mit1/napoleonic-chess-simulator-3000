@@ -182,3 +182,78 @@ export const isValidMove = (
 
   return false;
 };
+
+const calculateValue = (square?: Square) => {
+  if (!square) {
+    return 0;
+  }
+  if (square.piece === ChessPieces.Rook) {
+    return 5;
+  }
+  if (square.piece === ChessPieces.Knight) {
+    return 2.5;
+  }
+  if (square.piece === ChessPieces.Bishop) {
+    return 3;
+  }
+  if (square.piece === ChessPieces.Queen) {
+    return 9;
+  }
+  if (square.piece === ChessPieces.King) {
+    return 4;
+  }
+  if (square.piece === ChessPieces.Pawn) {
+    return 1;
+  }
+  return 0;
+};
+
+const getCoprimeWithEight = () => {
+  const randomNumber = Math.floor(Math.random() * 17);
+  console.log(1 + randomNumber + (randomNumber % 2))
+  return 1 + randomNumber + (randomNumber % 2);
+};
+const getFirstValue = () => {
+  return Math.floor(Math.random() * 8);
+};
+
+export const getAIMove = (
+  squares: Array<Array<Square | undefined>>,
+  currentPlayer: Players
+) => {
+  let bestMove = [-1, -1, -1, -1];
+  let bestValue = -1;
+  const firstX = getFirstValue();
+  const firstY = getFirstValue();
+  const xCoprime = getCoprimeWithEight();
+  const yCoprime = getCoprimeWithEight();
+  for (
+    let startXMultiplier = 0;
+    startXMultiplier < squares.length;
+    startXMultiplier++
+  ) {
+    const startX = ((startXMultiplier + firstX) * xCoprime) % 8;
+    for (
+      let startYMultiplier = 0;
+      startYMultiplier < squares.length;
+      startYMultiplier++
+    ) {
+      const startY = ((startYMultiplier + firstY) * yCoprime) % 8;
+      console.log(startX, startY);
+      if (hasPieceOfColor(startX, startY, currentPlayer, squares)) {
+        for (let endX = 0; endX < squares.length; endX++) {
+          for (let endY = 0; endY < squares.length; endY++) {
+            if (isValidMove(squares, startX, startY, endX, endY)) {
+              const currentValue = calculateValue(squares[endX][endY]);
+              if (currentValue > bestValue) {
+                bestValue = currentValue;
+                bestMove = [startX, startY, endX, endY];
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return bestMove;
+};
