@@ -197,7 +197,7 @@ const pieceValue = (piece: ChessPieces) => {
     return 9;
   }
   if (piece === ChessPieces.King) {
-    return 4;
+    return 9999;
   }
   if (piece === ChessPieces.Pawn) {
     return 1;

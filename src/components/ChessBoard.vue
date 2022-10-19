@@ -42,6 +42,7 @@ export default defineComponent({
                 this.selectedSquareX = x;
                 this.selectedSquareY = y;
             }
+            setTimeout(this.attemptAIMove, 1);
         },
         makeMove(x: number, y: number) {
             this.squares[x][y] = this.squares[this.selectedSquareX][this.selectedSquareY];
