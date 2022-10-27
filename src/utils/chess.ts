@@ -1,6 +1,7 @@
 import { ChessPieces, Players } from "@/types";
 import type { Square, ChessState } from "@/types";
 import { chessBoardLength } from "@/constants";
+
 export const hasPiece = (
   x: number,
   y: number,
@@ -316,6 +317,7 @@ export const getGreediestMove = (
                 recursionDepth <= maxRecursionDepth
                 // && (currentValue > bestMove.moveValue || recursionDepth === 0)
                 && Math.random() < recursionProbability
+                && currentValue < pieceValue(ChessPieces.King)
               ) {
                 const nextState = getStateAfterMove(
                   chessState,
@@ -323,7 +325,7 @@ export const getGreediestMove = (
                   startY,
                   endX,
                   endY
-                );
+                  );
                 currentValue =
                   currentValue -
                   0.9 * getGreediestMove(

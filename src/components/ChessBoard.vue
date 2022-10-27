@@ -59,12 +59,11 @@ export default defineComponent({
         },
         attemptAIMove() {
             if (this.aiPlayers.includes(this.chessState.currentPlayer)) {
-                const { startX, startY, endX, endY } = getGreediestMove(this.chessState, 0, 2, 0.92);
+                const { startX, startY, endX, endY } = getGreediestMove(this.chessState, 0, 2, 1);
                 if (isValidMove(this.chessState, startX, startY, endX, endY)) {
                     this.selectedSquareX = startX;
                     this.selectedSquareY = startY;
                     this.makeMove(endX, endY);
-
                 }
             }
         }
@@ -82,7 +81,7 @@ export default defineComponent({
             <g :class="!(aiPlayers.includes(chessState.currentPlayer) && startedGame) && 'chessSquare'"
                 :onClick="() => handleSquareClick(x, y)" v-for="y in squareIndicies" v-bind:key="`square-${x}-${y}`">
                 <rect :height="length/chessBoardLength" :width="length/chessBoardLength" :x="x*length/chessBoardLength"
-                    :y="y*length/chessBoardLength" :fill="((x + y) % 2) ? lightSquareColor : darkSquareColor" />
+                    :y="y*length/chessBoardLength" :fill="((x + y) % 2) ? darkSquareColor : lightSquareColor" />
                 <rect :height="(length * 0.9)/chessBoardLength" :width="(length * 0.9)/chessBoardLength"
                     :x="(x+0.05)*length/chessBoardLength" :y="(y+0.05)*length/chessBoardLength"
                     :fill="selectedSquareX === x && selectedSquareY === y ? '#a34b9a' : 'transparent'" />

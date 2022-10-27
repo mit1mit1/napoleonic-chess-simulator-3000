@@ -35,16 +35,6 @@ export const normalStartingChessBoard: Array<Array<Square | undefined>> = [
     { piece: ChessPieces.Bishop, player: Players.White },
   ],
   [
-    { piece: ChessPieces.King, player: Players.Black },
-    { piece: ChessPieces.Pawn, player: Players.Black },
-    undefined,
-    undefined,
-    undefined,
-    undefined,
-    { piece: ChessPieces.Pawn, player: Players.White },
-    { piece: ChessPieces.King, player: Players.White },
-  ],
-  [
     { piece: ChessPieces.Queen, player: Players.Black },
     { piece: ChessPieces.Pawn, player: Players.Black },
     undefined,
@@ -53,6 +43,16 @@ export const normalStartingChessBoard: Array<Array<Square | undefined>> = [
     undefined,
     { piece: ChessPieces.Pawn, player: Players.White },
     { piece: ChessPieces.Queen, player: Players.White },
+  ],
+  [
+    { piece: ChessPieces.King, player: Players.Black },
+    { piece: ChessPieces.Pawn, player: Players.Black },
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    { piece: ChessPieces.Pawn, player: Players.White },
+    { piece: ChessPieces.King, player: Players.White },
   ],
   [
     { piece: ChessPieces.Bishop, player: Players.Black },
