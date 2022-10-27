@@ -255,7 +255,7 @@ const pieceValue = (piece: ChessPieces) => {
   return 0;
 };
 
-const greedyMoveValue = (toSquare?: Square) => {
+export const greedyMoveValue = (toSquare?: Square) => {
   if (!toSquare) {
     return 0;
   }
