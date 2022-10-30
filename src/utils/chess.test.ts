@@ -883,5 +883,20 @@ describe.concurrent("gets greediest move", async () => {
     expect(noRecursion.endX).toBe(4);
     expect(noRecursion.endY).toBe(0);
     expect(noRecursion.moveValue).toBe(INFINITE_VALUE);
+    
+    const someRecursion = getGreediestMove(capturableKingFourZero, 1, 1, 1);
+    expect(someRecursion.endX).toBe(4);
+    expect(someRecursion.endY).toBe(0);
+    expect(someRecursion.moveValue).toBe(INFINITE_VALUE);
+
+    const possibleRecursion = getGreediestMove(capturableKingFourZero, 1, 1, 0.5);
+    expect(possibleRecursion.endX).toBe(4);
+    expect(possibleRecursion.endY).toBe(0);
+    expect(possibleRecursion.moveValue).toBe(INFINITE_VALUE);
+
+    const likelyRecursion = getGreediestMove(capturableKingFourZero, 1, 1, 0.8);
+    expect(likelyRecursion.endX).toBe(4);
+    expect(likelyRecursion.endY).toBe(0);
+    expect(likelyRecursion.moveValue).toBe(INFINITE_VALUE);
   });
 });
