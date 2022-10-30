@@ -312,7 +312,7 @@ export const getGreediestMove = (
               );
               if (
                 recursionDepth < maxRecursionDepth &&
-                Math.random() < recursionProbability &&
+                Math.random() < Math.pow(recursionProbability, recursionDepth) &&
                 currentValue < INFINITE_VALUE
               ) {
                 const nextState = getStateAfterMove(

@@ -59,7 +59,7 @@ export default defineComponent({
         },
         attemptAIMove() {
             if (this.aiPlayers.includes(this.chessState.currentPlayer)) {
-                const { startX, startY, endX, endY } = getGreediestMove(this.chessState, 0, 1, 1);
+                const { startX, startY, endX, endY } = getGreediestMove(this.chessState, 0, 2, 0.8);
                 if (isValidMove(this.chessState, startX, startY, endX, endY)) {
                     this.selectedSquareX = startX;
                     this.selectedSquareY = startY;
