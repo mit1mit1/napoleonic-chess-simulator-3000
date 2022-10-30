@@ -260,7 +260,7 @@ export const greedyMoveValue = (toSquare?: Square) => {
 };
 
 const getCoprimeWithEight = () => {
-  const randomNumber = Math.floor(Math.random() * chessBoardLength - 1);
+  const randomNumber = Math.floor(Math.random() * (chessBoardLength - 1));
   return 1 + randomNumber + (randomNumber % 2);
 };
 const getFirstValue = () => {
@@ -286,13 +286,13 @@ export const getGreediestMove = (
   const yCoprime = getCoprimeWithEight();
   for (
     let startXMultiplier = 0;
-    startXMultiplier < chessState.squares.length;
+    startXMultiplier < chessBoardLength;
     startXMultiplier++
   ) {
     const startX = ((startXMultiplier + firstX) * xCoprime) % 8;
     for (
       let startYMultiplier = 0;
-      startYMultiplier < chessState.squares.length;
+      startYMultiplier < chessBoardLength;
       startYMultiplier++
     ) {
       const startY = ((startYMultiplier + firstY) * yCoprime) % 8;
@@ -304,17 +304,16 @@ export const getGreediestMove = (
           chessState.squares
         )
       ) {
-        for (let endX = 0; endX < chessState.squares.length; endX++) {
-          for (let endY = 0; endY < chessState.squares.length; endY++) {
+        for (let endX = 0; endX < chessBoardLength; endX++) {
+          for (let endY = 0; endY < chessBoardLength; endY++) {
             if (isValidMove(chessState, startX, startY, endX, endY)) {
               let currentValue = greedyMoveValue(
                 chessState.squares[endX][endY]
               );
               if (
-                recursionDepth <= maxRecursionDepth &&
-                // && (currentValue > bestMove.moveValue || recursionDepth === 0)
+                recursionDepth < maxRecursionDepth &&
                 Math.random() < recursionProbability &&
-                currentValue < pieceValue(ChessPieces.King)
+                currentValue < INFINITE_VALUE
               ) {
                 const nextState = getStateAfterMove(
                   chessState,

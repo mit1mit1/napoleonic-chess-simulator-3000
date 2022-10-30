@@ -8,7 +8,7 @@ import ChessPieceFigure from "./ChessPieceFigure.vue";
 const length = 400;
 let selectedSquareX = -1;
 let selectedSquareY = -1;
-let aiPlayers = [Players.White];
+let aiPlayers = [Players.Black];
 let startedGame = false;
 let chessState = {
     squares: normalStartingChessBoard,
@@ -59,7 +59,7 @@ export default defineComponent({
         },
         attemptAIMove() {
             if (this.aiPlayers.includes(this.chessState.currentPlayer)) {
-                const { startX, startY, endX, endY } = getGreediestMove(this.chessState, 0, 2, 1);
+                const { startX, startY, endX, endY } = getGreediestMove(this.chessState, 0, 1, 1);
                 if (isValidMove(this.chessState, startX, startY, endX, endY)) {
                     this.selectedSquareX = startX;
                     this.selectedSquareY = startY;

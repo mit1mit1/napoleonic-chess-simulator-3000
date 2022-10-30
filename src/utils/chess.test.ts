@@ -871,9 +871,38 @@ const whiteKingFourZeroCapturable = [
   [],
 ];
 
+const whiteKingFourZeroOneWayOut = [
+  [{ piece: ChessPieces.Rook, player: Players.Black }],
+  [],
+  [],
+  [],
+  [
+    { piece: ChessPieces.King, player: Players.White },
+    undefined,
+    undefined,
+    { piece: ChessPieces.Knight, player: Players.Black },
+  ],
+  [],
+  [],
+  [
+    { piece: ChessPieces.Rook, player: Players.Black },
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    { piece: ChessPieces.Queen, player: Players.White },
+  ],
+];
+
 const capturableKingFourZero: ChessState = {
   currentPlayer: Players.Black,
   squares: whiteKingFourZeroCapturable,
+  kingsMoved: [],
+};
+
+const endangeredKingFourZero: ChessState = {
+  currentPlayer: Players.White,
+  squares: whiteKingFourZeroOneWayOut,
   kingsMoved: [],
 };
 
@@ -883,13 +912,18 @@ describe.concurrent("gets greediest move", async () => {
     expect(noRecursion.endX).toBe(4);
     expect(noRecursion.endY).toBe(0);
     expect(noRecursion.moveValue).toBe(INFINITE_VALUE);
-    
+
     const someRecursion = getGreediestMove(capturableKingFourZero, 1, 1, 1);
     expect(someRecursion.endX).toBe(4);
     expect(someRecursion.endY).toBe(0);
     expect(someRecursion.moveValue).toBe(INFINITE_VALUE);
 
-    const possibleRecursion = getGreediestMove(capturableKingFourZero, 1, 1, 0.5);
+    const possibleRecursion = getGreediestMove(
+      capturableKingFourZero,
+      1,
+      1,
+      0.5
+    );
     expect(possibleRecursion.endX).toBe(4);
     expect(possibleRecursion.endY).toBe(0);
     expect(possibleRecursion.moveValue).toBe(INFINITE_VALUE);
@@ -898,5 +932,12 @@ describe.concurrent("gets greediest move", async () => {
     expect(likelyRecursion.endX).toBe(4);
     expect(likelyRecursion.endY).toBe(0);
     expect(likelyRecursion.moveValue).toBe(INFINITE_VALUE);
+  });
+
+  it("always saves the king if it can if recursion is on", async () => {
+    const someRecursion = getGreediestMove(endangeredKingFourZero, 0, 1, 1);
+    console.log(someRecursion);
+    expect(someRecursion.endX).toBe(4);
+    expect(someRecursion.endY).toBe(1);
   });
 });
