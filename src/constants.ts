@@ -85,3 +85,5 @@ export const normalStartingChessBoard: Array<Array<Square | undefined>> = [
     { piece: ChessPieces.Rook, player: Players.White },
   ],
 ];
+
+export const INFINITE_VALUE = 99999;

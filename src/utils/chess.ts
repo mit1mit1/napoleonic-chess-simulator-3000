@@ -1,8 +1,8 @@
 import { ChessPieces, Players } from "@/types";
 import type { Square, ChessState } from "@/types";
-import { chessBoardLength } from "@/constants";
+import { chessBoardLength, INFINITE_VALUE } from "@/constants";
 
-export const hasPiece = (
+export const getPiece = (
   x: number,
   y: number,
   squares: Array<Array<Square | undefined>>
@@ -16,7 +16,7 @@ export const hasPieceOfColor = (
   player: Players,
   squares: Array<Array<Square | undefined>>
 ) => {
-  return hasPiece(x, y, squares) && squares[x][y]?.player === player;
+  return getPiece(x, y, squares) && squares[x][y]?.player === player;
 };
 
 export const hasPieceOfType = (
@@ -25,7 +25,7 @@ export const hasPieceOfType = (
   type: ChessPieces,
   squares: Array<Array<Square | undefined>>
 ) => {
-  return hasPiece(x, y, squares) && squares[x][y]?.piece === type;
+  return getPiece(x, y, squares) && squares[x][y]?.piece === type;
 };
 
 const jumpingOverPiece = (
@@ -42,7 +42,7 @@ const jumpingOverPiece = (
         startX + (i * (endX - startX)) / Math.abs(endX - startX);
       const investigateY =
         startY + i * Math.floor((endY - startY) / Math.abs(endX - startX));
-      if (hasPiece(investigateX, investigateY, squares)) {
+      if (getPiece(investigateX, investigateY, squares)) {
         return true;
       }
       i++;
@@ -54,7 +54,7 @@ const jumpingOverPiece = (
         startX + (i * (endX - startX)) / Math.abs(endY - startY);
       const investigateY =
         startY + i * Math.floor((endY - startY) / Math.abs(endY - startY));
-      if (hasPiece(investigateX, investigateY, squares)) {
+      if (getPiece(investigateX, investigateY, squares)) {
         return true;
       }
       i++;
@@ -99,10 +99,7 @@ export const isValidMove = (
     squares[startX][startY] &&
     squares[startX][startY]?.player;
 
-  if (!movingPiece) {
-    return false;
-  }
-  if (!currentPlayer) {
+  if (!(movingPiece && currentPlayer)) {
     return false;
   }
 
@@ -152,7 +149,7 @@ export const isValidMove = (
         endX === startX &&
         !endPlayer
       ) {
-        return !hasPiece(startX, startY - 1, squares);
+        return !getPiece(startX, startY - 1, squares);
       }
       if (endY - startY === -1 && endX === startX && !endPlayer) {
         return true;
@@ -247,7 +244,7 @@ const pieceValue = (piece: ChessPieces) => {
     return 9;
   }
   if (piece === ChessPieces.King) {
-    return 9999;
+    return INFINITE_VALUE;
   }
   if (piece === ChessPieces.Pawn) {
     return 1;
@@ -274,14 +271,14 @@ export const getGreediestMove = (
   chessState: ChessState,
   recursionDepth: number,
   maxRecursionDepth: number,
-  recursionProbability: number,
+  recursionProbability: number
 ) => {
   const bestMove = {
     startX: -1,
     startY: -1,
     endX: -1,
     endY: -1,
-    moveValue: -9999,
+    moveValue: undefined as number | undefined,
   };
   const firstX = getFirstValue();
   const firstY = getFirstValue();
@@ -314,10 +311,10 @@ export const getGreediestMove = (
                 chessState.squares[endX][endY]
               );
               if (
-                recursionDepth <= maxRecursionDepth
+                recursionDepth <= maxRecursionDepth &&
                 // && (currentValue > bestMove.moveValue || recursionDepth === 0)
-                && Math.random() < recursionProbability
-                && currentValue < pieceValue(ChessPieces.King)
+                Math.random() < recursionProbability &&
+                currentValue < pieceValue(ChessPieces.King)
               ) {
                 const nextState = getStateAfterMove(
                   chessState,
@@ -325,17 +322,17 @@ export const getGreediestMove = (
                   startY,
                   endX,
                   endY
-                  );
-                currentValue =
-                  currentValue -
-                  0.9 * getGreediestMove(
+                );
+                const nextValue =
+                  getGreediestMove(
                     nextState,
                     recursionDepth + 1,
                     maxRecursionDepth,
                     recursionProbability
-                  ).moveValue;
+                  ).moveValue || 0;
+                currentValue = currentValue - 0.9 * nextValue;
               }
-              if (currentValue > bestMove.moveValue) {
+              if (!bestMove.moveValue || currentValue > bestMove.moveValue) {
                 bestMove.moveValue = currentValue;
                 bestMove.startX = startX;
                 bestMove.startY = startY;
@@ -359,6 +356,9 @@ export const getStateAfterMove = (
   endY: number
 ): ChessState => {
   const copiedState = JSON.parse(JSON.stringify(chessState)) as ChessState;
+  if (!isValidMove(copiedState, startX, startY, endX, endY)) {
+    return copiedState;
+  }
   if (
     hasPieceOfType(startX, startY, ChessPieces.King, copiedState.squares) &&
     !copiedState.kingsMoved.includes(copiedState.currentPlayer)
@@ -367,20 +367,26 @@ export const getStateAfterMove = (
   }
   if (isCastling(copiedState, startX, startY, endX, endY)) {
     if (startX > endX) {
+      if (!copiedState.squares[startX - 1]) {
+        copiedState.squares[startX - 1] = [];
+      }
       copiedState.squares[startX - 1][startY] = copiedState.squares[0][startY];
-      delete copiedState.squares[0][startY];
+      copiedState.squares[0][startY] = undefined;
     }
     if (startX < endX) {
+      if (!copiedState.squares[startX + 1]) {
+        copiedState.squares[startX + 1] = [];
+      }
       copiedState.squares[startX + 1][startY] =
         copiedState.squares[chessBoardLength - 1][startY];
-      delete copiedState.squares[chessBoardLength - 1][startY];
+      copiedState.squares[chessBoardLength - 1][startY] = undefined;
     }
   }
 
   copiedState.currentPlayer =
     chessState.currentPlayer === Players.White ? Players.Black : Players.White;
   copiedState.squares[endX][endY] = copiedState.squares[startX][startY];
-  delete copiedState.squares[startX][startY];
+  copiedState.squares[startX][startY] = undefined;
 
   return copiedState;
 };
