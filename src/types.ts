@@ -28,3 +28,21 @@ export interface ChessState {
   kingsMoved: Array<Players>;
   enPassantableSquare?: [number, number];
 }
+
+export enum Locations {
+  None,
+  ParisDistrict,
+  AimensDistrict,
+  RennesDistrictWest,
+  RennesDistrictEast,
+  PotiersDistrict,
+  OrleansDistrict,
+  BordeauxDistrict,
+  TolouseDistrict,
+  MarsielleDistrict,
+  ValenceDistrict,
+  LyonDistrict,
+  DijonDistrict,
+  ReimsDistrict,
+
+}
