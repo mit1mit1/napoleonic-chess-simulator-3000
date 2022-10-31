@@ -44,5 +44,17 @@ export enum Locations {
   LyonDistrict,
   DijonDistrict,
   ReimsDistrict,
+}
 
+export interface LocationInfo {
+  name: string;
+  cityCoordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  cityHectares: number;
+  districtHectares: number;
+  subtitleEnglish: string;
+  descriptionEnglish: string;
+  influenceAvailable: number;
 }

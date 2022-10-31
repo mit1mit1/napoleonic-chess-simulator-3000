@@ -9,9 +9,15 @@ export default defineComponent({
         toLanguage: String,
         text: String,
     },
-    data(props) {
+    data() {
         return {
-            displayWords: {} as Record<string, string[]>, splitText: props.text?.split(" ") ?? [], showTranslationCard: ""
+            displayWords: {} as Record<string, string[]>, showTranslationCard: ""
+        }
+    },
+
+    computed: {
+        splitText() {
+            return this.text?.split(" ") ?? []
         }
     },
 
@@ -21,7 +27,7 @@ export default defineComponent({
             if (translatedWords.length === 0) {
                 const originalLanguageMessage = new SpeechSynthesisUtterance();
                 originalLanguageMessage.text = word;
-                originalLanguageMessage.lang = this.fromLanguage ?? "en";
+                originalLanguageMessage.lang = this.toLanguage ?? "en";
                 window.speechSynthesis.speak(originalLanguageMessage);
             }
             this.displayWords[word] = translatedWords ?? {};

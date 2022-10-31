@@ -936,7 +936,6 @@ describe.concurrent("gets greediest move", async () => {
 
   it("always saves the king if it can if recursion is on", async () => {
     const someRecursion = getGreediestMove(endangeredKingFourZero, 0, 1, 1);
-    console.log(someRecursion);
     expect(someRecursion.endX).toBe(4);
     expect(someRecursion.endY).toBe(1);
   });

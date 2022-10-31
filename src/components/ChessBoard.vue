@@ -2,7 +2,7 @@
 import { ChessPieces, Players } from "@/types";
 import type { ChessState } from "@/types";
 import { chessBoardLength, normalStartingChessBoard } from "@/constants";
-import { getGreediestMove, hasPieceOfColor, isValidMove, getStateAfterMove } from "@/utils/chess";
+import { getGreediestMove, hasPieceOfColor, isValidMove, getStateAfterMove, getVictor } from "@/utils/chess";
 import { defineComponent } from "vue";
 import ChessPieceFigure from "./ChessPieceFigure.vue";
 const length = 400;
@@ -20,6 +20,10 @@ let chessState = {
 const lightSquareColor = "#fcf9e6";
 const darkSquareColor = "#c7b3a3";
 export default defineComponent({
+    props: {
+        onVictory: Function,
+    },
+
     data() {
         return {
             length, chessState, selectedSquareX, selectedSquareY, ChessPieces, Players, lightSquareColor,
@@ -56,6 +60,12 @@ export default defineComponent({
             this.chessState = getStateAfterMove(this.chessState, this.selectedSquareX, this.selectedSquareY, x, y);
             this.selectedSquareX = -1;
             this.selectedSquareY = -1;
+            setTimeout(() => {
+                const victor = getVictor(this.chessState)
+                if (victor) {
+                    this.onVictory && this.onVictory(victor)
+                }
+            }, 1);
         },
         attemptAIMove() {
             if (this.aiPlayers.includes(this.chessState.currentPlayer)) {
@@ -76,19 +86,20 @@ export default defineComponent({
 </script>
 
 <template>
-    <svg :height="length" :width="length">
+    <svg :height="length" :width="length" class="boardSVG">
         <g v-for="x in squareIndicies" v-bind:key="`row-${x}`">
             <g :class="!(aiPlayers.includes(chessState.currentPlayer) && startedGame) && 'chessSquare'"
                 :onClick="() => handleSquareClick(x, y)" v-for="y in squareIndicies" v-bind:key="`square-${x}-${y}`">
-                <rect :height="length/chessBoardLength" :width="length/chessBoardLength" :x="x*length/chessBoardLength"
-                    :y="y*length/chessBoardLength" :fill="((x + y) % 2) ? darkSquareColor : lightSquareColor" />
-                <rect :height="(length * 0.9)/chessBoardLength" :width="(length * 0.9)/chessBoardLength"
-                    :x="(x+0.05)*length/chessBoardLength" :y="(y+0.05)*length/chessBoardLength"
+                <rect :height="length / chessBoardLength" :width="length / chessBoardLength" :x="x * length / chessBoardLength"
+                    :y="y * length / chessBoardLength" :fill="((x + y) % 2) ? darkSquareColor : lightSquareColor" />
+                <rect :height="(length * 0.9) / chessBoardLength" :width="(length * 0.9) / chessBoardLength"
+                    :x="(x + 0.05) * length / chessBoardLength" :y="(y + 0.05) * length / chessBoardLength"
                     :fill="selectedSquareX === x && selectedSquareY === y ? '#a34b9a' : 'transparent'" />
 
                 <g v-if="chessState.squares[x] && chessState.squares[x][y]?.piece"
-                    :transform="`translate(${x*length/chessBoardLength + 2}, ${y*length/chessBoardLength})`">
-                    <ChessPieceFigure :piece="chessState.squares[x][y]?.piece" :player="chessState.squares[x][y]?.player" />
+                    :transform="`translate(${x * length / chessBoardLength + 2}, ${y * length / chessBoardLength})`">
+                    <ChessPieceFigure :piece="chessState.squares[x][y]?.piece"
+                        :player="chessState.squares[x][y]?.player" />
                 </g>
             </g>
         </g>
@@ -104,5 +115,11 @@ export default defineComponent({
 
 .loadingMessage {
     position: absolute;
+}
+
+.boardSVG {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 </style>

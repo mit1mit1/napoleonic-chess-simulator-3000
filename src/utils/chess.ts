@@ -312,7 +312,8 @@ export const getGreediestMove = (
               );
               if (
                 recursionDepth < maxRecursionDepth &&
-                Math.random() < Math.pow(recursionProbability, recursionDepth) &&
+                Math.random() <
+                  Math.pow(recursionProbability, recursionDepth) &&
                 currentValue < INFINITE_VALUE
               ) {
                 const nextState = getStateAfterMove(
@@ -388,4 +389,39 @@ export const getStateAfterMove = (
   copiedState.squares[startX][startY] = undefined;
 
   return copiedState;
+};
+
+export const getVictor = (chessState: ChessState): Players | "tie" | undefined => {
+  const playersWithKings = new Set([] as Players[]);
+  let anyValidMoves = false;
+  for (let startX = 0; startX < chessBoardLength; startX++) {
+    for (let startY = 0; startY < chessBoardLength; startY++) {
+      if (
+        hasPieceOfType(startX, startY, ChessPieces.King, chessState.squares)
+      ) {
+        const piecePlayer = chessState.squares[startX][startY]?.player;
+        piecePlayer && playersWithKings.add(piecePlayer);
+      }
+      if (!anyValidMoves && !!getPiece(startX, startY, chessState.squares)) {
+        for (let endX = 0; endX < chessBoardLength; endX++) {
+          for (let endY = 0; endY < chessBoardLength; endY++) {
+            if (!anyValidMoves) {
+              if (isValidMove(chessState, startX, startY, endX, endY)) {
+                anyValidMoves = true;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  if (playersWithKings.size === 1) {
+    if (playersWithKings.has(Players.White)) {
+      return Players.White;
+    }
+    return Players.Black;
+  }
+  if (!anyValidMoves) {
+    return "tie";
+  }
 };
