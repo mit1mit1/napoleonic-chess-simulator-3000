@@ -151,9 +151,10 @@ const getAndPushMelody = (
       const pitchRadomiser = Math.random();
       const jazzRandomiser = Math.random();
       const skipRandomiser = Math.random();
-      // if (skipRandomiser < 0.7) {
-      //   continue;
-      // }
+      if (skipRandomiser < 0.2) {
+        currentTime = addToneJSDurations(currentTime, {"16n": 1});
+        continue;
+      }
       if (jazzRandomiser < 0.8) {
         const pentatonicScale = getMajorPentatonicScale(key)
         pitch = pentatonicScale[Math.floor(pitchRadomiser * pentatonicScale.length)]
