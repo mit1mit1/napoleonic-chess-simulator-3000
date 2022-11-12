@@ -16,10 +16,10 @@ export default defineConfig({
   test: {
     coverage: {
       reporter: ['text', 'json', 'html'],
-      lines: 90,
-      functions: 90,
-      branches: 90,
-      statements: 90,
+      lines: 40,
+      functions: 40,
+      branches: 40,
+      statements: 40,
     }
   },
 });

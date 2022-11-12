@@ -203,7 +203,7 @@ const pushChord = (
   }
 };
 
-const calculateIndexNumber = (currentX: number, currentY: number, a, b, c) => {
+const calculateIndexNumber = (currentX: number, currentY: number) => {
   return currentX * 13 + currentY * 23;
 };
 
@@ -240,7 +240,7 @@ const pushSounds = (
   let currentY = yStart;
 
   for (let i = 0; i < iterationsToPush; i++) {
-    const indexNumber = calculateIndexNumber(currentX, currentY, 0, 0, 0);
+    const indexNumber = calculateIndexNumber(currentX, currentY);
     if (indexNumber != prevIndexNumber) {
       pushNoteFromNumber(indexNumber, currentTime, true);
       currentTime[durationIncrement] =

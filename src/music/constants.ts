@@ -41,7 +41,7 @@ export const tritoneScale: Array<Pitch> = [
   "F#5",
   // "G5",
   // "G#5",
-  "A5",
+  // "A5",
   // "A#5",
   // "B5",
 ];
@@ -72,6 +72,6 @@ export const pentatonicScale: Array<Pitch> = [
   // "G5",
   "G#5",
   // "A5",
-  "A#5",
+  // "A#5",
   // "B5",
 ];
