@@ -5,7 +5,7 @@ import ChessBoard from './components/ChessBoard.vue';
 import TranslatableText from './components/TranslatableText.vue';
 import { Languages, Locations, Players } from "./types";
 import DividedFrance from './components/DividedFrance.vue';
-import { getSounds } from "./utils/music";
+import { startMusic } from "./utils/music";
 import { defineComponent } from "vue";
 let displayChessBoard = false;
 let displayCharacters = false;
@@ -22,7 +22,7 @@ export default defineComponent({
             this.displayDividedFrance = false;
             this.displayChessBoard = true;
         },
-        
+
         onVictory(victor: Players | "tie") {
             alert(victor + " won!")
             this.displayDividedFrance = true;
@@ -30,11 +30,7 @@ export default defineComponent({
         },
 
         onSoundTrigger() {
-            getSounds(  2,
-  4,
-  3,
-  7,
-  true);
+            startMusic();
         }
     },
 

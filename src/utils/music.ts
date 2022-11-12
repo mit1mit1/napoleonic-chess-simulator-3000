@@ -1,159 +1,54 @@
 import PianoMp3 from "tonejs-instrument-piano-mp3";
 import * as Tone from "tone";
+import type {
+  BaseDuration,
+  Chord,
+  Note,
+  Pitch,
+  ToneJSDuration,
+} from "@/music/types";
+import { pentatonicScale, quarterDurations } from "@/music/constants";
+import {
+  getDiminishedSeventh,
+  getMajorFifth,
+  getMajorFourth,
+  getMinorSecond,
+  getMinorSixth,
+  getMinorThird,
+  getRootMajor,
+  getMajorThird,
+  getThird,
+  getFifth,
+  getFlatThird,
+  getFlatFifth,
+  getNormalChords,
+  includesChord,
+  getFourth,
+} from "@/music/keysAndChords";
 
-const quarterDurations: Array<BaseDuration> = [
-  // "16n",
-  "8n",
-  "8n.",
-  "4n",
-  "4n.",
-  "2n",
-  "2n.",
-  "1n",
-  "1n.",
-  // "16t",
-  // "8t",
-  // "4t",
-  // "2t",
-];
-
-const tritoneScale: Array<Pitch> = [
-  "A3",
-  // "A#3",
-  // "B3",
-  "C4",
-  // "C#4",
-  // "D4",
-  "D#4",
-  // "E4",
-  // "F4",
-  "F#4",
-  // "G4",
-  // "G#4",
-  "A4",
-  // "A#4",
-  // "B4",
-  "C5",
-  // "C#5",
-  // "D5",
-  "D#5",
-  // "E5",
-  // "F5",
-  "F#5",
-  // "G5",
-  // "G#5",
-  "A5",
-  // "A#5",
-  // "B5",
-];
-
-const pentatonicScale: Array<Pitch> = [
-  // "A3",
-  "A#3",
-  // "B3",
-  // "C4",
-  "C#4",
-  // "D4",
-  "D#4",
-  // "E4",
-  // "F4",
-  "F#4",
-  // "G4",
-  "G#4",
-  // "A4",
-  "A#4",
-  // "B4",
-  // "C5",
-  "C#5",
-  // "D5",
-  "D#5",
-  // "E5",
-  // "F5",
-  "F#5",
-  // "G5",
-  "G#5",
-  // "A5",
-  "A#5",
-  // "B5",
-];
-
-interface Note {
-  pitch: Pitch;
-  durations: Array<BaseDuration>;
-  staccato?: boolean;
-  rest?: boolean;
-}
-
-type ToneJSDuration = {
-  [key in typeof durationNames[number]]?: number;
+export const addToneJSDurations = (
+  durationObject1: ToneJSDuration,
+  durationObject2: ToneJSDuration
+) => {
+  const newObject: ToneJSDuration = { ...durationObject1 };
+  for (const [key, value] of Object.entries(durationObject2)) {
+    const based = key as BaseDuration;
+    newObject[based] = (newObject[based] || 0) + value;
+  }
+  return newObject;
 };
-
-const pitchNames = [
-  // "E3",
-  // "F3",
-  // "F#3",
-  // "G3",
-  // "G#3",
-  "A3",
-  "A#3",
-  "B3",
-  "C4",
-  "C#4",
-  "D4",
-  "D#4",
-  "E4",
-  "F4",
-  "F#4",
-  "G4",
-  "G#4",
-  "A4",
-  "A#4",
-  "B4",
-  "C5",
-  "C#5",
-  "D5",
-  "D#5",
-  "E5",
-  "F5",
-  "F#5",
-  "G5",
-  "G#5",
-  "A5",
-  "A#5",
-  "B5",
-] as const;
-
-const durationNames = [
-  "16n",
-  "8n",
-  "8n.",
-  "4n",
-  "4n.",
-  "2n",
-  "2n.",
-  "1n",
-  "1n.",
-  "16t",
-  "8t",
-  "4t",
-  "2t",
-] as const;
-
-export type BaseDuration = typeof durationNames[number];
-export type Pitch = typeof pitchNames[number];
 
 export const addDurationObjects = (
   durationObject: ToneJSDuration,
   durations: Array<BaseDuration>
 ) => {
-  let newObject: ToneJSDuration = { ...durationObject };
+  const newObject: ToneJSDuration = { ...durationObject };
   for (let i = 0; i < durations.length; i++) {
-    let based = durations[i] as BaseDuration;
+    const based = durations[i] as BaseDuration;
     newObject[based] = (newObject[based] || 0) + 1;
   }
   return newObject;
 };
-
 
 const volumeSlider = document.querySelector("#volumeSlider");
 volumeSlider?.addEventListener("change", (event) => {
@@ -164,7 +59,7 @@ volumeSlider?.addEventListener("change", (event) => {
 });
 
 const instrumentVolume = -24;
-let allowAudio = false;
+let allowAudio = true;
 
 const instrument = new PianoMp3({
   minify: true,
@@ -184,17 +79,13 @@ document
   .querySelector("#musical-box")
   ?.addEventListener("keypress", handleKeypress);
 
-
-
-
-
 const pushNoteFromNumber = (
   indexNumber: number,
   currentTime: ToneJSDuration,
   allowAudio: boolean
 ) => {
   if (allowAudio && instrument.loaded) {
-    let mandleNote: Note = {
+    const mandleNote: Note = {
       pitch: pentatonicScale[Math.abs(indexNumber) % pentatonicScale.length],
       durations: [
         quarterDurations[Math.abs(indexNumber) % quarterDurations.length],
@@ -216,7 +107,7 @@ const pushNoteFromNumber = (
           holdNoteLength = "16n";
         }
       }
-      let attackDuration = holdNoteLength;
+      const attackDuration = holdNoteLength;
       instrument.triggerAttackRelease(
         mandleNote.pitch,
         attackDuration,
@@ -226,9 +117,39 @@ const pushNoteFromNumber = (
   }
 };
 
-const calculateIndexNumber = (currentX, currentY, a, b, c) => {
+const getPitches = ({ rootNote, chordType }: Chord) => {
+  const pitches = [rootNote];
+  if (chordType === "major") {
+    pitches.push(getThird(rootNote));
+    pitches.push(getFifth(rootNote));
+  }
+  if (chordType === "minor") {
+    pitches.push(getFlatThird(rootNote));
+    pitches.push(getFifth(rootNote));
+  }
+  if (chordType === "diminished") {
+    pitches.push(getFlatThird(rootNote));
+    pitches.push(getFlatFifth(rootNote));
+  }
+  return pitches;
+};
+
+const pushChord = (
+  chord: Chord,
+  currentTime: ToneJSDuration,
+  duration: ToneJSDuration,
+  allowAudio: boolean
+) => {
+  if (allowAudio && instrument.loaded) {
+    for (const pitch of getPitches(chord)) {
+      instrument.triggerAttackRelease(pitch, duration, currentTime);
+    }
+  }
+};
+
+const calculateIndexNumber = (currentX: number, currentY: number, a, b, c) => {
   return currentX * 13 + currentY * 23;
-}
+};
 
 let isTransitioning = false;
 const fadeIncrementDb = 1.4;
@@ -258,12 +179,12 @@ const pushSounds = (
 ): ToneJSDuration => {
   let sinceDifferentNumber = 1;
   let prevIndexNumber = -2;
-  let currentTime = startTime;
+  const currentTime = startTime;
   let currentX = xStart;
   let currentY = yStart;
 
   for (let i = 0; i < iterationsToPush; i++) {
-    let indexNumber = calculateIndexNumber(currentX, currentY, 0, 0, 0);
+    const indexNumber = calculateIndexNumber(currentX, currentY, 0, 0, 0);
     if (indexNumber != prevIndexNumber) {
       pushNoteFromNumber(indexNumber, currentTime, true);
       currentTime[durationIncrement] =
@@ -304,73 +225,82 @@ const fadeOutThenIn = async () => {
   }
 };
 
-const xResolution = 128;
-const yResolution = 128;
+const getChord = (key: Pitch, lastChord: Chord): Chord => {
+  const random = Math.random();
+  if (random < 0.2) {
+    return getRootMajor(key);
+  }
+  if (random < 0.25) {
+    return getMinorSecond(key);
+  }
+  if (random < 0.4) {
+    return getMinorThird(key);
+  }
+  if (random < 0.55) {
+    return getMajorFourth(key);
+  }
+  if (random < 0.7) {
+    return getMajorFifth(key);
+  }
+  if (random < 0.9) {
+    return getMinorSixth(key);
+  }
+  if (random < 0.93) {
+    return getDiminishedSeventh(key);
+  }
+  return getMajorThird(key);
+};
 
-export const getSounds = async (
-  xStepDistance: number,
-  centreX: number,
-  yStepDistance: number,
-  centreY: number,
-  allowAudio: boolean
-) => {
+const getChordLength = (index: number): ToneJSDuration => {
+  const random = Math.random();
+
+  if (random < 0.9) {
+    return {
+      "1n": 1,
+    };
+  }
+  return {
+    "2n": 1,
+  };
+};
+
+const getKey = (key: Pitch, currentChord: Chord) => {
+  if (includesChord(getNormalChords(key), currentChord)) {
+    return key;
+  }
+  if (currentChord.chordType === "major") {
+    return getFourth(currentChord.rootNote);
+  }
+  return key;
+};
+
+export const startMusic = async () => {
+  alert('attempting to start music')
   Tone.Transport.bpm.value = 120;
   Tone.Transport.position = "0:0:0";
   if (allowAudio && !isTransitioning) {
+    alert('got to start point')
     isTransitioning = true;
 
     await fadeOutThenIn();
-    const startTimeOscillater: ToneJSDuration = { "8n": 1 };
-    const startTimeTraverser: ToneJSDuration = { "16n": 1 };
-    const startTimeTraverserPlusOne: ToneJSDuration = { "16n": 3 };
+    let currentTime: ToneJSDuration = { "8n": 1 };
 
-    const xCentreSquare = Math.floor(xResolution / 2);
-    const yCentreSquare = Math.floor(yResolution / 2);
+    let key: Pitch = "C4";
+    let lastChord: Chord = {
+      rootNote: "C4",
+      chordType: "major",
+    };
+    let i: number = 0;
+    while (i < 200) {
+      const currentChord = getChord(key, lastChord);
+      const chordDuration = getChordLength(i);
+      key = getKey(key, currentChord);
+      pushChord(currentChord, currentTime, chordDuration, allowAudio);
+      currentTime = addToneJSDurations(currentTime, chordDuration);
+      lastChord = currentChord;
+      i++;
+    }
 
-    const xStartOscillater = xCentreSquare + Math.floor(3 / 5) * (-1) ** 3;
-    const yStartOscillater =
-      yCentreSquare + Math.floor(3 / 3) * (-1) ** Math.floor(3 / 3);
-
-    const getNextXOscillater = (
-      currentX: number,
-      currentY: number,
-      currentIteration: number
-    ) =>
-      xCentreSquare +
-      Math.floor((currentIteration + 4) / 5) * (-1) ** (currentIteration + 4) * xStepDistance * 4;
-    const getNextYOscillater = (
-      currentX: number,
-      currentY: number,
-      currentIteration: number
-    ) =>
-      yCentreSquare +
-      Math.floor((currentIteration + 4) / 3) *
-        (-1) ** Math.floor((currentIteration + 4) / 3) * yStepDistance * 4;
-
-    const calculateDurationIncreaseOscillater = (
-      sinceDifferentNumberOscillater: number,
-      mandleNumberOscillater: number
-    ) => sinceDifferentNumberOscillater * ((mandleNumberOscillater % 3) + 1);
-    pushSounds(
-      xStartOscillater,
-      yStartOscillater,
-      xResolution * yResolution,
-      getNextXOscillater,
-      getNextYOscillater,
-      startTimeOscillater,
-      "16n",
-      calculateDurationIncreaseOscillater
-    );
-
-    // new Tone.Loop(() => {
-    //   getSounds(
-    //     xStepDistance / 2,
-    //     centreX,
-    //     yStepDistance / 2,
-    //     centreY,
-    //     allowAudio
-    //   );
-    // }, traverserEndTime).start(traverserEndTime);
     Tone.Transport.start();
   }
 };
