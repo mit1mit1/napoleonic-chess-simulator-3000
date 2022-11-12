@@ -74,11 +74,30 @@ export const getNormalChords = (key: Pitch): Array<Chord> => [
   getDiminishedSeventh(key),
 ];
 
-export const includesChord = (chords: Array<Chord>, chord: Chord) =>  {
+export const includesChord = (chords: Array<Chord>, chord: Chord) => {
   for (const checkChord of chords) {
-    if (checkChord.chordType === chord.chordType && checkChord.rootNote === chord.rootNote) {
+    if (
+      checkChord.chordType === chord.chordType &&
+      checkChord.rootNote === chord.rootNote
+    ) {
       return true;
     }
   }
   return false;
-}
+};
+
+export const getMinorPentatonicScale = (key: Pitch): Array<Pitch> => [
+  key,
+  getSecond(key),
+  getFlatThird(key),
+  getFifth(key),
+  getSixth(key),
+];
+
+export const getMajorPentatonicScale = (key: Pitch): Array<Pitch> => [
+  key,
+  getSecond(key),
+  getThird(key),
+  getFifth(key),
+  getSixth(key),
+];
