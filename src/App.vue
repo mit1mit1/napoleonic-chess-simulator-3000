@@ -5,6 +5,7 @@ import ChessBoard from './components/ChessBoard.vue';
 import TranslatableText from './components/TranslatableText.vue';
 import { Languages, Locations, Players } from "./types";
 import DividedFrance from './components/DividedFrance.vue';
+import { getSounds } from "./utils/music";
 import { defineComponent } from "vue";
 let displayChessBoard = false;
 let displayCharacters = false;
@@ -26,6 +27,14 @@ export default defineComponent({
             alert(victor + " won!")
             this.displayDividedFrance = true;
             this.displayChessBoard = false;
+        },
+
+        onSoundTrigger() {
+            getSounds(  2,
+  4,
+  3,
+  7,
+  true);
         }
     },
 
@@ -41,7 +50,7 @@ export default defineComponent({
             <TranslatableText :from-language="Languages.English" :to-language="Languages.French"
                 text="Napoleonic Chess Simulator 0.01" />
         </h1>
-        <div class="game-screen">
+        <div class="game-screen" id="musical-box">
             <svg v-if="displayCharacters" height="300" width="350">
                 <NapoleonFigure />
             </svg>
@@ -50,6 +59,7 @@ export default defineComponent({
             <svg v-if="displayCharacters" height="300" width="250">
                 <SoldierFigure />
             </svg>
+            <button :onclick="onSoundTrigger">Music?</button>
         </div>
     </main>
 </template>

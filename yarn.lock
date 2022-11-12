@@ -262,6 +262,13 @@
     "@babel/helper-plugin-utils" "^7.19.0"
     "@babel/plugin-syntax-typescript" "^7.18.6"
 
+"@babel/runtime@^7.20.1":
+  version "7.20.1"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.1.tgz#1148bb33ab252b165a06698fde7576092a78b4a9"
+  integrity sha512-mrzLkl6U9YLF8qpqI7TB82PESyEGjm/0Ly91jG575eVxMMlb8fYfOXFZIJ8XfLrJZQbm7dlKry2bJmXBUEkdFg==
+  dependencies:
+    regenerator-runtime "^0.13.10"
+
 "@babel/template@^7.0.0", "@babel/template@^7.18.10", "@babel/template@^7.18.6":
   version "7.18.10"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.18.10.tgz#6f9134835970d1dbf0835c0d100c9f38de0c5e71"
@@ -894,6 +901,14 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
+
+automation-events@^4.0.23:
+  version "4.0.23"
+  resolved "https://registry.yarnpkg.com/automation-events/-/automation-events-4.0.23.tgz#abcd83ccb3e486658541e5675f418eaa9f80c387"
+  integrity sha512-3Q/moBk0NeWZb5jm5WtjmpAV5lxCoS00W+PQmQLp5mU0ra8AqU/lfjsIJly7Ze1drBE4aNfZIMGlbU+sTtJQJw==
+  dependencies:
+    "@babel/runtime" "^7.20.1"
+    tslib "^2.4.1"
 
 balanced-match@^1.0.0:
   version "1.0.2"
@@ -2626,6 +2641,11 @@ read-pkg@^3.0.0:
     normalize-package-data "^2.3.2"
     path-type "^3.0.0"
 
+regenerator-runtime@^0.13.10:
+  version "0.13.10"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.10.tgz#ed07b19616bcbec5da6274ebc75ae95634bfc2ee"
+  integrity sha512-KepLsg4dU12hryUO7bp/axHAKvwGOCV0sGloQtpagJ12ai+ojVDqkeGSiRX1zlq+kjIMZ1t7gpze+26QqtdGqw==
+
 regexp.prototype.flags@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/regexp.prototype.flags/-/regexp.prototype.flags-1.4.3.tgz#87cab30f80f66660181a3bb7bf5981a872b367ac"
@@ -2820,6 +2840,15 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.12.tgz#69077835abe2710b65f03969898b6637b505a779"
   integrity sha512-rr+VVSXtRhO4OHbXUiAF7xW3Bo9DuuF6C5jH+q/x15j2jniycgKbxU09Hr0WqlSLUs4i4ltHGXqTe7VHclYWyA==
 
+standardized-audio-context@^25.1.8:
+  version "25.3.34"
+  resolved "https://registry.yarnpkg.com/standardized-audio-context/-/standardized-audio-context-25.3.34.tgz#d62b70baee89f9122ba53368e65bdc5ee98563b8"
+  integrity sha512-SL8FQYqpfOifYGhAVfnAgC9o86mFNhy+W3xp28lHI6HgOQMbLTMcBoSN3FT0SwE51br7I9tmgjwiLggg7WWD/Q==
+  dependencies:
+    "@babel/runtime" "^7.20.1"
+    automation-events "^4.0.23"
+    tslib "^2.4.1"
+
 string-width@^4.1.0, string-width@^4.2.0:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
@@ -2962,6 +2991,19 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
+tone@^14.7.77:
+  version "14.7.77"
+  resolved "https://registry.yarnpkg.com/tone/-/tone-14.7.77.tgz#12a2a9f033952ccdb552275a6384ca5d36d4b5ed"
+  integrity sha512-tCfK73IkLHyzoKUvGq47gyDyxiKLFvKiVCOobynGgBB9Dl0NkxTM2p+eRJXyCYrjJwy9Y0XCMqD3uOYsYt2Fdg==
+  dependencies:
+    standardized-audio-context "^25.1.8"
+    tslib "^2.0.1"
+
+tonejs-instrument-piano-mp3@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/tonejs-instrument-piano-mp3/-/tonejs-instrument-piano-mp3-1.1.2.tgz#3f4072fde6be8790ed16802411cebc6f037de346"
+  integrity sha512-5h67cOKqC4XeS13szLcf275SEKLjxcybQiVZwvJjeDsc/44srxIkiSEPv7KqvGltX/uPoTmyAfwMS284nDxjKQ==
+
 tough-cookie@^4.0.0:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-4.1.2.tgz#e53e84b85f24e0b65dd526f46628db6c85f6b874"
@@ -2983,6 +3025,11 @@ tslib@^1.8.1:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
+
+tslib@^2.0.1, tslib@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.1.tgz#0d0bfbaac2880b91e22df0768e55be9753a5b17e"
+  integrity sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==
 
 tsutils@^3.21.0:
   version "3.21.0"
