@@ -155,13 +155,26 @@ const getAndPushMelody = (
   allowAudio: boolean
 ) => {
   let pitch = chord.rootNote
+  let lastDuration = "8n";
   if (allowAudio && instrument.loaded) {
     for (let i = 0; i < tonejsDurationTo16thCount(chordDuration); i++) {
       const pitchRadomiser = Math.random();
       const jazzRandomiser = Math.random();
       const skipRandomiser = Math.random();
-      if (skipRandomiser < 0.4) {
+      if (skipRandomiser < 0.15 && lastDuration === "16n") {
         currentTime = addToneJSDurations(currentTime, {"16n": 1});
+        lastDuration = "16n";
+        continue;
+      }
+      if (skipRandomiser < 0.55 && lastDuration !== "16n") {
+        if (jazzRandomiser < 0.8) {
+          currentTime = addToneJSDurations(currentTime, {"16n": 1});
+        } else if (jazzRandomiser < 0.92) {
+          currentTime = addToneJSDurations(currentTime, {"8n": 1});
+        } else {
+          currentTime = addToneJSDurations(currentTime, {"8n.": 1});
+        }
+        lastDuration = "16n";
         continue;
       }
       if (jazzRandomiser < 0.9) {
@@ -175,7 +188,7 @@ const getAndPushMelody = (
       const durationRandomiser = Math.random();
       if (durationRandomiser < 0.2) {
         duration = "8n"
-      } else if (durationRandomiser < 0.4) {
+      } else if (durationRandomiser < 0.45) {
         duration = "16n"
       } else if (durationRandomiser < 0.6) {
         duration = "4n"
@@ -191,6 +204,7 @@ const getAndPushMelody = (
         duration,
         currentTime
       );
+      lastDuration = duration;
       currentTime = addToneJSDurations(currentTime, {"16n": 1});
     }
   }
@@ -366,11 +380,14 @@ const getChordLength = (index: number): ToneJSDuration => {
 };
 
 const getKey = (key: Pitch, currentChord: Chord) => {
+  const random = Math.random();
   if (includesChord(getNormalChords(key), currentChord)) {
     return key;
   }
   if (currentChord.chordType === "major") {
-    return getFourth(currentChord.rootNote);
+    if (random < 0.5) {
+      return getFourth(currentChord.rootNote);
+    }
   }
   return key;
 };
@@ -389,14 +406,16 @@ export const startMusic = async () => {
       rootNote: "C4",
       chordType: "major",
     };
-    let lastNote: Pitch = "C4";
+    let lastMelodyNote: Pitch = "C4";
+    let lastCounterMelodyNote: Pitch = "A4";
     let i: number = 0;
     while (i < 200) {
       const currentChord = getChord(key, lastChord);
       const chordDuration = getChordLength(i);
       key = getKey(key, currentChord);
       pushChord(currentChord, currentTime, chordDuration, allowAudio);
-      lastNote = getAndPushMelody(key, currentChord, currentTime, chordDuration, lastNote, allowAudio);
+      lastMelodyNote = getAndPushMelody(key, currentChord, currentTime, chordDuration, lastMelodyNote, allowAudio);
+      lastCounterMelodyNote = getAndPushMelody(key, currentChord, currentTime, chordDuration, lastCounterMelodyNote, allowAudio);
       currentTime = addToneJSDurations(currentTime, chordDuration);
       lastChord = currentChord;
       i++;

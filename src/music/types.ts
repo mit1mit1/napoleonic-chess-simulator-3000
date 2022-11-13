@@ -10,11 +10,15 @@ export type ToneJSDuration = {
 };
 
 export const pitchNames = [
-  // "E3",
-  // "F3",
-  // "F#3",
-  // "G3",
-  // "G#3",
+  "C3",
+  "C#3",
+  "D3",
+  "D#3",
+  "E3",
+  "F3",
+  "F#3",
+  "G3",
+  "G#3",
   "A3",
   "A#3",
   "B3",
@@ -39,6 +43,9 @@ export const pitchNames = [
   "F#5",
   "G5",
   "G#5",
+  "A5",
+  "A#5",
+  "B5"
 ] as const;
 
 export const durationNames = [
