@@ -61,5 +61,5 @@ export type BaseDuration = typeof durationNames[number];
 export type Pitch = typeof pitchNames[number];
 export type Chord = {
     rootNote: Pitch,
-    chordType: "major" | "minor" | "diminished"
+    chordType: "major" | "minor" | "diminished" | "power"
 }

@@ -26,6 +26,12 @@ import {
   getFourth,
   getMajorPentatonicScale,
   getMinorPentatonicScale,
+  getRootPower,
+  getPowerSecond,
+  getPowerThird,
+  getPowerFourth,
+  getPowerFifth,
+  getPowerSixth,
 } from "@/music/keysAndChords";
 import { tonejsDurationTo16thCount } from "@/music/durations";
 
@@ -130,6 +136,9 @@ const getPitches = ({ rootNote, chordType }: Chord) => {
     pitches.push(getFlatThird(rootNote));
     pitches.push(getFifth(rootNote));
   }
+  if (chordType === "power") {
+    pitches.push(getFifth(rootNote));
+  }
   if (chordType === "diminished") {
     pitches.push(getFlatThird(rootNote));
     pitches.push(getFlatFifth(rootNote));
@@ -151,11 +160,11 @@ const getAndPushMelody = (
       const pitchRadomiser = Math.random();
       const jazzRandomiser = Math.random();
       const skipRandomiser = Math.random();
-      if (skipRandomiser < 0.2) {
+      if (skipRandomiser < 0.4) {
         currentTime = addToneJSDurations(currentTime, {"16n": 1});
         continue;
       }
-      if (jazzRandomiser < 0.8) {
+      if (jazzRandomiser < 0.9) {
         const pentatonicScale = getMajorPentatonicScale(key)
         pitch = pentatonicScale[Math.floor(pitchRadomiser * pentatonicScale.length)]
       } else {
@@ -164,19 +173,17 @@ const getAndPushMelody = (
       }
       let duration = "8n";
       const durationRandomiser = Math.random();
-      if (durationRandomiser < 0.4) {
+      if (durationRandomiser < 0.2) {
+        duration = "8n"
+      } else if (durationRandomiser < 0.4) {
         duration = "16n"
-      }
-      if (durationRandomiser < 0.6) {
+      } else if (durationRandomiser < 0.6) {
         duration = "4n"
-      }
-      if (durationRandomiser < 0.7) {
+      } else if (durationRandomiser < 0.7) {
         duration = "4n."
-      }
-      if (durationRandomiser < 0.8) {
+      } else if (durationRandomiser < 0.8) {
         duration = "8n."
-      }
-      if (durationRandomiser < 0.9) {
+      } else if (durationRandomiser < 0.9) {
         duration = "2n"
       }
       instrument.triggerAttackRelease(
@@ -283,23 +290,41 @@ const fadeOutThenIn = async () => {
 
 const getChord = (key: Pitch, lastChord: Chord): Chord => {
   const random = Math.random();
-  if (random < 0.2) {
+  if (random < 0.1) {
     return getRootMajor(key);
   }
-  if (random < 0.25) {
+  if (random < 0.2) {
+    return getRootPower(key);
+  }
+  if (random < 0.23) {
     return getMinorSecond(key);
+  }
+  if (random < 0.26) {
+    return getPowerSecond(key);
+  }
+  if (random < 0.35) {
+    return getPowerThird(key);
   }
   if (random < 0.4) {
     return getMinorThird(key);
   }
+  if (random < 0.4) {
+    return getPowerFourth(key);
+  }
   if (random < 0.55) {
     return getMajorFourth(key);
   }
-  if (random < 0.7) {
+  if (random < 0.65) {
+    return getPowerFifth(key);
+  }
+  if (random < 0.75) {
     return getMajorFifth(key);
   }
-  if (random < 0.9) {
+  if (random < 0.85) {
     return getMinorSixth(key);
+  }
+  if (random < 0.92) {
+    return getPowerSixth(key);
   }
   if (random < 0.93) {
     return getDiminishedSeventh(key);
@@ -351,7 +376,7 @@ const getKey = (key: Pitch, currentChord: Chord) => {
 };
 
 export const startMusic = async () => {
-  Tone.Transport.bpm.value = 120;
+  Tone.Transport.bpm.value = 100;
   Tone.Transport.position = "0:0:0";
   if (allowAudio && !isTransitioning) {
     isTransitioning = true;
