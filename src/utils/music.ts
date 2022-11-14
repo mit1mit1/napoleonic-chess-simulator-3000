@@ -7,7 +7,7 @@ import type {
   Pitch,
   ToneJSDuration,
 } from "@/music/types";
-import { pentatonicScale, quarterDurations } from "@/music/constants";
+import { bassNotes, middleNotes, pentatonicScale, quarterDurations } from "@/music/constants";
 import {
   getDiminishedSeventh,
   getMajorFifth,
@@ -152,60 +152,68 @@ const getAndPushMelody = (
   currentTime: ToneJSDuration,
   chordDuration: ToneJSDuration,
   lastNote: Pitch,
-  allowAudio: boolean
+  allowAudio: boolean,
+  availableNotes: Pitch[] = middleNotes,
+  skippiness: number = 1,
+  rapidity: number = 1
 ) => {
-  let pitch = chord.rootNote
+  let pitch = chord.rootNote;
   let lastDuration = "8n";
   if (allowAudio && instrument.loaded) {
     for (let i = 0; i < tonejsDurationTo16thCount(chordDuration); i++) {
       const pitchRadomiser = Math.random();
       const jazzRandomiser = Math.random();
       const skipRandomiser = Math.random();
-      if (skipRandomiser < 0.15 && lastDuration === "16n") {
-        currentTime = addToneJSDurations(currentTime, {"16n": 1});
+      if (skipRandomiser < 0.15 * skippiness && lastDuration === "16n") {
+        currentTime = addToneJSDurations(currentTime, { "16n": 1 });
         lastDuration = "16n";
         continue;
       }
-      if (skipRandomiser < 0.55 && lastDuration !== "16n") {
-        if (jazzRandomiser < 0.8) {
-          currentTime = addToneJSDurations(currentTime, {"16n": 1});
-        } else if (jazzRandomiser < 0.92) {
-          currentTime = addToneJSDurations(currentTime, {"8n": 1});
+      if (skipRandomiser < 0.55 * skippiness && lastDuration !== "16n") {
+        if (jazzRandomiser < 0.12 * skippiness) {
+          currentTime = addToneJSDurations(currentTime, { "8n": 1 });
+        } else if (jazzRandomiser < 0.2 * skippiness) {
+          currentTime = addToneJSDurations(currentTime, { "8n.": 1 });
         } else {
-          currentTime = addToneJSDurations(currentTime, {"8n.": 1});
+          currentTime = addToneJSDurations(currentTime, { "16n": 1 });
         }
         lastDuration = "16n";
         continue;
       }
-      if (jazzRandomiser < 0.9) {
-        const pentatonicScale = getMajorPentatonicScale(key)
-        pitch = pentatonicScale[Math.floor(pitchRadomiser * pentatonicScale.length)]
+      let pentatonicScale = []
+      console.log('pushing from key ' + key)
+      console.log('pushing from notes ' + availableNotes)
+      if (jazzRandomiser < 1) {
+        console.log('non jazz scale');
+        pentatonicScale = getMajorPentatonicScale(key, availableNotes);
+        pitch =
+          pentatonicScale[Math.floor(pitchRadomiser * pentatonicScale.length)];
+        console.log(pentatonicScale);
       } else {
-        const pentatonicScale = getMinorPentatonicScale(chord.rootNote)
-        pitch = pentatonicScale[Math.floor(pitchRadomiser * pentatonicScale.length)]
+        console.log('jazz scale');
+        pentatonicScale = getMinorPentatonicScale(chord.rootNote, availableNotes);
+        pitch =
+          pentatonicScale[Math.floor(pitchRadomiser * pentatonicScale.length)];
       }
+      console.log(pentatonicScale);
       let duration = "8n";
       const durationRandomiser = Math.random();
-      if (durationRandomiser < 0.2) {
-        duration = "8n"
-      } else if (durationRandomiser < 0.45) {
-        duration = "16n"
-      } else if (durationRandomiser < 0.6) {
-        duration = "4n"
-      } else if (durationRandomiser < 0.7) {
-        duration = "4n."
-      } else if (durationRandomiser < 0.8) {
-        duration = "8n."
-      } else if (durationRandomiser < 0.9) {
-        duration = "2n"
+      if (durationRandomiser < 0.25 * rapidity) {
+        duration = "16n";
+      } else if (durationRandomiser < 0.45 * rapidity) {
+        duration = "8n";
+      } else if (durationRandomiser < 0.6 * rapidity) {
+        duration = "8n.";
+      } else if (durationRandomiser < 0.7 * rapidity) {
+        duration = "4n";
+      } else if (durationRandomiser < 0.8 * rapidity) {
+        duration = "4n.";
+      } else {
+        duration = "2n";
       }
-      instrument.triggerAttackRelease(
-        pitch,
-        duration,
-        currentTime
-      );
+      instrument.triggerAttackRelease(pitch, duration, currentTime);
       lastDuration = duration;
-      currentTime = addToneJSDurations(currentTime, {"16n": 1});
+      currentTime = addToneJSDurations(currentTime, { "16n": 1 });
     }
   }
   return pitch;
@@ -381,12 +389,14 @@ const getChordLength = (index: number): ToneJSDuration => {
 
 const getKey = (key: Pitch, currentChord: Chord) => {
   const random = Math.random();
+  console.log("key is " + key)
   if (includesChord(getNormalChords(key), currentChord)) {
     return key;
   }
   if (currentChord.chordType === "major") {
     if (random < 0.5) {
-      return getFourth(currentChord.rootNote);
+      console.log("changing key to " +  getFourth(currentChord.rootNote, bassNotes))
+      return getFourth(currentChord.rootNote, bassNotes);
     }
   }
   return key;
@@ -401,21 +411,37 @@ export const startMusic = async () => {
     await fadeOutThenIn();
     let currentTime: ToneJSDuration = { "8n": 1 };
 
-    let key: Pitch = "C4";
+    let key: Pitch = "E2";
     let lastChord: Chord = {
-      rootNote: "C4",
+      rootNote: "E2",
       chordType: "major",
     };
-    let lastMelodyNote: Pitch = "C4";
-    let lastCounterMelodyNote: Pitch = "A4";
+    let lastMelodyNote: Pitch = "B4";
+    let lastCounterMelodyNote: Pitch = "E2";
     let i: number = 0;
-    while (i < 200) {
+    while (i < 5) {
       const currentChord = getChord(key, lastChord);
       const chordDuration = getChordLength(i);
       key = getKey(key, currentChord);
-      pushChord(currentChord, currentTime, chordDuration, allowAudio);
-      lastMelodyNote = getAndPushMelody(key, currentChord, currentTime, chordDuration, lastMelodyNote, allowAudio);
-      lastCounterMelodyNote = getAndPushMelody(key, currentChord, currentTime, chordDuration, lastCounterMelodyNote, allowAudio);
+      // pushChord(currentChord, currentTime, chordDuration, allowAudio);
+      lastMelodyNote = getAndPushMelody(
+        key,
+        currentChord,
+        currentTime,
+        chordDuration,
+        lastMelodyNote,
+        allowAudio
+      );
+      lastCounterMelodyNote = getAndPushMelody(
+        key,
+        currentChord,
+        currentTime,
+        chordDuration,
+        lastCounterMelodyNote,
+        allowAudio,
+        bassNotes,
+        1.3
+      );
       currentTime = addToneJSDurations(currentTime, chordDuration);
       lastChord = currentChord;
       i++;

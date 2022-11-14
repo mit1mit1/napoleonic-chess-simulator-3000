@@ -1,64 +1,152 @@
 import { middleNotes } from "./constants";
-import { pitchNames, type Chord, type Pitch } from "./types";
+import type { Chord, Pitch } from "./types";
+import { pitchNames } from "./types";
 
-const getMiddleNote = (baseNote: Pitch) => {
-  if (middleNotes.find(note => note === baseNote)) {
-    return middleNotes.indexOf(baseNote as typeof middleNotes[number]);
+const allPitches = [...pitchNames];
+
+const getAvailableNote = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = middleNotes
+) => {
+  if (availableNotes.find((note) => note === baseNote)) {
+    return availableNotes.indexOf(baseNote);
   }
-  const similarNote = middleNotes.find(note => note.startsWith(baseNote.slice(0, -1)));
+  const similarNote = availableNotes.find((note) =>
+    note.startsWith(baseNote.slice(0, -1))
+  );
   if (similarNote) {
-    return middleNotes.indexOf(similarNote);
+    return availableNotes.indexOf(similarNote);
   }
   return 0;
-}
+};
 
-export const getSecond = (baseNote: Pitch): Pitch =>
-  middleNotes[(getMiddleNote(baseNote) + 2) % middleNotes.length];
+export const getSecond = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = middleNotes
+): Pitch =>
+  availableNotes[
+    (getAvailableNote(baseNote, availableNotes) + 2) % availableNotes.length
+  ];
 
-export const getFlatThird = (baseNote: Pitch): Pitch =>
-  middleNotes[(getMiddleNote(baseNote) + 3) % middleNotes.length];
+export const getFlatThird = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = middleNotes
+): Pitch =>
+  availableNotes[
+    (getAvailableNote(baseNote, availableNotes) + 3) % availableNotes.length
+  ];
 
-export const getThird = (baseNote: Pitch): Pitch =>
-  middleNotes[(getMiddleNote(baseNote) + 4) % middleNotes.length];
+export const getThird = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = middleNotes
+): Pitch =>
+  availableNotes[
+    (getAvailableNote(baseNote, availableNotes) + 4) % availableNotes.length
+  ];
 
-export const getFourth = (baseNote: Pitch): Pitch =>
-  middleNotes[(getMiddleNote(baseNote) + 5) % middleNotes.length];
+export const getFourth = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = middleNotes
+): Pitch =>
+  availableNotes[
+    (getAvailableNote(baseNote, availableNotes) + 5) % availableNotes.length
+  ];
 
-export const getFlatFifth = (baseNote: Pitch): Pitch =>
-  middleNotes[(getMiddleNote(baseNote) + 6) % middleNotes.length];
+export const getFlatFifth = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = middleNotes
+): Pitch =>
+  availableNotes[
+    (getAvailableNote(baseNote, availableNotes) + 6) % availableNotes.length
+  ];
 
-export const getFifth = (baseNote: Pitch): Pitch =>
-  middleNotes[(getMiddleNote(baseNote) + 7) % middleNotes.length];
+export const getFifth = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = middleNotes
+): Pitch =>
+  availableNotes[
+    (getAvailableNote(baseNote, availableNotes) + 7) % availableNotes.length
+  ];
 
-export const getSixth = (baseNote: Pitch): Pitch =>
-  middleNotes[(getMiddleNote(baseNote) + 9) % middleNotes.length];
+export const getSixth = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = middleNotes
+): Pitch =>
+  availableNotes[
+    (getAvailableNote(baseNote, availableNotes) + 9) % availableNotes.length
+  ];
 
-export const getSeventh = (baseNote: Pitch): Pitch =>
-  middleNotes[(getMiddleNote(baseNote) + 11) % middleNotes.length];
+export const getSeventh = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = middleNotes
+): Pitch =>
+  availableNotes[
+    (getAvailableNote(baseNote, availableNotes) + 11) % availableNotes.length
+  ];
 
-export const getEighth = (baseNote: Pitch): Pitch =>
-  pitchNames[(pitchNames.indexOf(baseNote) + 12) % pitchNames.length];
+export const getEighth = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = allPitches
+): Pitch =>
+  availableNotes[
+    (availableNotes.indexOf(baseNote) + 12) % availableNotes.length
+  ];
 
-export const getNinth = (baseNote: Pitch): Pitch =>
-  pitchNames[(pitchNames.indexOf(baseNote) + 14) % pitchNames.length];
+export const getNinth = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = allPitches
+): Pitch =>
+  availableNotes[
+    (availableNotes.indexOf(baseNote) + 14) % availableNotes.length
+  ];
 
-export const getFlatTenth = (baseNote: Pitch): Pitch =>
-  pitchNames[(pitchNames.indexOf(baseNote) + 15) % pitchNames.length];
+export const getFlatTenth = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = allPitches
+): Pitch =>
+  availableNotes[
+    (availableNotes.indexOf(baseNote) + 15) % availableNotes.length
+  ];
 
-export const getTenth = (baseNote: Pitch): Pitch =>
-  pitchNames[(pitchNames.indexOf(baseNote) + 16) % pitchNames.length];
+export const getTenth = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = allPitches
+): Pitch =>
+  availableNotes[
+    (availableNotes.indexOf(baseNote) + 16) % availableNotes.length
+  ];
 
-export const getEleventh = (baseNote: Pitch): Pitch =>
-  pitchNames[(pitchNames.indexOf(baseNote) + 17) % pitchNames.length];
+export const getEleventh = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = allPitches
+): Pitch =>
+  availableNotes[
+    (availableNotes.indexOf(baseNote) + 17) % availableNotes.length
+  ];
 
-export const getTwelfth = (baseNote: Pitch): Pitch =>
-  pitchNames[(pitchNames.indexOf(baseNote) + 19) % pitchNames.length];
+export const getTwelfth = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = allPitches
+): Pitch =>
+  availableNotes[
+    (availableNotes.indexOf(baseNote) + 19) % availableNotes.length
+  ];
 
-export const getThirteenth = (baseNote: Pitch): Pitch =>
-  pitchNames[(pitchNames.indexOf(baseNote) + 21) % pitchNames.length];
+export const getThirteenth = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = allPitches
+): Pitch =>
+  availableNotes[
+    (availableNotes.indexOf(baseNote) + 21) % availableNotes.length
+  ];
 
-export const getFourteenth = (baseNote: Pitch): Pitch =>
-  pitchNames[(pitchNames.indexOf(baseNote) + 23) % pitchNames.length];
+export const getFourteenth = (
+  baseNote: Pitch,
+  availableNotes: Pitch[] = allPitches
+): Pitch =>
+  availableNotes[
+    (availableNotes.indexOf(baseNote) + 23) % availableNotes.length
+  ];
 
 export const getRootMajor = (key: Pitch): Chord => ({
   rootNote: key,
@@ -158,28 +246,69 @@ export const includesChord = (chords: Array<Chord>, chord: Chord) => {
   return false;
 };
 
-export const getMinorPentatonicScale = (key: Pitch): Array<Pitch> => [
-  key,
-  getSecond(key),
-  getFlatThird(key),
-  getFifth(key),
-  getSixth(key),
-  getEighth(key),
-  getNinth(key),
-  getFlatTenth(key),
-  getTwelfth(key),
-  getThirteenth(key),
-];
+export const getMinorPentatonicScale = (
+  key: Pitch,
+  availableNotes: Array<Pitch>
+): Array<Pitch> =>
+  Array.from(
+    new Set([
+      availableNotes[getAvailableNote(key, availableNotes)],
+      getSecond(key, availableNotes),
+      getFlatThird(key, availableNotes),
+      getFifth(key, availableNotes),
+      getSixth(key, availableNotes),
+      getEighth(key, availableNotes),
+      getNinth(key, availableNotes),
+      getFlatTenth(key, availableNotes),
+      getTwelfth(key, availableNotes),
+      getThirteenth(key, availableNotes),
+    ])
+  );
 
-export const getMajorPentatonicScale = (key: Pitch): Array<Pitch> => [
-  key,
-  getSecond(key),
-  getThird(key),
-  getFifth(key),
-  getSixth(key),
-  getEighth(key),
-  getNinth(key),
-  getTenth(key),
-  getTwelfth(key),
-  getThirteenth(key),
-];
+export const getMajorPentatonicScale = (
+  key: Pitch,
+  availableNotes: Array<Pitch>
+): Array<Pitch> => {
+  console.log(
+    new Set([
+      availableNotes[getAvailableNote(key, availableNotes)],
+      getSecond(key, availableNotes),
+      getThird(key, availableNotes),
+      getFifth(key, availableNotes),
+      getSixth(key, availableNotes),
+      getEighth(key, availableNotes),
+      getNinth(key, availableNotes),
+      getTenth(key, availableNotes),
+      getTwelfth(key, availableNotes),
+      getThirteenth(key, availableNotes),
+    ])
+  );
+  console.log(
+    Array.from(new Set([
+      availableNotes[getAvailableNote(key, availableNotes)],
+      getSecond(key, availableNotes),
+      getThird(key, availableNotes),
+      getFifth(key, availableNotes),
+      getSixth(key, availableNotes),
+      getEighth(key, availableNotes),
+      getNinth(key, availableNotes),
+      getTenth(key, availableNotes),
+      getTwelfth(key, availableNotes),
+      getThirteenth(key, availableNotes),
+    ])
+  ));
+  return Array.from(
+    new Set([
+      availableNotes[getAvailableNote(key, availableNotes)],
+      getSecond(key, availableNotes),
+      getThird(key, availableNotes),
+      getFifth(key, availableNotes),
+      getSixth(key, availableNotes),
+      getEighth(key, availableNotes),
+      getNinth(key, availableNotes),
+      getTenth(key, availableNotes),
+      getTwelfth(key, availableNotes),
+      getThirteenth(key, availableNotes),
+    ])
+  );
+};
