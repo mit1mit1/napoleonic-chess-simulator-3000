@@ -89,7 +89,7 @@ export const getEighth = (
   availableNotes: Pitch[] = allPitches
 ): Pitch =>
   availableNotes[
-    (availableNotes.indexOf(baseNote) + 12) % availableNotes.length
+    (getAvailableNote(baseNote, availableNotes) + 12) % availableNotes.length
   ];
 
 export const getNinth = (
@@ -97,7 +97,7 @@ export const getNinth = (
   availableNotes: Pitch[] = allPitches
 ): Pitch =>
   availableNotes[
-    (availableNotes.indexOf(baseNote) + 14) % availableNotes.length
+    (getAvailableNote(baseNote, availableNotes) + 14) % availableNotes.length
   ];
 
 export const getFlatTenth = (
@@ -105,7 +105,7 @@ export const getFlatTenth = (
   availableNotes: Pitch[] = allPitches
 ): Pitch =>
   availableNotes[
-    (availableNotes.indexOf(baseNote) + 15) % availableNotes.length
+    (getAvailableNote(baseNote, availableNotes) + 15) % availableNotes.length
   ];
 
 export const getTenth = (
@@ -113,7 +113,7 @@ export const getTenth = (
   availableNotes: Pitch[] = allPitches
 ): Pitch =>
   availableNotes[
-    (availableNotes.indexOf(baseNote) + 16) % availableNotes.length
+    (getAvailableNote(baseNote, availableNotes) + 16) % availableNotes.length
   ];
 
 export const getEleventh = (
@@ -121,7 +121,7 @@ export const getEleventh = (
   availableNotes: Pitch[] = allPitches
 ): Pitch =>
   availableNotes[
-    (availableNotes.indexOf(baseNote) + 17) % availableNotes.length
+    (getAvailableNote(baseNote, availableNotes) + 17) % availableNotes.length
   ];
 
 export const getTwelfth = (
@@ -129,7 +129,7 @@ export const getTwelfth = (
   availableNotes: Pitch[] = allPitches
 ): Pitch =>
   availableNotes[
-    (availableNotes.indexOf(baseNote) + 19) % availableNotes.length
+    (getAvailableNote(baseNote, availableNotes) + 19) % availableNotes.length
   ];
 
 export const getThirteenth = (
@@ -137,7 +137,7 @@ export const getThirteenth = (
   availableNotes: Pitch[] = allPitches
 ): Pitch =>
   availableNotes[
-    (availableNotes.indexOf(baseNote) + 21) % availableNotes.length
+    (getAvailableNote(baseNote, availableNotes) + 21) % availableNotes.length
   ];
 
 export const getFourteenth = (
@@ -145,7 +145,7 @@ export const getFourteenth = (
   availableNotes: Pitch[] = allPitches
 ): Pitch =>
   availableNotes[
-    (availableNotes.indexOf(baseNote) + 23) % availableNotes.length
+    (getAvailableNote(baseNote, availableNotes) + 23) % availableNotes.length
   ];
 
 export const getRootMajor = (key: Pitch): Chord => ({
@@ -269,34 +269,6 @@ export const getMajorPentatonicScale = (
   key: Pitch,
   availableNotes: Array<Pitch>
 ): Array<Pitch> => {
-  console.log(
-    new Set([
-      availableNotes[getAvailableNote(key, availableNotes)],
-      getSecond(key, availableNotes),
-      getThird(key, availableNotes),
-      getFifth(key, availableNotes),
-      getSixth(key, availableNotes),
-      getEighth(key, availableNotes),
-      getNinth(key, availableNotes),
-      getTenth(key, availableNotes),
-      getTwelfth(key, availableNotes),
-      getThirteenth(key, availableNotes),
-    ])
-  );
-  console.log(
-    Array.from(new Set([
-      availableNotes[getAvailableNote(key, availableNotes)],
-      getSecond(key, availableNotes),
-      getThird(key, availableNotes),
-      getFifth(key, availableNotes),
-      getSixth(key, availableNotes),
-      getEighth(key, availableNotes),
-      getNinth(key, availableNotes),
-      getTenth(key, availableNotes),
-      getTwelfth(key, availableNotes),
-      getThirteenth(key, availableNotes),
-    ])
-  ));
   return Array.from(
     new Set([
       availableNotes[getAvailableNote(key, availableNotes)],

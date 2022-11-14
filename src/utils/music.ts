@@ -7,7 +7,7 @@ import type {
   Pitch,
   ToneJSDuration,
 } from "@/music/types";
-import { bassNotes, middleNotes, pentatonicScale, quarterDurations } from "@/music/constants";
+import { bassNotes, middleNotes, quarterDurations } from "@/music/constants";
 import {
   getDiminishedSeventh,
   getMajorFifth,
@@ -88,43 +88,6 @@ document
   .querySelector("#musical-box")
   ?.addEventListener("keypress", handleKeypress);
 
-const pushNoteFromNumber = (
-  indexNumber: number,
-  currentTime: ToneJSDuration,
-  allowAudio: boolean
-) => {
-  if (allowAudio && instrument.loaded) {
-    const mandleNote: Note = {
-      pitch: pentatonicScale[Math.abs(indexNumber) % pentatonicScale.length],
-      durations: [
-        quarterDurations[Math.abs(indexNumber) % quarterDurations.length],
-      ],
-    };
-    if (!mandleNote.rest) {
-      let holdNoteLength: ToneJSDuration | string = addDurationObjects(
-        {},
-        mandleNote.durations
-      );
-      if (mandleNote.staccato) {
-        if (
-          mandleNote.durations.length === 1 &&
-          (mandleNote.durations[0] === "16n" ||
-            mandleNote.durations[0] === "8n")
-        ) {
-          holdNoteLength = "32n";
-        } else {
-          holdNoteLength = "16n";
-        }
-      }
-      const attackDuration = holdNoteLength;
-      instrument.triggerAttackRelease(
-        mandleNote.pitch,
-        attackDuration,
-        currentTime
-      );
-    }
-  }
-};
 
 const getPitches = ({ rootNote, chordType }: Chord) => {
   const pitches = [rootNote];
@@ -188,7 +151,6 @@ const getAndPushMelody = (
         pentatonicScale = getMajorPentatonicScale(key, availableNotes);
         pitch =
           pentatonicScale[Math.floor(pitchRadomiser * pentatonicScale.length)];
-        console.log(pentatonicScale);
       } else {
         console.log('jazz scale');
         pentatonicScale = getMinorPentatonicScale(chord.rootNote, availableNotes);
@@ -232,59 +194,11 @@ const pushChord = (
   }
 };
 
-const calculateIndexNumber = (currentX: number, currentY: number) => {
-  return currentX * 13 + currentY * 23;
-};
 
 let isTransitioning = false;
 const fadeIncrementDb = 1.4;
 const fadeIncrementMilliseconds = 90;
 const fadeIncrements = 22;
-
-const pushSounds = (
-  xStart: number,
-  yStart: number,
-  iterationsToPush: number,
-  getNextX: (
-    currentX: number,
-    currentY: number,
-    currentIteration: number
-  ) => number,
-  getNextY: (
-    currentX: number,
-    currentY: number,
-    currentIteration: number
-  ) => number,
-  startTime: ToneJSDuration,
-  durationIncrement: BaseDuration,
-  calculateDurationIncrease: (
-    sinceDifferentNumber: number,
-    mandleNumber: number
-  ) => number
-): ToneJSDuration => {
-  let sinceDifferentNumber = 1;
-  let prevIndexNumber = -2;
-  const currentTime = startTime;
-  let currentX = xStart;
-  let currentY = yStart;
-
-  for (let i = 0; i < iterationsToPush; i++) {
-    const indexNumber = calculateIndexNumber(currentX, currentY);
-    if (indexNumber != prevIndexNumber) {
-      pushNoteFromNumber(indexNumber, currentTime, true);
-      currentTime[durationIncrement] =
-        (currentTime[durationIncrement] ?? 0) +
-        calculateDurationIncrease(sinceDifferentNumber, indexNumber);
-      sinceDifferentNumber = 1;
-      prevIndexNumber = indexNumber;
-    } else {
-      sinceDifferentNumber++;
-    }
-    currentX = getNextX(currentX, currentY, i);
-    currentY = getNextY(currentY, currentY, i);
-  }
-  return currentTime;
-};
 
 const fadeOutThenIn = async () => {
   for (let i = 0; i < fadeIncrements; i++) {
@@ -419,11 +333,11 @@ export const startMusic = async () => {
     let lastMelodyNote: Pitch = "B4";
     let lastCounterMelodyNote: Pitch = "E2";
     let i: number = 0;
-    while (i < 5) {
+    while (i < 50) {
       const currentChord = getChord(key, lastChord);
       const chordDuration = getChordLength(i);
       key = getKey(key, currentChord);
-      // pushChord(currentChord, currentTime, chordDuration, allowAudio);
+      pushChord(currentChord, currentTime, chordDuration, allowAudio);
       lastMelodyNote = getAndPushMelody(
         key,
         currentChord,
