@@ -19,6 +19,7 @@ let chessState = {
 
 const lightSquareColor = "#fcf9e6";
 const darkSquareColor = "#c7b3a3";
+let isAttemptingAiMove = false;
 export default defineComponent({
     props: {
         onVictory: Function,
@@ -28,7 +29,7 @@ export default defineComponent({
         return {
             length, chessState, selectedSquareX, selectedSquareY, ChessPieces, Players, lightSquareColor,
             darkSquareColor, squareIndicies: [...Array(chessBoardLength).keys()], aiPlayers, startedGame,
-            chessBoardLength
+            chessBoardLength, isAttemptingAiMove,
         }
     },
 
@@ -67,14 +68,29 @@ export default defineComponent({
                 }
             }, 1);
         },
-        attemptAIMove() {
-            if (this.aiPlayers.includes(this.chessState.currentPlayer)) {
-                const { startX, startY, endX, endY } = getGreediestMove(this.chessState, 0, 2, 0.8);
-                if (isValidMove(this.chessState, startX, startY, endX, endY)) {
-                    this.selectedSquareX = startX;
-                    this.selectedSquareY = startY;
-                    this.makeMove(endX, endY);
+        async attemptAIMove() {
+            if (this.aiPlayers.includes(this.chessState.currentPlayer) && !this.isAttemptingAiMove) {
+                this.isAttemptingAiMove = true;
+                let greediestMove = undefined as undefined | {
+                    startX: number,
+                    startY: number,
+                    endX: number,
+                    endY: number,
+                    moveValue: number | undefined,
+                };
+                for (let i = 0; i < chessBoardLength; i++) {
+                    await new Promise(resolve => setTimeout(() => {
+                        greediestMove = getGreediestMove(this.chessState, 0, 4, 0.8, greediestMove, { minX: i, minY: 0, maxX: i + 1, maxY: chessBoardLength });
+                        resolve(undefined);
+                    }, 1000));
                 }
+                console.log(greediestMove);
+                if (isValidMove(this.chessState, greediestMove?.startX ?? -1, greediestMove?.startY ?? -1, greediestMove?.endX ?? -1, greediestMove?.endY ?? -1)) {
+                    this.selectedSquareX = greediestMove?.startX ?? -1;
+                    this.selectedSquareY = greediestMove?.startY ?? -1;
+                    this.makeMove(greediestMove?.endX ?? -1, greediestMove?.endY ?? -1);
+                }
+                this.isAttemptingAiMove = false;
             }
         }
     },
@@ -90,8 +106,9 @@ export default defineComponent({
         <g v-for="x in squareIndicies" v-bind:key="`row-${x}`">
             <g :class="!(aiPlayers.includes(chessState.currentPlayer) && startedGame) && 'chessSquare'"
                 :onClick="() => handleSquareClick(x, y)" v-for="y in squareIndicies" v-bind:key="`square-${x}-${y}`">
-                <rect :height="length / chessBoardLength" :width="length / chessBoardLength" :x="x * length / chessBoardLength"
-                    :y="y * length / chessBoardLength" :fill="((x + y) % 2) ? darkSquareColor : lightSquareColor" />
+                <rect :height="length / chessBoardLength" :width="length / chessBoardLength"
+                    :x="x * length / chessBoardLength" :y="y * length / chessBoardLength"
+                    :fill="((x + y) % 2) ? darkSquareColor : lightSquareColor" />
                 <rect :height="(length * 0.9) / chessBoardLength" :width="(length * 0.9) / chessBoardLength"
                     :x="(x + 0.05) * length / chessBoardLength" :y="(y + 0.05) * length / chessBoardLength"
                     :fill="selectedSquareX === x && selectedSquareY === y ? '#a34b9a' : 'transparent'" />

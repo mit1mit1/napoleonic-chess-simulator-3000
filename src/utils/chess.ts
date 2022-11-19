@@ -271,14 +271,27 @@ export const getGreediestMove = (
   chessState: ChessState,
   recursionDepth: number,
   maxRecursionDepth: number,
-  recursionProbability: number
+  recursionProbability: number,
+  comparedMove?: {
+    startX: number;
+    startY: number;
+    endX: number;
+    endY: number;
+    moveValue: number | undefined;
+  },
+  investigateRange?: {
+    minX: number;
+    maxX: number;
+    minY: number;
+    maxY: number;
+  }
 ) => {
   const bestMove = {
-    startX: -1,
-    startY: -1,
-    endX: -1,
-    endY: -1,
-    moveValue: undefined as number | undefined,
+    startX: comparedMove?.startX ?? -1,
+    startY: comparedMove?.startY ?? -1,
+    endX: comparedMove?.endX ?? -1,
+    endY: comparedMove?.endY ?? -1,
+    moveValue: comparedMove?.moveValue ?? (undefined as number | undefined),
   };
   const firstX = getFirstValue();
   const firstY = getFirstValue();
@@ -304,8 +317,16 @@ export const getGreediestMove = (
           chessState.squares
         )
       ) {
-        for (let endX = 0; endX < chessBoardLength; endX++) {
-          for (let endY = 0; endY < chessBoardLength; endY++) {
+        for (
+          let endX = investigateRange?.minX ?? 0;
+          endX < (investigateRange?.maxX ?? chessBoardLength);
+          endX++
+        ) {
+          for (
+            let endY = investigateRange?.minY ?? 0;
+            endY < (investigateRange?.maxY ?? chessBoardLength);
+            endY++
+          ) {
             if (isValidMove(chessState, startX, startY, endX, endY)) {
               let currentValue = greedyMoveValue(
                 chessState.squares[endX][endY]
@@ -391,7 +412,9 @@ export const getStateAfterMove = (
   return copiedState;
 };
 
-export const getVictor = (chessState: ChessState): Players | "tie" | undefined => {
+export const getVictor = (
+  chessState: ChessState
+): Players | "tie" | undefined => {
   const playersWithKings = new Set([] as Players[]);
   let anyValidMoves = false;
   for (let startX = 0; startX < chessBoardLength; startX++) {
