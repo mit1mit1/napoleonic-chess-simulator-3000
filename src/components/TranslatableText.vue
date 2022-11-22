@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import type { Languages } from "../types";
+import { Languages } from "../types";
 import { translate } from "../utils/translate";
 
 export default defineComponent({
@@ -23,11 +23,14 @@ export default defineComponent({
 
     methods: {
         handleTranslate(word: string) {
+            if (!this.fromLanguage || !this.toLanguage) {
+                return;
+            }
             const translatedWords = translate(word, this.fromLanguage as Languages, this.toLanguage as Languages);
             if (translatedWords.length === 0) {
                 const originalLanguageMessage = new SpeechSynthesisUtterance();
                 originalLanguageMessage.text = word;
-                originalLanguageMessage.lang = this.toLanguage ?? "en";
+                originalLanguageMessage.lang = Languages.French;
                 window.speechSynthesis.speak(originalLanguageMessage);
             }
             this.displayWords[word] = translatedWords ?? {};
@@ -35,33 +38,41 @@ export default defineComponent({
             for (let translatedWord of translatedWords) {
                 if (index === 0) {
                     this.showTranslationCard = word;
-                    setTimeout(() => {
-                        const translatedMessage = new SpeechSynthesisUtterance();
-                        translatedMessage.text = translatedWord;
-                        translatedMessage.lang = this.toLanguage ?? "en";
-                        window.speechSynthesis.speak(translatedMessage);
-                    }, 2000 * index)
+                    if (this.toLanguage === Languages.French) {
+                        setTimeout(() => {
+                            const translatedMessage = new SpeechSynthesisUtterance();
+                            translatedMessage.text = translatedWord;
+                            translatedMessage.lang = Languages.French;
+                            window.speechSynthesis.speak(translatedMessage);
+                        }, 2000 * index)
+                    }
                     index++;
                 }
+            }
+            if (this.toLanguage !== Languages.French) {
+                const originalLanguageMessage = new SpeechSynthesisUtterance();
+                originalLanguageMessage.text = word;
+                originalLanguageMessage.lang = Languages.French;
+                window.speechSynthesis.speak(originalLanguageMessage);
             }
             setTimeout(() => {
                 if (this.showTranslationCard == word) {
                     this.showTranslationCard = "";
                 };
-            }, 2000 * index)
+            }, 5000 * index)
         }
     },
 });
 </script>
 
 <template>
-    <span class="positionParent" v-for="word in splitText" v-bind:key="word">
+    <span class="positionParent" v-for="word, index in splitText" v-bind:key="word">
         <a :onClick="() => handleTranslate(word)" class="translatableText">
-            {{ word + " " }}
-        </a>
-        <div v-if="showTranslationCard === word && displayWords[word] && displayWords[word].length > 0" class="translationCard">
-            <div v-for="displayWord in displayWords[word]" class="translationLine">{{displayWord}}</div>
-        </div>
+            {{ word }}{{ index < splitText.length - 1 ? " " : "" }} </a>
+                <div v-if="showTranslationCard === word && displayWords[word] && displayWords[word].length > 0"
+                    class="translationCard">
+                    <div v-for="displayWord in displayWords[word]" class="translationLine">{{ displayWord }}</div>
+                </div>
     </span>
 </template>
 
@@ -81,7 +92,8 @@ export default defineComponent({
 .translationCard {
     position: absolute;
     padding: 5px 4px 0px 4px;
-    background-color: white;
+    background-color: rgb(205, 205, 205);
+    border-color: aqua;
     display: inline-block;
     width: 150px;
     font-size: medium;

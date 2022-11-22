@@ -67,7 +67,10 @@ export default defineComponent({
                         <TranslatableText from-language="en" to-language="fr"
                             :text="selectedLocationInfo?.subtitleEnglish" />
                     </i></div>
-                <div class="infoBoxDescription">{{ selectedLocationInfo?.descriptionEnglish }}</div>
+                <div class="infoBoxDescription">
+                    <TranslatableText from-language="en" to-language="fr"
+                        :text="selectedLocationInfo?.descriptionEnglish" />
+                </div>
                 <div class="infoBoxNumericInfo">City Co-ordinates: ({{ selectedLocationInfo?.cityCoordinates.latitude
                 }},
                     {{ selectedLocationInfo?.cityCoordinates.longitude }})</div>

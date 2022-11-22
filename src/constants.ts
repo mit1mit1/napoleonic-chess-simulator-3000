@@ -94,7 +94,7 @@ export const normalStartingChessBoard: Array<Array<Square | undefined>> = [
 
 export const INFINITE_VALUE = 99999;
 
-export const locationInfos: {[key in Locations]: LocationInfo | undefined} = {
+export const locationInfos: { [key in Locations]: LocationInfo | undefined } = {
   [Locations.ParisDistrict]: {
     name: "Paris District",
     cityCoordinates: {
@@ -106,7 +106,7 @@ export const locationInfos: {[key in Locations]: LocationInfo | undefined} = {
     subtitleEnglish: "Once opulent heart",
     descriptionEnglish:
       "Once a heart of opulence in the world, now destroyed by political infighting.",
-    influenceAvailable: 55,
+    influenceAvailable: 20,
   },
 
   [Locations.AimensDistrict]: {
@@ -171,12 +171,12 @@ export const locationInfos: {[key in Locations]: LocationInfo | undefined} = {
       latitude: 23,
       longitude: 45,
     },
-    cityHectares: 58,
+    cityHectares: 45,
     districtHectares: 108,
-    subtitleEnglish: "Once opulent heart",
+    subtitleEnglish: "Blues capital of the old world",
     descriptionEnglish:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
-    influenceAvailable: 55,
+      "Famous for it's swamps and guitars, Orleans is famous as the setting for Disney's \"The Princess and the Frog (2032)\".",
+    influenceAvailable: 50,
   },
 
   [Locations.BordeauxDistrict]: {
@@ -252,15 +252,15 @@ export const locationInfos: {[key in Locations]: LocationInfo | undefined} = {
   [Locations.DijonDistrict]: {
     name: "Dijon District",
     cityCoordinates: {
-      latitude: 23,
-      longitude: 45,
+      latitude: 80,
+      longitude: 50,
     },
-    cityHectares: 58,
-    districtHectares: 108,
-    subtitleEnglish: "Once opulent heart",
+    cityHectares: 59,
+    districtHectares: 160,
+    subtitleEnglish: "Mustard land",
     descriptionEnglish:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
-    influenceAvailable: 55,
+      "Dijon is known for two things. One is the renowned Hermione ski scene, re-enacted by thousands of fans every April. The other is mustard production. No other district in the world produces mustard by waterfall. In fact, no other district in the world produces mustard, full stop.",
+    influenceAvailable: 80,
   },
 
   [Locations.ReimsDistrict]: {
@@ -277,5 +277,5 @@ export const locationInfos: {[key in Locations]: LocationInfo | undefined} = {
     influenceAvailable: 55,
   },
 
-  [Locations.None] : undefined,
+  [Locations.None]: undefined,
 };

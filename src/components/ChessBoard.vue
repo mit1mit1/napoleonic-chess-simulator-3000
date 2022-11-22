@@ -79,12 +79,13 @@ export default defineComponent({
                     moveValue: number | undefined,
                 };
                 for (let i = 0; i < chessBoardLength; i++) {
-                    await new Promise(resolve => setTimeout(() => {
-                        greediestMove = getGreediestMove(this.chessState, 0, 4, 0.8, greediestMove, { minX: i, minY: 0, maxX: i + 1, maxY: chessBoardLength });
-                        resolve(undefined);
-                    }, 1000));
+                    for (let j = 0; j < chessBoardLength; j++) {
+                        await new Promise(resolve => setTimeout(() => {
+                            greediestMove = getGreediestMove(this.chessState, 0, 3, 0.8, greediestMove, { minX: i, minY: j, maxX: i + 1, maxY: j + 1 });
+                            resolve(undefined);
+                        }, 150));
+                    }
                 }
-                console.log(greediestMove);
                 if (isValidMove(this.chessState, greediestMove?.startX ?? -1, greediestMove?.startY ?? -1, greediestMove?.endX ?? -1, greediestMove?.endY ?? -1)) {
                     this.selectedSquareX = greediestMove?.startX ?? -1;
                     this.selectedSquareY = greediestMove?.startY ?? -1;

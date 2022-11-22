@@ -144,20 +144,15 @@ const getAndPushMelody = (
         continue;
       }
       let pentatonicScale = []
-      console.log('pushing from key ' + key)
-      console.log('pushing from notes ' + availableNotes)
       if (jazzRandomiser < 1) {
-        console.log('non jazz scale');
         pentatonicScale = getMajorPentatonicScale(key, availableNotes);
         pitch =
           pentatonicScale[Math.floor(pitchRadomiser * pentatonicScale.length)];
       } else {
-        console.log('jazz scale');
         pentatonicScale = getMinorPentatonicScale(chord.rootNote, availableNotes);
         pitch =
           pentatonicScale[Math.floor(pitchRadomiser * pentatonicScale.length)];
       }
-      console.log(pentatonicScale);
       let duration = "8n";
       const durationRandomiser = Math.random();
       if (durationRandomiser < 0.25 * rapidity) {
@@ -303,13 +298,11 @@ const getChordLength = (index: number): ToneJSDuration => {
 
 const getKey = (key: Pitch, currentChord: Chord) => {
   const random = Math.random();
-  console.log("key is " + key)
   if (includesChord(getNormalChords(key), currentChord)) {
     return key;
   }
   if (currentChord.chordType === "major") {
     if (random < 0.5) {
-      console.log("changing key to " +  getFourth(currentChord.rootNote, bassNotes))
       return getFourth(currentChord.rootNote, bassNotes);
     }
   }

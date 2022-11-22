@@ -1,19 +1,24 @@
 <script lang="ts">
-import NapoleonFigure from './vue-svgs/NapoleonFigure.vue';
-import SoldierFigure from './vue-svgs/SoldierFigure.vue';
 import ChessBoard from './components/ChessBoard.vue';
+import DialogOverlay from './components/DialogOverlay.vue';
 import TranslatableText from './components/TranslatableText.vue';
 import { Languages, Locations, Players } from "./types";
 import DividedFrance from './components/DividedFrance.vue';
 import { startMusic } from "./utils/music";
+import { initialDialogs } from "./initialDialogs";
 import { defineComponent } from "vue";
 let displayChessBoard = false;
-let displayCharacters = false;
 let displayDividedFrance = true;
+let displayDialogOverlay = true;
+const availableDialogs = [...initialDialogs];
+
+const currentLines = availableDialogs.find(dialog => dialog.triggerCondition())?.lines ?? [];
+
+
 export default defineComponent({
     data() {
         return {
-            Languages, displayChessBoard, displayDividedFrance, displayCharacters
+            Languages, displayChessBoard, displayDividedFrance, displayDialogOverlay, availableDialog: currentLines
         }
     },
 
@@ -35,7 +40,7 @@ export default defineComponent({
     },
 
     components: {
-        NapoleonFigure, ChessBoard, SoldierFigure, DividedFrance, TranslatableText
+        ChessBoard, DividedFrance, TranslatableText, DialogOverlay
     }
 });
 </script>
@@ -47,14 +52,11 @@ export default defineComponent({
                 text="Napoleonic Chess Simulator 0.01" />
         </h1>
         <div class="game-screen" id="musical-box">
-            <svg v-if="displayCharacters" height="300" width="350">
-                <NapoleonFigure />
-            </svg>
             <ChessBoard v-if="displayChessBoard" :onVictory="onVictory" />
             <DividedFrance v-if="displayDividedFrance" :onAttackLocation="onAttackLocation" />
-            <svg v-if="displayCharacters" height="300" width="250">
-                <SoldierFigure />
-            </svg>
+            <DialogOverlay v-if="displayDialogOverlay"
+                :on-finished-dialog="() => displayDialogOverlay = !displayDialogOverlay"
+                :dialog-lines="availableDialog" />
             <button :onclick="onSoundTrigger">Music?</button>
         </div>
     </main>
