@@ -46,6 +46,10 @@ export enum Locations {
   ReimsDistrict = "ReimsDistrict",
 }
 
+export const allLocations = Object.values(Locations).sort((a, b) =>
+  a.localeCompare(b)
+);
+
 export interface LocationInfo {
   name: string;
   cityCoordinates: {

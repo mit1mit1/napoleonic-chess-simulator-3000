@@ -1,18 +1,22 @@
 <script lang="ts">
-import { ChessPieces, Locations, Players } from "@/types";
+import { ChessPieces, Locations, Players, allLocations } from "@/types";
 import type { ChessState } from "@/types";
 import { chessBoardLength, normalStartingChessBoard } from "@/constants";
 import { getGreediestMove, hasPieceOfColor, isValidMove, getStateAfterMove, getVictor, getFischerBoard } from "@/utils/chess";
 import { defineComponent } from "vue";
 import ChessPieceFigure from "./ChessPieceFigure.vue";
+import { getNthPrime } from "@/utils/math";
 const length = 400;
 let selectedSquareX = -1;
 let selectedSquareY = -1;
 let startedGame = false;
 
 const getStateFromLocation = (attackedLocation: Locations, playerLocationWins: number) => {
+    const locationIndex = allLocations.indexOf(attackedLocation);
+    const randomiser = getNthPrime(locationIndex + playerLocationWins + 5);
+    console.log(randomiser);
     return {
-        squares: getFischerBoard(23),
+        squares: getFischerBoard(randomiser),
         currentPlayer: Players.White,
         kingsMoved: [],
 
