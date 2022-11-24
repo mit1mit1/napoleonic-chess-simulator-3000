@@ -1,21 +1,27 @@
 <script lang="ts">
-import { ChessPieces, Players } from "@/types";
+import { ChessPieces, Locations, Players } from "@/types";
 import type { ChessState } from "@/types";
 import { chessBoardLength, normalStartingChessBoard } from "@/constants";
-import { getGreediestMove, hasPieceOfColor, isValidMove, getStateAfterMove, getVictor } from "@/utils/chess";
+import { getGreediestMove, hasPieceOfColor, isValidMove, getStateAfterMove, getVictor, getFischerBoard } from "@/utils/chess";
 import { defineComponent } from "vue";
 import ChessPieceFigure from "./ChessPieceFigure.vue";
 const length = 400;
 let selectedSquareX = -1;
 let selectedSquareY = -1;
-let aiPlayers = [Players.Black];
 let startedGame = false;
-let chessState = {
-    squares: normalStartingChessBoard,
-    currentPlayer: Players.White,
-    kingsMoved: [],
 
-} as ChessState;
+const getStateFromLocation = (attackedLocation: Locations, playerLocationWins: number) => {
+    return {
+        squares: getFischerBoard(23),
+        currentPlayer: Players.White,
+        kingsMoved: [],
+
+    } as ChessState;
+}
+
+const getAiPlayersFromLocation = (attackedLocation: Locations, playerLocationWins: number) => {
+    return playerLocationWins % 2 ? [Players.Black] : [Players.White];
+}
 
 const lightSquareColor = "#fcf9e6";
 const darkSquareColor = "#c7b3a3";
@@ -23,9 +29,13 @@ let isAttemptingAiMove = false;
 export default defineComponent({
     props: {
         onVictory: Function,
+        attackedLocation: String,
+        playerLocationWins: Number,
     },
 
-    data() {
+    data(props) {
+        const chessState = getStateFromLocation((props.attackedLocation || "") as Locations, props.playerLocationWins ?? 0);
+        const aiPlayers = getAiPlayersFromLocation((props.attackedLocation || "") as Locations, props.playerLocationWins ?? 0);
         return {
             length, chessState, selectedSquareX, selectedSquareY, ChessPieces, Players, lightSquareColor,
             darkSquareColor, squareIndicies: [...Array(chessBoardLength).keys()], aiPlayers, startedGame,
@@ -81,9 +91,9 @@ export default defineComponent({
                 for (let i = 0; i < chessBoardLength; i++) {
                     for (let j = 0; j < chessBoardLength; j++) {
                         await new Promise(resolve => setTimeout(() => {
-                            greediestMove = getGreediestMove(this.chessState, 0, 3, 0.8, greediestMove, { minX: i, minY: j, maxX: i + 1, maxY: j + 1 });
+                            greediestMove = getGreediestMove(this.chessState, 0, 2, 0.8, greediestMove, { minX: i, minY: j, maxX: i + 1, maxY: j + 1 });
                             resolve(undefined);
-                        }, 150));
+                        }, 10));
                     }
                 }
                 if (isValidMove(this.chessState, greediestMove?.startX ?? -1, greediestMove?.startY ?? -1, greediestMove?.endX ?? -1, greediestMove?.endY ?? -1)) {

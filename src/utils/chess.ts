@@ -2,6 +2,131 @@ import { ChessPieces, Players } from "@/types";
 import type { Square, ChessState } from "@/types";
 import { chessBoardLength, INFINITE_VALUE } from "@/constants";
 
+const getFirstFreeNumber = (steps: number, takenNumbers: Array<number>) => {
+  let result = 0;
+  for (let i = 0; i < steps; i++) {
+    while (takenNumbers.includes(result)) {
+      result++;
+    }
+    result++;
+  }
+  while (takenNumbers.includes(result)) {
+    result++;
+  }
+  return result;
+};
+
+export const getFischerBoard = (primeGreaterThanFive: number) => {
+  const squares = [[], [], [], [], [], [], [], []] as (Square | undefined)[][];
+  const blackBishopIndex = (primeGreaterThanFive % 4) * 2;
+  const whiteBishopIndex =
+    ((primeGreaterThanFive * primeGreaterThanFive) % 4) * 2 - 1;
+  const queenIndex = getFirstFreeNumber(
+    (primeGreaterThanFive * primeGreaterThanFive * primeGreaterThanFive) % 6,
+    [blackBishopIndex, whiteBishopIndex]
+  );
+  const firstKnightIndex = getFirstFreeNumber(
+    (primeGreaterThanFive *
+      primeGreaterThanFive *
+      primeGreaterThanFive *
+      primeGreaterThanFive) %
+      5,
+    [blackBishopIndex, whiteBishopIndex, queenIndex]
+  );
+  const secondKnightIndex = getFirstFreeNumber(
+    (primeGreaterThanFive *
+      primeGreaterThanFive *
+      primeGreaterThanFive *
+      primeGreaterThanFive *
+      primeGreaterThanFive) %
+      4,
+    [blackBishopIndex, whiteBishopIndex, queenIndex, firstKnightIndex]
+  );
+  // const queenIndex =
+  //   (randomiser % 6) +
+  //   (randomiser % 6 >= blackBishopIndex ? 1 : 0) +
+  //   (randomiser % 6 >= whiteBishopIndex ? 1 : 0);
+  // const firstKnightIndex =
+  //   (randomiser % 5) +
+  //   (randomiser % 5 >= blackBishopIndex ? 1 : 0) +
+  //   (randomiser % 5 >= whiteBishopIndex ? 1 : 0) +
+  //   (randomiser % 5 >= queenIndex ? 1 : 0);
+  // const secondKnightIndex =
+  //   (randomiser % 4) +
+  //   (randomiser % 4 >= blackBishopIndex ? 1 : 0) +
+  //   (randomiser % 4 >= whiteBishopIndex ? 1 : 0) +
+  //   (randomiser % 4 >= queenIndex ? 1 : 0) +
+  //   (randomiser % 4 >= firstKnightIndex ? 1 : 0);
+  console.log(
+    blackBishopIndex,
+    whiteBishopIndex,
+    queenIndex,
+    firstKnightIndex,
+    secondKnightIndex
+  );
+  let rookPlaced = false;
+  let kingPlaced = false;
+  for (let i = 0; i < chessBoardLength; i++) {
+    if (i === blackBishopIndex || i === whiteBishopIndex) {
+      squares[i][0] = {
+        player: Players.Black,
+        piece: ChessPieces.Bishop,
+      };
+      squares[i][chessBoardLength - 1] = {
+        player: Players.White,
+        piece: ChessPieces.Bishop,
+      };
+    } else if (i === queenIndex) {
+      squares[i][0] = {
+        player: Players.Black,
+        piece: ChessPieces.Queen,
+      };
+      squares[i][chessBoardLength - 1] = {
+        player: Players.White,
+        piece: ChessPieces.Queen,
+      };
+    } else if (i === firstKnightIndex || i === secondKnightIndex) {
+      squares[i][0] = {
+        player: Players.Black,
+        piece: ChessPieces.Knight,
+      };
+      squares[i][chessBoardLength - 1] = {
+        player: Players.White,
+        piece: ChessPieces.Knight,
+      };
+    } else if (!rookPlaced || (rookPlaced && kingPlaced)) {
+      squares[i][0] = {
+        player: Players.Black,
+        piece: ChessPieces.Rook,
+      };
+      squares[i][chessBoardLength - 1] = {
+        player: Players.White,
+        piece: ChessPieces.Rook,
+      };
+      rookPlaced = true;
+    } else {
+      squares[i][0] = {
+        player: Players.Black,
+        piece: ChessPieces.King,
+      };
+      squares[i][chessBoardLength - 1] = {
+        player: Players.White,
+        piece: ChessPieces.King,
+      };
+      kingPlaced = true;
+    }
+    squares[i][1] = {
+      player: Players.Black,
+      piece: ChessPieces.Pawn,
+    };
+    squares[i][chessBoardLength - 2] = {
+      player: Players.White,
+      piece: ChessPieces.Pawn,
+    };
+  }
+  return squares;
+};
+
 export const getPiece = (
   x: number,
   y: number,
@@ -199,26 +324,19 @@ export const isValidMove = (
     ) {
       if (
         startX > endX &&
-        hasPieceOfType(0, startY, ChessPieces.Rook, squares) &&
-        isValidMove(chessState, 0, startY, (startX + endX) / 2, endY)
+        ((hasPieceOfType(endX - 1, startY, ChessPieces.Rook, squares) &&
+          isValidMove(chessState, endX - 1, startY, startX - 1, endY)) ||
+          (hasPieceOfType(endX - 2, startY, ChessPieces.Rook, squares) &&
+            isValidMove(chessState, endX - 2, startY, startX - 1, endY)))
       ) {
         return true;
       }
       if (
         startX < endX &&
-        hasPieceOfType(
-          chessBoardLength - 1,
-          startY,
-          ChessPieces.Rook,
-          squares
-        ) &&
-        isValidMove(
-          chessState,
-          chessBoardLength - 1,
-          startY,
-          (startX + endX) / 2,
-          endY
-        )
+        ((hasPieceOfType(endX + 1, startY, ChessPieces.Rook, squares) &&
+          isValidMove(chessState, endX + 1, startY, startX + 1, endY)) ||
+          (hasPieceOfType(endX + 2, startY, ChessPieces.Rook, squares) &&
+            isValidMove(chessState, endX + 2, startY, startX + 1, endY)))
       ) {
         return true;
       }
@@ -391,16 +509,33 @@ export const getStateAfterMove = (
       if (!copiedState.squares[startX - 1]) {
         copiedState.squares[startX - 1] = [];
       }
-      copiedState.squares[startX - 1][startY] = copiedState.squares[0][startY];
-      copiedState.squares[0][startY] = undefined;
+      if (
+        hasPieceOfType(endX - 1, endY, ChessPieces.Rook, copiedState.squares)
+      ) {
+        copiedState.squares[startX - 1][startY] =
+          copiedState.squares[endX - 1][startY];
+        copiedState.squares[endX - 1][startY] = undefined;
+      } else {
+        copiedState.squares[startX - 2][startY] =
+          copiedState.squares[endX - 2][startY];
+        copiedState.squares[endX - 2][startY] = undefined;
+      }
     }
     if (startX < endX) {
       if (!copiedState.squares[startX + 1]) {
         copiedState.squares[startX + 1] = [];
       }
-      copiedState.squares[startX + 1][startY] =
-        copiedState.squares[chessBoardLength - 1][startY];
-      copiedState.squares[chessBoardLength - 1][startY] = undefined;
+      if (
+        hasPieceOfType(endX + 1, endY, ChessPieces.Rook, copiedState.squares)
+      ) {
+        copiedState.squares[startX + 1][startY] =
+          copiedState.squares[endX + 1][startY];
+        copiedState.squares[endX + 1][startY] = undefined;
+      } else {
+        copiedState.squares[startX + 2][startY] =
+          copiedState.squares[endX + 2][startY];
+        copiedState.squares[endX + 2][startY] = undefined;
+      }
     }
   }
 

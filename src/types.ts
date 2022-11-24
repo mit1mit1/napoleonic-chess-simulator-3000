@@ -30,20 +30,20 @@ export interface ChessState {
 }
 
 export enum Locations {
-  None,
-  ParisDistrict,
-  AimensDistrict,
-  RennesDistrictWest,
-  RennesDistrictEast,
-  PotiersDistrict,
-  OrleansDistrict,
-  BordeauxDistrict,
-  TolouseDistrict,
-  MarsielleDistrict,
-  ValenceDistrict,
-  LyonDistrict,
-  DijonDistrict,
-  ReimsDistrict,
+  None = "",
+  ParisDistrict = "ParisDistrict",
+  AimensDistrict = "AimensDistrict",
+  RennesDistrictWest = "RennesDistrictWest",
+  RennesDistrictEast = "RennesDistrictEast",
+  PotiersDistrict = "PotiersDistrict",
+  OrleansDistrict = "OrleansDistrict",
+  BordeauxDistrict = "BordeauxDistrict",
+  TolouseDistrict = "TolouseDistrict",
+  MarsielleDistrict = "MarsielleDistrict",
+  ValenceDistrict = "ValenceDistrict",
+  LyonDistrict = "LyonDistrict",
+  DijonDistrict = "DijonDistrict",
+  ReimsDistrict = "ReimsDistrict",
 }
 
 export interface LocationInfo {
