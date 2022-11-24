@@ -42,28 +42,6 @@ export const getFischerBoard = (primeGreaterThanFive: number) => {
       4,
     [blackBishopIndex, whiteBishopIndex, queenIndex, firstKnightIndex]
   );
-  // const queenIndex =
-  //   (randomiser % 6) +
-  //   (randomiser % 6 >= blackBishopIndex ? 1 : 0) +
-  //   (randomiser % 6 >= whiteBishopIndex ? 1 : 0);
-  // const firstKnightIndex =
-  //   (randomiser % 5) +
-  //   (randomiser % 5 >= blackBishopIndex ? 1 : 0) +
-  //   (randomiser % 5 >= whiteBishopIndex ? 1 : 0) +
-  //   (randomiser % 5 >= queenIndex ? 1 : 0);
-  // const secondKnightIndex =
-  //   (randomiser % 4) +
-  //   (randomiser % 4 >= blackBishopIndex ? 1 : 0) +
-  //   (randomiser % 4 >= whiteBishopIndex ? 1 : 0) +
-  //   (randomiser % 4 >= queenIndex ? 1 : 0) +
-  //   (randomiser % 4 >= firstKnightIndex ? 1 : 0);
-  console.log(
-    blackBishopIndex,
-    whiteBishopIndex,
-    queenIndex,
-    firstKnightIndex,
-    secondKnightIndex
-  );
   let rookPlaced = false;
   let kingPlaced = false;
   for (let i = 0; i < chessBoardLength; i++) {
@@ -186,6 +164,19 @@ const jumpingOverPiece = (
     }
   }
   return false;
+};
+
+const isPromoting = (
+  chessState: ChessState,
+  startX: number,
+  startY: number,
+  endX: number,
+  endY: number
+): boolean => {
+  return !!(
+    hasPieceOfType(startX, startY, ChessPieces.Pawn, chessState.squares) &&
+    (endY === 0 || endY === chessBoardLength - 1)
+  );
 };
 
 const isCastling = (
@@ -487,6 +478,17 @@ export const getGreediestMove = (
   return bestMove;
 };
 
+const getRandomPromotionPiece = () => {
+  const randomiser = Math.floor(Math.random() * 4);
+  const pieces = [
+    ChessPieces.Bishop,
+    ChessPieces.Knight,
+    ChessPieces.Queen,
+    ChessPieces.Rook,
+  ];
+  return pieces[randomiser];
+};
+
 export const getStateAfterMove = (
   chessState: ChessState,
   startX: number,
@@ -542,6 +544,12 @@ export const getStateAfterMove = (
   copiedState.currentPlayer =
     chessState.currentPlayer === Players.White ? Players.Black : Players.White;
   copiedState.squares[endX][endY] = copiedState.squares[startX][startY];
+  if (isPromoting(chessState, startX, startY, endX, endY)) {
+    const promotedSquare = copiedState.squares[endX][endY];
+    if (promotedSquare) {
+      promotedSquare.piece = getRandomPromotionPiece();
+    }
+  }
   copiedState.squares[startX][startY] = undefined;
 
   return copiedState;
