@@ -14,16 +14,17 @@ const availableDialogs = [...initialDialogs];
 
 const currentLines = availableDialogs.find(dialog => dialog.triggerCondition())?.lines ?? [];
 
-
+let attackedLocation: Locations | undefined = undefined;
 export default defineComponent({
     data() {
         return {
-            Languages, displayChessBoard, displayDividedFrance, displayDialogOverlay, availableDialog: currentLines
+            Languages, displayChessBoard, displayDividedFrance, displayDialogOverlay, availableDialog: currentLines, attackedLocation
         }
     },
 
     methods: {
         onAttackLocation(attackedLocation: Locations) {
+            this.attackedLocation = attackedLocation;
             this.displayDividedFrance = false;
             this.displayChessBoard = true;
         },
@@ -52,7 +53,7 @@ export default defineComponent({
                 text="Napoleonic Chess Simulator 0.01" />
         </h1>
         <div class="game-screen" id="musical-box">
-            <ChessBoard v-if="displayChessBoard" :onVictory="onVictory" />
+            <ChessBoard v-if="displayChessBoard" :onVictory="onVictory" :attacked-location="attackedLocation" />
             <DividedFrance v-if="displayDividedFrance" :onAttackLocation="onAttackLocation" />
             <DialogOverlay v-if="displayDialogOverlay"
                 :on-finished-dialog="() => displayDialogOverlay = !displayDialogOverlay"

@@ -516,7 +516,7 @@ export const getStateAfterMove = (
           copiedState.squares[endX - 1][startY];
         copiedState.squares[endX - 1][startY] = undefined;
       } else {
-        copiedState.squares[startX - 2][startY] =
+        copiedState.squares[startX - 1][startY] =
           copiedState.squares[endX - 2][startY];
         copiedState.squares[endX - 2][startY] = undefined;
       }
@@ -532,7 +532,7 @@ export const getStateAfterMove = (
           copiedState.squares[endX + 1][startY];
         copiedState.squares[endX + 1][startY] = undefined;
       } else {
-        copiedState.squares[startX + 2][startY] =
+        copiedState.squares[startX + 1][startY] =
           copiedState.squares[endX + 2][startY];
         copiedState.squares[endX + 2][startY] = undefined;
       }

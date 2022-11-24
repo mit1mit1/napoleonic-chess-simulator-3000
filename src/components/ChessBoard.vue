@@ -13,7 +13,7 @@ let startedGame = false;
 
 const getStateFromLocation = (attackedLocation: Locations, playerLocationWins: number) => {
     const locationIndex = allLocations.indexOf(attackedLocation);
-    const randomiser = getNthPrime(locationIndex + playerLocationWins + 5);
+    const randomiser = getNthPrime((locationIndex * 20) + playerLocationWins + 5);
     console.log(randomiser);
     return {
         squares: getFischerBoard(randomiser),
@@ -24,7 +24,8 @@ const getStateFromLocation = (attackedLocation: Locations, playerLocationWins: n
 }
 
 const getAiPlayersFromLocation = (attackedLocation: Locations, playerLocationWins: number) => {
-    return playerLocationWins % 2 ? [Players.Black] : [Players.White];
+    const locationIndex = allLocations.indexOf(attackedLocation);
+    return (playerLocationWins + locationIndex) % 2 ? [Players.Black] : [Players.White];
 }
 
 const lightSquareColor = "#fcf9e6";
@@ -43,7 +44,7 @@ export default defineComponent({
         return {
             length, chessState, selectedSquareX, selectedSquareY, ChessPieces, Players, lightSquareColor,
             darkSquareColor, squareIndicies: [...Array(chessBoardLength).keys()], aiPlayers, startedGame,
-            chessBoardLength, isAttemptingAiMove,
+            chessBoardLength, isAttemptingAiMove, attackedLocation: props.attackedLocation
         }
     },
 
@@ -95,7 +96,7 @@ export default defineComponent({
                 for (let i = 0; i < chessBoardLength; i++) {
                     for (let j = 0; j < chessBoardLength; j++) {
                         await new Promise(resolve => setTimeout(() => {
-                            greediestMove = getGreediestMove(this.chessState, 0, 2, 0.8, greediestMove, { minX: i, minY: j, maxX: i + 1, maxY: j + 1 });
+                            greediestMove = getGreediestMove(this.chessState, 0, 2, 0.95, greediestMove, { minX: i, minY: j, maxX: i + 1, maxY: j + 1 });
                             resolve(undefined);
                         }, 10));
                     }
