@@ -45,8 +45,7 @@ export default defineComponent({
                 this.line = dialogLine.line;
                 this.speaker = dialogLine.speaker;
             }
-        }
-
+        },
     },
 
     components: {
@@ -58,37 +57,43 @@ export default defineComponent({
 <template>
     <div class="greyBackground" :onclick="handleFinished"></div>
     <div class="visibleModal">
-        <div class="modalContent">
-            <button class="modalCloseButton" :onclick="handleFinished">x</button>
-            <svg height="300" width="350">
-                <NapoleonFigure />
-            </svg>
-            <div v-if="lineCount > 0" class="textBlock">
-                <h2>{{ speaker }}</h2>
-                <TranslatableText v-for="chunk in line" :from-language="chunk.fromLanguage"
-                    :to-language="chunk.toLanguage" :text="chunk.words" />
+        <div class="modalContent" @keyup.esc="handleFinished" tabindex="0">
+            <button class="modalCloseButton napoleonic-button" :onclick="handleFinished">x</button>
+            <div>
+                <h2 class="modalTitle">{{ speaker }}</h2>
+                <svg class="speaker-svg" v-if="speaker === 'Napoleon'" viewBox="0 0 300 350" height="200" width="200" xmlns="http://www.w3.org/2000/svg">
+                    <NapoleonFigure />
+                </svg>
+                <svg class="speaker-svg" v-if="speaker === 'Pierre'" viewBox="0 0 300 350" height="200" width="200">
+                    <SoldierFigure />
+                </svg>
+                <div v-if="lineCount > 0" class="textBlock">
+                    <TranslatableText v-for="chunk in line" :from-language="chunk.fromLanguage"
+                        :to-language="chunk.toLanguage" :text="chunk.words" />
+                </div>
             </div>
-            <svg height="300" width="250" class="rightCharacter">
-                <SoldierFigure />
-            </svg>
             <div>
                 <!-- <button v-if="dialogLineNumber > 0" :onclick="decrementLine">Prev</button> -->
-                <button v-if="dialogLineNumber + 1 < lineCount" :onclick="incrementLine">Next</button>
-                <button v-else :onclick="handleFinished">Close</button>
+                <button class="napoleonic-button " v-if="dialogLineNumber + 1 < lineCount"
+                    :onclick="incrementLine">Next</button>
+                <button class="napoleonic-button " v-else :onclick="handleFinished">Close</button>
             </div>
         </div>
     </div>
 </template>
 
 <style>
-.rightCharacter {
-    float: right;
+.speaker-svg {
+    max-height: 150px;
+    max-width: 175px;
 }
 
 .textBlock {
     display: inline;
     text-align: center;
     height: 100%;
+    font-family: 'Quicksand';
+    vertical-align: top;
 }
 
 .visibleModal {
@@ -98,7 +103,6 @@ export default defineComponent({
     top: 50px;
     align-items: center;
     justify-content: center;
-    top: 0;
     max-width: 1080px;
     margin-top: 50px;
     margin-left: auto;
@@ -119,11 +123,13 @@ export default defineComponent({
     padding: 20px 30px 25px 30px;
     height: inherit;
     overflow: auto;
-    padding-bottom: 140px;
+    padding-bottom: 50px;
 }
 
 .modalTitle {
     margin-top: 0;
+    font-family: Quicksand;
+    text-align: left;
 }
 
 .invisibleModal {

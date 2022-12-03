@@ -6,15 +6,20 @@ import { getGreediestMove, hasPieceOfColor, isValidMove, getStateAfterMove, getV
 import { defineComponent } from "vue";
 import ChessPieceFigure from "./ChessPieceFigure.vue";
 import { getNthPrime } from "@/utils/math";
+import { Player } from "tone";
 const length = 400;
 let selectedSquareX = -1;
 let selectedSquareY = -1;
 let startedGame = false;
+let startOfTurn = new Date();
+let completedTurnsTimes = {
+    [Players.White]: 0,
+    [Players.Black]: 0,
+};
 
 const getStateFromLocation = (attackedLocation: Locations, playerLocationWins: number) => {
     const locationIndex = allLocations.indexOf(attackedLocation);
     const randomiser = getNthPrime((locationIndex * 20) + playerLocationWins + 5);
-    console.log(randomiser);
     return {
         squares: getFischerBoard(randomiser),
         currentPlayer: Players.White,
@@ -44,13 +49,16 @@ export default defineComponent({
         return {
             length, chessState, selectedSquareX, selectedSquareY, ChessPieces, Players, lightSquareColor,
             darkSquareColor, squareIndicies: [...Array(chessBoardLength).keys()], aiPlayers, startedGame,
-            chessBoardLength, isAttemptingAiMove, attackedLocation: props.attackedLocation
+            chessBoardLength, isAttemptingAiMove, attackedLocation: props.attackedLocation, startOfTurn, completedTurnsTimes,
         }
     },
 
     methods: {
         handleSquareClick(x: number, y: number) {
-            this.startedGame = true;
+            if (!this.startedGame) {
+                this.startedGame = true;
+                this.startOfTurn = new Date();
+            }
             if (this.aiPlayers.includes(this.chessState.currentPlayer)) {
                 this.attemptAIMove();
                 return;
@@ -73,9 +81,11 @@ export default defineComponent({
             setTimeout(this.attemptAIMove, 1);
         },
         makeMove(x: number, y: number) {
+            this.completedTurnsTimes[this.chessState.currentPlayer] += ((new Date()).getTime() - this.startOfTurn.getTime());
             this.chessState = getStateAfterMove(this.chessState, this.selectedSquareX, this.selectedSquareY, x, y);
             this.selectedSquareX = -1;
             this.selectedSquareY = -1;
+            this.startOfTurn = new Date();
             setTimeout(() => {
                 const victor = getVictor(this.chessState)
                 if (victor) {
@@ -96,6 +106,7 @@ export default defineComponent({
                 for (let i = 0; i < chessBoardLength; i++) {
                     for (let j = 0; j < chessBoardLength; j++) {
                         await new Promise(resolve => setTimeout(() => {
+                            // the player can spend resources to change the probability of looking forward (0.95)
                             greediestMove = getGreediestMove(this.chessState, 0, 2, 0.95, greediestMove, { minX: i, minY: j, maxX: i + 1, maxY: j + 1 });
                             resolve(undefined);
                         }, 10));
@@ -118,27 +129,37 @@ export default defineComponent({
 </script>
 
 <template>
-    <svg :height="length" :width="length" class="boardSVG">
-        <g v-for="x in squareIndicies" v-bind:key="`row-${x}`">
-            <g :class="!(aiPlayers.includes(chessState.currentPlayer) && startedGame) && 'chessSquare'"
-                :onClick="() => handleSquareClick(x, y)" v-for="y in squareIndicies" v-bind:key="`square-${x}-${y}`">
-                <rect :height="length / chessBoardLength" :width="length / chessBoardLength"
-                    :x="x * length / chessBoardLength" :y="y * length / chessBoardLength"
-                    :fill="((x + y) % 2) ? darkSquareColor : lightSquareColor" />
-                <rect :height="(length * 0.9) / chessBoardLength" :width="(length * 0.9) / chessBoardLength"
-                    :x="(x + 0.05) * length / chessBoardLength" :y="(y + 0.05) * length / chessBoardLength"
-                    :fill="selectedSquareX === x && selectedSquareY === y ? '#a34b9a' : 'transparent'" />
+    <div class="boardScreen">
+        <svg :height="length" :width="length" class="boardSVG">
+            <g v-for="x in squareIndicies" v-bind:key="`row-${x}`">
+                <g :class="!(aiPlayers.includes(chessState.currentPlayer) && startedGame) && 'chessSquare'"
+                    :onClick="() => handleSquareClick(x, y)" v-for="y in squareIndicies"
+                    v-bind:key="`square-${x}-${y}`">
+                    <rect :height="length / chessBoardLength" :width="length / chessBoardLength"
+                        :x="x * length / chessBoardLength" :y="y * length / chessBoardLength"
+                        :fill="((x + y) % 2) ? darkSquareColor : lightSquareColor" />
+                    <rect :height="(length * 0.9) / chessBoardLength" :width="(length * 0.9) / chessBoardLength"
+                        :x="(x + 0.05) * length / chessBoardLength" :y="(y + 0.05) * length / chessBoardLength"
+                        :fill="selectedSquareX === x && selectedSquareY === y ? '#a34b9a' : 'transparent'" />
 
-                <g v-if="chessState.squares[x] && chessState.squares[x][y]?.piece"
-                    :transform="`translate(${x * length / chessBoardLength + 2}, ${y * length / chessBoardLength})`">
-                    <ChessPieceFigure :piece="chessState.squares[x][y]?.piece"
-                        :player="chessState.squares[x][y]?.player" />
+                    <g v-if="chessState.squares[x] && chessState.squares[x][y]?.piece"
+                        :transform="`translate(${x * length / chessBoardLength + 2}, ${y * length / chessBoardLength})`">
+                        <ChessPieceFigure :piece="chessState.squares[x][y]?.piece"
+                            :player="chessState.squares[x][y]?.player" />
+                    </g>
                 </g>
             </g>
-        </g>
-    </svg>
-    <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && startedGame">Thinking...</div>
-    <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && !startedGame">Click to start</div>
+        </svg>
+        <div class="game-text">
+
+            <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && startedGame">Thinking...
+            </div>
+            <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && !startedGame">Click to
+                start</div>
+            <div>White time: {{ ((completedTurnsTimes[Players.White]) / 1000).toFixed(2) }}</div>
+            <div>Black time: {{ ((completedTurnsTimes[Players.Black]) / 1000).toFixed(2) }}</div>
+        </div>
+    </div>
 </template>
 
 <style>
@@ -146,13 +167,23 @@ export default defineComponent({
     cursor: pointer;
 }
 
-.loadingMessage {
-    position: absolute;
-}
-
-.boardSVG {
+.boardScreen {
     margin-left: auto;
     margin-right: auto;
     display: block;
+    width: 700px;
+}
+
+.boardSVG {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.loadingMessage {
+    vertical-align: top;
+}
+
+.game-text {
+    display: inline-block;
 }
 </style>

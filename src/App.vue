@@ -58,7 +58,7 @@ export default defineComponent({
             <DialogOverlay v-if="displayDialogOverlay"
                 :on-finished-dialog="() => displayDialogOverlay = !displayDialogOverlay"
                 :dialog-lines="availableDialog" />
-            <button :onclick="onSoundTrigger">Music?</button>
+            <button class="napoleonic-button" :onclick="onSoundTrigger">Music?</button>
         </div>
     </main>
 </template>
@@ -68,10 +68,12 @@ h1 {
     text-align: center;
     font-family: monospace;
     font-weight: normal;
+    margin-bottom: 20px;
 }
 
 html {
     background-color: #eee;
+    font-family: Merriweather;
 }
 
 .game-screen {
@@ -79,4 +81,24 @@ html {
     margin-right: auto;
     max-width: 1100px;
 }
+
+
+
+.napoleonic-button {
+  margin-right: 10px;
+  margin-bottom: 5px;
+  transition-duration: 0.4s;
+  border: none;
+  padding: 8px 12px;
+  min-height: 40px;
+  min-width: 100px;
+  font-size: 0.95em;
+  font-family: "Quicksand", sans-serif;
+}
+
+.napoleonic-button:hover {
+  background-color: #ffb7c5;
+  cursor: pointer;
+}
+
 </style>

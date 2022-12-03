@@ -63,23 +63,27 @@ export default defineComponent({
                 <h2 class="infoBoxTitle">
                     <TranslatableText from-language="en" to-language="fr" :text="selectedLocationInfo?.name" />
                 </h2>
-                <div class="infoBoxSubitle"><i>
+                <div class="infoBoxInfo">
+                    <div class="infoBoxSubitle"><i>
+                            <TranslatableText from-language="en" to-language="fr"
+                                :text="selectedLocationInfo?.subtitleEnglish" />
+                        </i></div>
+                    <div class="infoBoxDescription">
                         <TranslatableText from-language="en" to-language="fr"
-                            :text="selectedLocationInfo?.subtitleEnglish" />
-                    </i></div>
-                <div class="infoBoxDescription">
-                    <TranslatableText from-language="en" to-language="fr"
-                        :text="selectedLocationInfo?.descriptionEnglish" />
+                            :text="selectedLocationInfo?.descriptionEnglish" />
+                    </div>
+                    <div class="infoBoxNumericInfo">City Co-ordinates: ({{
+                            selectedLocationInfo?.cityCoordinates.latitude
+                    }},
+                        {{ selectedLocationInfo?.cityCoordinates.longitude }})</div>
+                    <div class="infoBoxNumericInfo">City Size: {{ selectedLocationInfo?.cityHectares }}ha</div>
+                    <div class="infoBoxNumericInfo">District Size: {{ selectedLocationInfo?.districtHectares }}ha
+                    </div>
+                    <div class="infoBoxNumericInfo">Area Influence: {{ selectedLocationInfo?.influenceAvailable
+                    }}</div>
                 </div>
-                <div class="infoBoxNumericInfo">City Co-ordinates: ({{ selectedLocationInfo?.cityCoordinates.latitude
-                }},
-                    {{ selectedLocationInfo?.cityCoordinates.longitude }})</div>
-                <div class="infoBoxNumericInfo">City Size: {{ selectedLocationInfo?.cityHectares }}ha</div>
-                <div class="infoBoxNumericInfo">District Size: {{ selectedLocationInfo?.districtHectares }}ha
-                </div>
-                <div class="infoBoxNumericInfo">Area Influence: {{ selectedLocationInfo?.influenceAvailable
-                }}</div>
-                <button :onclick="() => handleDistrictAttack(selectedLocation)">Attack</button>
+                <button class="napoleonic-button infoBoxButton"
+                    :onclick="() => handleDistrictAttack(selectedLocation)">Attack</button>
             </div>
         </div>
         <div class="mapSVGBox">
@@ -165,6 +169,11 @@ export default defineComponent({
     cursor: pointer;
 }
 
+.infoBoxInfo {
+    margin-bottom: 20px;
+    font-family: 'Quicksand';
+}
+
 .mapScreen {
     height: 480px;
     margin-left: auto;
@@ -172,8 +181,14 @@ export default defineComponent({
     max-width: 800px;
 }
 
+.infoBoxButton {
+    position: absolute;
+    bottom: 20px;
+}
+
 .locationInfoBox {
     display: inline-block;
+    position: relative;
     width: 300px;
     vertical-align: top;
     background-color: #def;
@@ -182,18 +197,18 @@ export default defineComponent({
 }
 
 .mapSVGBox {
-    height: 600px;
+    height: 480px;
     display: inline-block;
 }
 
 .infoBoxTitle {
     margin: 0 0 5px 0;
-    text-align: center;
+    text-align: left;
 }
 
 .infoBoxSubitle {
     margin: 0 0 15px 0;
-    text-align: center;
+    text-align: left;
 }
 
 .infoBoxDescription {
