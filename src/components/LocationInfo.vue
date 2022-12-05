@@ -47,3 +47,29 @@ export default defineComponent({
         </div>
     </div>
 </template>
+
+<style>
+.infoBoxInfo {
+    margin-bottom: 20px;
+    font-family: 'Quicksand';
+}
+
+.infoBoxTitle {
+    margin: 0 0 5px 0;
+    text-align: left;
+}
+
+.infoBoxSubitle {
+    margin: 0 0 15px 0;
+    text-align: left;
+}
+
+.infoBoxDescription {
+    margin: 0 0 15px 0;
+}
+
+
+.infoBoxNumericInfo {
+    margin: 0 0 5px 0;
+}
+</style>

@@ -156,8 +156,8 @@ export default defineComponent({
             </div>
             <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && !startedGame">Click to
                 start</div>
-            <div>White time: {{ ((completedTurnsTimes[Players.White]) / 1000).toFixed(2) }}</div>
-            <div>Black time: {{ ((completedTurnsTimes[Players.Black]) / 1000).toFixed(2) }}</div>
+            <div>White time: {{ ((completedTurnsTimes[Players.White]) / 1000).toFixed(2) }}s</div>
+            <div>Black time: {{ ((completedTurnsTimes[Players.Black]) / 1000).toFixed(2) }}s</div>
         </div>
     </div>
 </template>

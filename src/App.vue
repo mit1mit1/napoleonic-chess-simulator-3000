@@ -2,6 +2,7 @@
 import ChessBoard from './components/ChessBoard.vue';
 import DialogOverlay from './components/DialogOverlay.vue';
 import TranslatableText from './components/TranslatableText.vue';
+import TranslationBar from './components/TranslationBar.vue';
 import { Languages, Locations, Players } from "./types";
 import DividedFrance from './components/DividedFrance.vue';
 import { startMusic } from "./utils/music";
@@ -41,7 +42,7 @@ export default defineComponent({
     },
 
     components: {
-        ChessBoard, DividedFrance, TranslatableText, DialogOverlay
+        ChessBoard, DividedFrance, TranslatableText, DialogOverlay, TranslationBar
     }
 });
 </script>
@@ -60,6 +61,7 @@ export default defineComponent({
                 :dialog-lines="availableDialog" />
             <button class="napoleonic-button" :onclick="onSoundTrigger">Music?</button>
         </div>
+        <TranslationBar />
     </main>
 </template>
 
@@ -80,25 +82,25 @@ html {
     margin-left: auto;
     margin-right: auto;
     max-width: 1100px;
+    margin-bottom: 40px;
 }
 
 
 
 .napoleonic-button {
-  margin-right: 10px;
-  margin-bottom: 5px;
-  transition-duration: 0.4s;
-  border: none;
-  padding: 8px 12px;
-  min-height: 40px;
-  min-width: 100px;
-  font-size: 0.95em;
-  font-family: "Quicksand", sans-serif;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    transition-duration: 0.4s;
+    border: none;
+    padding: 8px 12px;
+    min-height: 40px;
+    min-width: 100px;
+    font-size: 0.95em;
+    font-family: "Quicksand", sans-serif;
 }
 
 .napoleonic-button:hover {
-  background-color: #ffb7c5;
-  cursor: pointer;
+    background-color: #ffb7c5;
+    cursor: pointer;
 }
-
 </style>

@@ -157,13 +157,9 @@ export default defineComponent({
     cursor: pointer;
 }
 
-.infoBoxInfo {
-    margin-bottom: 20px;
-    font-family: 'Quicksand';
-}
 
 .mapScreen {
-    height: 480px;
+    height: 420px;
     margin-left: auto;
     margin-right: auto;
     max-width: 800px;
@@ -181,30 +177,11 @@ export default defineComponent({
     vertical-align: top;
     background-color: #def;
     padding: 15px;
-    min-height: 480px;
+    min-height: 420px;
 }
 
 .mapSVGBox {
     height: 480px;
     display: inline-block;
-}
-
-.infoBoxTitle {
-    margin: 0 0 5px 0;
-    text-align: left;
-}
-
-.infoBoxSubitle {
-    margin: 0 0 15px 0;
-    text-align: left;
-}
-
-.infoBoxDescription {
-    margin: 0 0 15px 0;
-}
-
-
-.infoBoxNumericInfo {
-    margin: 0 0 5px 0;
 }
 </style>
