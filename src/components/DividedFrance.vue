@@ -16,6 +16,7 @@ import MarsielleDistrict from '@/vue-svgs/france/MarsielleDistrict.vue';
 import ValenceDistrict from '@/vue-svgs/france/ValenceDistrict.vue';
 import { defineComponent } from 'vue';
 import TranslatableText from '@/components/TranslatableText.vue';
+import LocationInfo from './LocationInfo.vue';
 
 
 let startedGame = false;
@@ -44,47 +45,34 @@ export default defineComponent({
     },
 
     components: {
-        ParisDistrict, AimensDistrict, RennesDistrictWest, RennesDistrictEast, PotiersDistrict, OrleansDistrict, LyonDistrict,
-        DijonDistrict,
-        ReimsDistrict,
-        BordeauxDistrict,
-        TolouseDistrict,
-        MarsielleDistrict,
-        ValenceDistrict,
-        TranslatableText,
-    }
+    ParisDistrict,
+    AimensDistrict,
+    RennesDistrictWest,
+    RennesDistrictEast,
+    PotiersDistrict,
+    OrleansDistrict,
+    LyonDistrict,
+    DijonDistrict,
+    ReimsDistrict,
+    BordeauxDistrict,
+    TolouseDistrict,
+    MarsielleDistrict,
+    ValenceDistrict,
+    TranslatableText,
+    LocationInfo
+}
 });
 </script>
 
 <template>
     <div class="mapScreen">
         <div class="locationInfoBox">
-            <div v-if="selectedLocationInfo !== undefined">
-                <h2 class="infoBoxTitle">
-                    <TranslatableText from-language="en" to-language="fr" :text="selectedLocationInfo?.name" />
-                </h2>
-                <div class="infoBoxInfo">
-                    <div class="infoBoxSubitle"><i>
-                            <TranslatableText from-language="en" to-language="fr"
-                                :text="selectedLocationInfo?.subtitleEnglish" />
-                        </i></div>
-                    <div class="infoBoxDescription">
-                        <TranslatableText from-language="en" to-language="fr"
-                            :text="selectedLocationInfo?.descriptionEnglish" />
-                    </div>
-                    <div class="infoBoxNumericInfo">City Co-ordinates: ({{
-                            selectedLocationInfo?.cityCoordinates.latitude
-                    }},
-                        {{ selectedLocationInfo?.cityCoordinates.longitude }})</div>
-                    <div class="infoBoxNumericInfo">City Size: {{ selectedLocationInfo?.cityHectares }}ha</div>
-                    <div class="infoBoxNumericInfo">District Size: {{ selectedLocationInfo?.districtHectares }}ha
-                    </div>
-                    <div class="infoBoxNumericInfo">Area Influence: {{ selectedLocationInfo?.influenceAvailable
-                    }}</div>
-                </div>
-                <button class="napoleonic-button infoBoxButton"
-                    :onclick="() => handleDistrictAttack(selectedLocation)">Attack</button>
+            <div v-for="location in Locations">
+                <LocationInfo v-if="location === selectedLocation" :selected-location="location"/>
             </div>
+            <button class="napoleonic-button infoBoxButton"
+                :onclick="() => handleDistrictAttack(selectedLocation)">Attack</button>
+            
         </div>
         <div class="mapSVGBox">
             <svg height="450" width="400">
