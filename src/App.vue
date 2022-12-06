@@ -14,12 +14,16 @@ let displayDialogOverlay = true;
 const availableDialogs = [...initialDialogs];
 
 const currentLines = availableDialogs.find(dialog => dialog.triggerCondition())?.lines ?? [];
+let translatedWord = "";
+let fromLanguage = Languages.English
+let toLanguage = Languages.French;
+
 
 let attackedLocation: Locations | undefined = undefined;
 export default defineComponent({
     data() {
         return {
-            Languages, displayChessBoard, displayDividedFrance, displayDialogOverlay, availableDialog: currentLines, attackedLocation
+            Languages, displayChessBoard, displayDividedFrance, displayDialogOverlay, availableDialog: currentLines, attackedLocation, translatedWord, fromLanguage, toLanguage
         }
     },
 
@@ -38,7 +42,14 @@ export default defineComponent({
 
         onSoundTrigger() {
             startMusic();
+        },
+
+        setTranslatedWord(word: string, fromLanguage: Languages, toLanguage: Languages) {
+            this.translatedWord = word;
+            this.fromLanguage = fromLanguage;
+            this.toLanguage = toLanguage;
         }
+
     },
 
     components: {
@@ -50,18 +61,19 @@ export default defineComponent({
 <template>
     <main>
         <h1>
-            <TranslatableText :from-language="Languages.English" :to-language="Languages.French"
-                text="Napoleonic Chess Simulator 0.01" />
+            <TranslatableText :setTranslatedWord="setTranslatedWord" :from-language="Languages.English"
+                :to-language="Languages.French" text="Napoleonic Chess Simulator 0.01" />
         </h1>
         <div class="game-screen" id="musical-box">
             <ChessBoard v-if="displayChessBoard" :onVictory="onVictory" :attacked-location="attackedLocation" />
-            <DividedFrance v-if="displayDividedFrance" :onAttackLocation="onAttackLocation" />
+            <DividedFrance v-if="displayDividedFrance" :onAttackLocation="onAttackLocation"
+                :setTranslatedWord="setTranslatedWord" />
             <DialogOverlay v-if="displayDialogOverlay"
-                :on-finished-dialog="() => displayDialogOverlay = !displayDialogOverlay"
-                :dialog-lines="availableDialog" />
+                :on-finished-dialog="() => displayDialogOverlay = !displayDialogOverlay" :dialog-lines="availableDialog"
+                :setTranslatedWord="setTranslatedWord" />
             <button class="napoleonic-button" :onclick="onSoundTrigger">Music?</button>
         </div>
-        <TranslationBar />
+        <TranslationBar :translatedWord="translatedWord" :fromLanguage="fromLanguage" :toLanguage="toLanguage" />
     </main>
 </template>
 

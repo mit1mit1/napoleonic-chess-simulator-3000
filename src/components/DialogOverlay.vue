@@ -11,6 +11,7 @@ export default defineComponent({
     props: {
         onFinishedDialog: Function,
         dialogLines: Array,
+        setTranslatedWord: Function,
     },
 
     data(props) {
@@ -20,7 +21,7 @@ export default defineComponent({
             speaker = dialogLine.speaker;
         }
         return {
-            dialogLines: props.dialogLines, dialogLineNumber, line, lineCount: props.dialogLines?.length ?? 0, speaker
+            dataDialogLines: props.dialogLines, dialogLineNumber, line, lineCount: props.dialogLines?.length ?? 0, speaker
         }
     },
 
@@ -33,7 +34,7 @@ export default defineComponent({
         incrementLine() {
             if (this.dialogLineNumber + 1 < this.lineCount) {
                 this.dialogLineNumber = this.dialogLineNumber + 1;
-                const dialogLine = ((this.dialogLines ? this.dialogLines[this.dialogLineNumber] : []) as { line: Array<{ words: string, fromLanguage: string, toLanguage: string }>, speaker: string });
+                const dialogLine = ((this.dataDialogLines ? this.dataDialogLines[this.dialogLineNumber] : []) as { line: Array<{ words: string, fromLanguage: string, toLanguage: string }>, speaker: string });
                 this.line = dialogLine.line;
                 this.speaker = dialogLine.speaker;
             }
@@ -41,7 +42,7 @@ export default defineComponent({
         decrementLine() {
             if (this.dialogLineNumber > 0) {
                 this.dialogLineNumber = this.dialogLineNumber - 1;
-                const dialogLine = ((this.dialogLines ? this.dialogLines[this.dialogLineNumber] : []) as { line: Array<{ words: string, fromLanguage: string, toLanguage: string }>, speaker: string });
+                const dialogLine = ((this.dataDialogLines ? this.dataDialogLines[this.dialogLineNumber] : []) as { line: Array<{ words: string, fromLanguage: string, toLanguage: string }>, speaker: string });
                 this.line = dialogLine.line;
                 this.speaker = dialogLine.speaker;
             }
@@ -61,15 +62,17 @@ export default defineComponent({
             <button class="modalCloseButton napoleonic-button" :onclick="handleFinished">x</button>
             <div>
                 <h2 class="modalTitle">{{ speaker }}</h2>
-                <svg class="speaker-svg" v-if="speaker === 'Napoleon'" viewBox="0 0 300 350" height="200" width="200" xmlns="http://www.w3.org/2000/svg">
+                <svg class="speaker-svg" v-if="speaker === 'Napoleon'" viewBox="0 0 300 350" height="200" width="200"
+                    xmlns="http://www.w3.org/2000/svg">
                     <NapoleonFigure />
                 </svg>
                 <svg class="speaker-svg" v-if="speaker === 'Pierre'" viewBox="0 0 300 350" height="200" width="200">
                     <SoldierFigure />
                 </svg>
                 <div v-if="lineCount > 0" class="textBlock">
-                    <TranslatableText v-for="chunk in line" :from-language="chunk.fromLanguage"
-                        :to-language="chunk.toLanguage" :text="chunk.words" />
+                    <TranslatableText v-for="chunk in line" v-bind:key="chunk.words"
+                        :from-language="chunk.fromLanguage" :to-language="chunk.toLanguage" :text="chunk.words"
+                        :setTranslatedWord="setTranslatedWord" />
                 </div>
             </div>
             <div>

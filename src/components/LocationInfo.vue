@@ -7,6 +7,7 @@ import TranslatableText from '@/components/TranslatableText.vue';
 export default defineComponent({
     props: {
         selectedLocation: String,
+        setTranslatedWord: Function,
     },
 
     data(props) {
@@ -24,15 +25,16 @@ export default defineComponent({
 <template>
     <div v-if="selectedLocationInfo !== undefined">
         <h2 class="infoBoxTitle">
-            <TranslatableText from-language="en" to-language="fr" :text="selectedLocationInfo?.name" />
+            <TranslatableText :setTranslatedWord="setTranslatedWord" from-language="en" to-language="fr"
+                :text="selectedLocationInfo?.name" />
         </h2>
         <div class="infoBoxInfo">
             <div class="infoBoxSubitle"><i>
-                    <TranslatableText from-language="en" to-language="fr"
+                    <TranslatableText :setTranslatedWord="setTranslatedWord" from-language="en" to-language="fr"
                         :text="selectedLocationInfo?.subtitleEnglish" />
                 </i></div>
             <div class="infoBoxDescription">
-                <TranslatableText from-language="en" to-language="fr"
+                <TranslatableText :setTranslatedWord="setTranslatedWord" from-language="en" to-language="fr"
                     :text="selectedLocationInfo?.descriptionEnglish" />
             </div>
             <div class="infoBoxNumericInfo">City Co-ordinates: ({{

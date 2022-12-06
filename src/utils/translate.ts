@@ -1,102 +1,144 @@
 import { Languages } from "../types";
 
 const englishToFrench = {
-  ["3000"]: ["trois mille", "trois milles"],
-  april: ["Avril"],
-  as: ["comme", "en tant que"],
-  beg: ["demander", "supplier"],
-  butts: ["mégots", "fesses"],
-  by: ["par", "de"],
-  chess: ["jeu d'échecs"],
-  district: ["district", "quartier", "le district"],
-  every: ["chaque", "tous les"],
-  fact: ["fait"],
-  fans: ["ventilateurs", "fans", "supporters"],
-  for: ["pour", "pour le site"],
-  french: ["français"],
-  full: ["complet", "pleine page"],
-  how: ["comment"],
-  i: ["je"],
-  in: ["sur", "à", "à l'adresse"],
-  is: ["est", "c'est"],
-  kick: ["coup de pied", "kick"],
-  known: ["connu", "connu sous"],
-  ["let's"]: ["allons-y", "allons"],
-  mustard: ["moutarde"],
-  mind: ["esprit", "l'esprit"],
-  never: ["jamais"],
-  no: ["pas de", "non", "aucun"],
-  of: ["de", "du site", "sur", "de"],
-  one: ["un", "une"],
-  other: ["autre", "autres"],
-  pardon: ["pardon", "la grâce"],
-  produces: ["produit"],
-  ["re-enacted"]: ["réédité", "rétabli"],
-  renowned: ["renommé", "célèbre"],
-  say: ["dites", "dire"],
-  scene: ['scène'],
-  simulator: ["simulatrice", "simulateur"],
-  ski: ["ski", "le ski"],
-  some: ["un peu de", "quelques", "un certain"],
-  stop: ["arrêter", "arrêtez", "stop"],
-  the: ["le", "le site"],
-  thing: ["chose", "objet", "truc"],
-  things: ["choses", "les choses", "sites"],
-  thousands: ["milliers"],
-  uh: ["hum"],
-  warlord: ["seigneur de guerre", "chef de guerre"],
-  wassup: ["quoi de neuf", "qu'est-ce qui se passe"],
-  wassupppp: ["quoi de neuf", "qu'est-ce qui se passe"],
-  waterfall: ["cascade", "chute d'eau"],
-  world: ["monde"],
-  yo: ["bonjour", "salut", "hé"],
-  you: ["vous", "tu"],
-  your: ["votre", "vous"],
+  ["3000"]: {
+    translations: ["trois mille", "trois milles"],
+    englishDefinition: "",
+  },
+  april: { translations: ["Avril"], englishDefinition: "" },
+  as: { translations: ["comme", "en tant que"], englishDefinition: "" },
+  beg: { translations: ["demander", "supplier"], englishDefinition: "" },
+  butts: { translations: ["mégots", "fesses"], englishDefinition: "" },
+  by: { translations: ["par", "de"], englishDefinition: "" },
+  chess: { translations: ["jeu d'échecs"], englishDefinition: "" },
+  district: {
+    translations: ["district", "quartier", "le district"],
+    englishDefinition: "",
+  },
+  every: { translations: ["chaque", "tous les"], englishDefinition: "" },
+  fact: { translations: ["fait"], englishDefinition: "" },
+  fans: {
+    translations: ["ventilateurs", "fans", "supporters"],
+    englishDefinition: "",
+  },
+  for: { translations: ["pour", "pour le site"], englishDefinition: "" },
+  french: { translations: ["français"], englishDefinition: "" },
+  full: { translations: ["complet", "pleine page"], englishDefinition: "" },
+  how: { translations: ["comment"], englishDefinition: "" },
+  i: { translations: ["je"], englishDefinition: "" },
+  in: { translations: ["sur", "à", "à l'adresse"], englishDefinition: "" },
+  is: { translations: ["est", "c'est"], englishDefinition: "" },
+  kick: { translations: ["coup de pied", "kick"], englishDefinition: "" },
+  known: { translations: ["connu", "connu sous"], englishDefinition: "" },
+  ["let's"]: { translations: ["allons-y", "allons"], englishDefinition: "" },
+  mustard: { translations: ["moutarde"], englishDefinition: "" },
+  mind: { translations: ["esprit", "l'esprit"], englishDefinition: "" },
+  never: { translations: ["jamais"], englishDefinition: "" },
+  no: { translations: ["pas de", "non", "aucun"], englishDefinition: "" },
+  of: { translations: ["de", "du site", "sur", "de"], englishDefinition: "" },
+  one: { translations: ["un", "une"], englishDefinition: "" },
+  other: { translations: ["autre", "autres"], englishDefinition: "" },
+  pardon: { translations: ["pardon", "la grâce"], englishDefinition: "" },
+  produces: { translations: ["produit"], englishDefinition: "" },
+  ["re-enacted"]: {
+    translations: ["réédité", "rétabli"],
+    englishDefinition: "",
+  },
+  renowned: { translations: ["renommé", "célèbre"], englishDefinition: "" },
+  say: { translations: ["dites", "dire"], englishDefinition: "" },
+  scene: { translations: ["scène"], englishDefinition: "" },
+  simulator: {
+    translations: ["simulatrice", "simulateur"],
+    englishDefinition: "",
+  },
+  ski: { translations: ["ski", "le ski"], englishDefinition: "" },
+  some: {
+    translations: ["un peu de", "quelques", "un certain"],
+    englishDefinition: "",
+  },
+  stop: { translations: ["arrêter", "arrêtez", "stop"], englishDefinition: "" },
+  the: { translations: ["le", "le site"], englishDefinition: "" },
+  thing: { translations: ["chose", "objet", "truc"], englishDefinition: "" },
+  things: {
+    translations: ["choses", "les choses", "sites"],
+    englishDefinition: "",
+  },
+  thousands: { translations: ["milliers"], englishDefinition: "" },
+  uh: { translations: ["hum"], englishDefinition: "" },
+  warlord: {
+    translations: ["seigneur de guerre", "chef de guerre"],
+    englishDefinition: "",
+  },
+  wassup: {
+    translations: ["quoi de neuf", "qu'est-ce qui se passe"],
+    englishDefinition: "",
+  },
+  wassupppp: {
+    translations: ["quoi de neuf", "qu'est-ce qui se passe"],
+    englishDefinition: "",
+  },
+  waterfall: {
+    translations: ["cascade", "chute d'eau"],
+    englishDefinition: "",
+  },
+  world: { translations: ["monde"], englishDefinition: "" },
+  yo: { translations: ["bonjour", "salut", "hé"], englishDefinition: "" },
+  you: { translations: ["vous", "tu"], englishDefinition: "" },
+  your: { translations: ["votre", "vous"], englishDefinition: "" },
 };
 
 const frenchToEnglish = {
-  hum: ["um"],
-  depuis: ["since", "from"],
-  quand: ["when", "at"],
-  ce: ["this", "that"],
-  mot: ["word", "note"],
-  connaissez: ["know", "know about"],
-  vous: ["you", "you at"],
-  ["connaissez-vous"]: ["do you know", "are you familiar with"],
-  j: ["I"],
-  ai: ["have"],
-  ["j'ai"]: ["I have"],
-  oublié: ["forgotten", "forgot"],
-  ["l'anglais"]: ["English", "the English language"],
-  ["n'existait"]: ["didn't exist"],
-  pas: ["no", "not", "step"],
-  ["l'époque"]: ["the time", "at the time", "the era"],
-  à: ["in", "to", "at"],
-  le: ["the"],
-  français: ["French"],
+  hum: { translations: ["um"], englishDefinition: "" },
+  depuis: { translations: ["since", "from"], englishDefinition: "" },
+  quand: { translations: ["when", "at"], englishDefinition: "" },
+  ce: { translations: ["this", "that"], englishDefinition: "" },
+  mot: { translations: ["word", "note"], englishDefinition: "" },
+  connaissez: { translations: ["know", "know about"], englishDefinition: "" },
+  vous: { translations: ["you", "you at"], englishDefinition: "" },
+  ["connaissez-vous"]: {
+    translations: ["do you know", "are you familiar with"],
+    englishDefinition: "",
+  },
+  j: { translations: ["I"], englishDefinition: "" },
+  ai: { translations: ["have"], englishDefinition: "" },
+  ["j'ai"]: { translations: ["I have"], englishDefinition: "" },
+  oublié: { translations: ["forgotten", "forgot"], englishDefinition: "" },
+  ["l'anglais"]: {
+    translations: ["English", "the English language"],
+    englishDefinition: "",
+  },
+  ["n'existait"]: { translations: ["didn't exist"], englishDefinition: "" },
+  pas: { translations: ["no", "not", "step"], englishDefinition: "" },
+  ["l'époque"]: {
+    translations: ["the time", "at the time", "the era"],
+    englishDefinition: "",
+  },
+  à: { translations: ["in", "to", "at"], englishDefinition: "" },
+  le: { translations: ["the"], englishDefinition: "" },
+  français: { translations: ["French"], englishDefinition: "" },
 };
 
 export const translate = (
   word: string,
   fromLanguage: Languages.English | Languages.French,
   toLanguage: Languages.French | Languages.English
-): string[] => {
+): { translations: string[]; englishDefinition?: string } => {
   const lookupWord = word.toLowerCase().replace(/[.,/#!$%^&*;:{}=_`~()?]/g, "");
-  console.log(lookupWord);
+  const nullReturn = { translations: [], englishDefinition: "" };
   if (fromLanguage === toLanguage) {
-    return [lookupWord];
+    return { translations: [lookupWord], englishDefinition: "" };
   }
   if (fromLanguage === Languages.English && toLanguage === Languages.French) {
     return lookupWord in englishToFrench
       ? englishToFrench[lookupWord as keyof typeof englishToFrench]
-      : [];
+      : nullReturn;
   } else if (
     fromLanguage === Languages.French &&
     toLanguage === Languages.English
   ) {
     return lookupWord in frenchToEnglish
       ? frenchToEnglish[lookupWord as keyof typeof frenchToEnglish]
-      : [];
+      : nullReturn;
   }
-  return [];
+  return nullReturn;
 };

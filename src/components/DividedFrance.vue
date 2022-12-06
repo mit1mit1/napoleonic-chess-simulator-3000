@@ -28,7 +28,7 @@ export default defineComponent({
 
     data() {
         return {
-            startedGame, Locations, selectedLocation, selectedLocationColor: '#aaa', selectedLocationInfo: locationInfos[selectedLocation]
+            startedGame, Locations, selectedLocation, selectedLocationColor: '#aaa', selectedLocationInfo: locationInfos[selectedLocation],
         }
     },
 
@@ -45,22 +45,22 @@ export default defineComponent({
     },
 
     components: {
-    ParisDistrict,
-    AimensDistrict,
-    RennesDistrictWest,
-    RennesDistrictEast,
-    PotiersDistrict,
-    OrleansDistrict,
-    LyonDistrict,
-    DijonDistrict,
-    ReimsDistrict,
-    BordeauxDistrict,
-    TolouseDistrict,
-    MarsielleDistrict,
-    ValenceDistrict,
-    TranslatableText,
-    LocationInfo
-}
+        ParisDistrict,
+        AimensDistrict,
+        RennesDistrictWest,
+        RennesDistrictEast,
+        PotiersDistrict,
+        OrleansDistrict,
+        LyonDistrict,
+        DijonDistrict,
+        ReimsDistrict,
+        BordeauxDistrict,
+        TolouseDistrict,
+        MarsielleDistrict,
+        ValenceDistrict,
+        TranslatableText,
+        LocationInfo
+    }
 });
 </script>
 
@@ -68,11 +68,11 @@ export default defineComponent({
     <div class="mapScreen">
         <div class="locationInfoBox">
             <div v-for="location in Locations">
-                <LocationInfo v-if="location === selectedLocation" :selected-location="location"/>
+                <LocationInfo v-if="location === selectedLocation" :selected-location="location" />
             </div>
             <button class="napoleonic-button infoBoxButton"
                 :onclick="() => handleDistrictAttack(selectedLocation)">Attack</button>
-            
+
         </div>
         <div class="mapSVGBox">
             <svg height="450" width="400">

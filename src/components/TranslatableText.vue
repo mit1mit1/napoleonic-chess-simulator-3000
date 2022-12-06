@@ -8,6 +8,7 @@ export default defineComponent({
         fromLanguage: String,
         toLanguage: String,
         text: String,
+        setTranslatedWord: Function,
     },
     data() {
         return {
@@ -26,7 +27,7 @@ export default defineComponent({
             if (!this.fromLanguage || !this.toLanguage) {
                 return;
             }
-            const translatedWords = translate(word, this.fromLanguage as Languages, this.toLanguage as Languages);
+            const translatedWords = translate(word, this.fromLanguage as Languages, this.toLanguage as Languages).translations;
             if (translatedWords.length === 0) {
                 const originalLanguageMessage = new SpeechSynthesisUtterance();
                 originalLanguageMessage.text = word;
@@ -37,6 +38,7 @@ export default defineComponent({
             let index = 0;
             for (let translatedWord of translatedWords) {
                 if (index === 0) {
+                    this.setTranslatedWord && this.setTranslatedWord(word, this.fromLanguage, this.toLanguage);
                     this.showTranslationCard = word;
                     if (this.toLanguage === Languages.French) {
                         setTimeout(() => {
@@ -57,8 +59,9 @@ export default defineComponent({
             }
             setTimeout(() => {
                 if (this.showTranslationCard == word) {
+                    this.setTranslatedWord && this.setTranslatedWord("");
                     this.showTranslationCard = "";
-                };
+                }
             }, 5000 * index)
         }
     },
@@ -71,7 +74,9 @@ export default defineComponent({
             {{ word }}{{ index < splitText.length - 1 ? " " : "" }} </a>
                 <div v-if="showTranslationCard === word && displayWords[word] && displayWords[word].length > 0"
                     class="translationCard">
-                    <div v-for="displayWord in displayWords[word]" class="translationLine">{{ displayWord }}</div>
+                    <div v-for="displayWord in displayWords[word]" v-bind:key="displayWord" class="translationLine">{{
+                            displayWord
+                    }}</div>
                 </div>
     </span>
 </template>
