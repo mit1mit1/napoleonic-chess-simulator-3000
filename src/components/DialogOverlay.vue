@@ -79,7 +79,7 @@ export default defineComponent({
                 <!-- <button v-if="dialogLineNumber > 0" :onclick="decrementLine">Prev</button> -->
                 <button class="napoleonic-button " v-if="dialogLineNumber + 1 < lineCount"
                     :onclick="incrementLine">Next</button>
-                <button class="napoleonic-button " v-else :onclick="handleFinished">Close</button>
+                <button class="napoleonic-button" v-else :onclick="handleFinished">Close</button>
             </div>
         </div>
     </div>
@@ -150,7 +150,7 @@ export default defineComponent({
 
 .modalCloseButton {
     position: absolute;
-    top: 0px;
+    top: 5px;
     right: 50px;
     width: 40px;
     height: 40px;

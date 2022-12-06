@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { Languages } from "@/types";
+import { Languages } from "@/types";
 import { translate } from "@/utils/translate";
 import { defineComponent } from "vue";
 
@@ -16,10 +16,19 @@ export default defineComponent({
     // },
 
     computed: {
-        translatedWords() {
-            return translate(this.translatedWord ?? "", this.fromLanguage as Languages, this.toLanguage as Languages).translations
+        translationInfo() {
+            return translate(this.translatedWord ?? "", this.fromLanguage as Languages, this.toLanguage as Languages)
         }
 
+    },
+
+    methods: {
+        speakWord(word: string, language?: string) {
+            const newUtterence = new SpeechSynthesisUtterance();
+            newUtterence.text = word;
+            newUtterence.lang = language ?? Languages.French;
+            window.speechSynthesis.speak(newUtterence);
+        }
     }
 });
 </script>
@@ -27,14 +36,18 @@ export default defineComponent({
 <template>
     <div class="translation-bar">
         <div v-if="translatedWord" class="translation-bar-text">
-            {{ translatedWord }} ({{ fromLanguage }}): {{ translatedWords }}
+            <a class="readable-word" :onclick="() => speakWord(translationInfo.lookupWord, fromLanguage)">{{
+                    translationInfo.lookupWord
+            }}</a>
+            ({{ fromLanguage }}): <span v-for="translationWord in translationInfo.translations"><a class="readable-word"
+                    :onclick="() => speakWord(translationWord, toLanguage)">{{ translationWord }}</a>; </span>
         </div>
     </div>
 </template>
 
 <style>
 .translation-bar {
-    background-color: #333;
+    background-color: #d3d5da;
     overflow: hidden;
     position: fixed;
     bottom: 0;
@@ -43,5 +56,9 @@ export default defineComponent({
     padding: 15px;
     min-height: 1.2em;
     font-size: 1em;
+}
+
+.readable-word {
+    cursor: pointer;
 }
 </style>

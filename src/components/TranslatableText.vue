@@ -39,7 +39,6 @@ export default defineComponent({
             for (let translatedWord of translatedWords) {
                 if (index === 0) {
                     this.setTranslatedWord && this.setTranslatedWord(word, this.fromLanguage, this.toLanguage);
-                    this.showTranslationCard = word;
                     if (this.toLanguage === Languages.French) {
                         setTimeout(() => {
                             const translatedMessage = new SpeechSynthesisUtterance();
@@ -57,12 +56,6 @@ export default defineComponent({
                 originalLanguageMessage.lang = Languages.French;
                 window.speechSynthesis.speak(originalLanguageMessage);
             }
-            setTimeout(() => {
-                if (this.showTranslationCard == word) {
-                    this.setTranslatedWord && this.setTranslatedWord("");
-                    this.showTranslationCard = "";
-                }
-            }, 5000 * index)
         }
     },
 });
@@ -72,12 +65,6 @@ export default defineComponent({
     <span class="positionParent" v-for="word, index in splitText" v-bind:key="word">
         <a :onClick="() => handleTranslate(word)" class="translatableText">
             {{ word }}{{ index < splitText.length - 1 ? " " : "" }} </a>
-                <div v-if="showTranslationCard === word && displayWords[word] && displayWords[word].length > 0"
-                    class="translationCard">
-                    <div v-for="displayWord in displayWords[word]" v-bind:key="displayWord" class="translationLine">{{
-                            displayWord
-                    }}</div>
-                </div>
     </span>
 </template>
 
@@ -92,19 +79,5 @@ export default defineComponent({
 
 .translationLine {
     padding-bottom: 5px;
-}
-
-.translationCard {
-    position: absolute;
-    padding: 5px 4px 0px 4px;
-    background-color: rgb(205, 205, 205);
-    border-color: aqua;
-    display: inline-block;
-    width: 150px;
-    font-size: medium;
-    z-index: 2;
-    top: 50px;
-    left: 0px;
-    right: 0px;
 }
 </style>
