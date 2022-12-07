@@ -2999,10 +2999,45 @@ tone@^14.7.77:
     standardized-audio-context "^25.1.8"
     tslib "^2.0.1"
 
+tonejs-instrument-clarinet-mp3@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/tonejs-instrument-clarinet-mp3/-/tonejs-instrument-clarinet-mp3-1.1.2.tgz#f5900a1c8e7e7708fe2c154f8108ea1e9b044f53"
+  integrity sha512-q88NKOFrIQ8ZuOyyAxCJQQLEN3VrPClFrb5VZNwfiD155rMCL+duc7To0wvArD1lxEBu5AXGv6Z44G4AKuc4Wg==
+
+tonejs-instrument-guitar-acoustic-mp3@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/tonejs-instrument-guitar-acoustic-mp3/-/tonejs-instrument-guitar-acoustic-mp3-1.1.2.tgz#c62d7ee9d77a13379a93086c15bc03080b6cc299"
+  integrity sha512-+24Jd7q2IVeR+y0yxB9oaujXFv/1gpfzbbLn3FZBQ6Fw0AWDO1CI8qM0l4YCN/4w60/cZMIT5laQ3PYB/ZN6jQ==
+
+tonejs-instrument-guitar-electric-mp3@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/tonejs-instrument-guitar-electric-mp3/-/tonejs-instrument-guitar-electric-mp3-1.1.1.tgz#f039a478cceeb9990c4ec8050619dfe76bd35225"
+  integrity sha512-DMA0dq6KI5lMA3Eo32kbKfMKgtDwWCNzXnlzhh+p5KTsY+84ySCsSbpeVU66wqcdXEOp+7zPvRzb0GorMDvP5A==
+
+tonejs-instrument-guitar-nylon-mp3@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/tonejs-instrument-guitar-nylon-mp3/-/tonejs-instrument-guitar-nylon-mp3-1.1.1.tgz#0c3263bae8cd836998c3a66470c41fde5df3bbd1"
+  integrity sha512-HXSTXWo+vXY9J20xoq4Z9gYpy6loZT0uj/WRzkMU5UP7WKjZC5pz0nQtDm2ySrtC9LpiGneSrX550a1FziUScw==
+
+tonejs-instrument-harmonium-mp3@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/tonejs-instrument-harmonium-mp3/-/tonejs-instrument-harmonium-mp3-1.1.1.tgz#bc1769d809b65734027fd15e5e79834c682182f9"
+  integrity sha512-86HYt62dzLUL5fXPzWb4hTiU4Q+k+H9lIDrkxhppuDX3Uq3oSgMG+HC+4pDmOCTpEj5EIcdLYlNVQeVUMGvROw==
+
+tonejs-instrument-harp-mp3@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/tonejs-instrument-harp-mp3/-/tonejs-instrument-harp-mp3-1.1.1.tgz#172e570db9044987d7839b1b0bb7f995f80d28d1"
+  integrity sha512-6WGOpdjYu8ak1Pu3FXNtpEFGHMXSBEyjIwRKpjrjzo7CAJqyVQzUC1eSH1MXMPujpCwl5iUyKmft6p2DEc40tg==
+
 tonejs-instrument-piano-mp3@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/tonejs-instrument-piano-mp3/-/tonejs-instrument-piano-mp3-1.1.2.tgz#3f4072fde6be8790ed16802411cebc6f037de346"
   integrity sha512-5h67cOKqC4XeS13szLcf275SEKLjxcybQiVZwvJjeDsc/44srxIkiSEPv7KqvGltX/uPoTmyAfwMS284nDxjKQ==
+
+tonejs-instrument-violin-mp3@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/tonejs-instrument-violin-mp3/-/tonejs-instrument-violin-mp3-1.1.1.tgz#f8730c3699b90d7bdba6e9d982b344724d5f2fa7"
+  integrity sha512-uTZ87W4COhfDR16x4HTcX9fudOpRDGlIi4fSMCF7CI1VoyhQ19n1i5wj3pdH9QbkFncXhLBab+eP3xq+Le4q2A==
 
 tough-cookie@^4.0.0:
   version "4.1.2"

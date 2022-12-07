@@ -1,13 +1,8 @@
-import PianoMp3 from "tonejs-instrument-piano-mp3";
+import ElectricGuitar from "tonejs-instrument-guitar-electric-mp3";
+import Violin from "tonejs-instrument-violin-mp3";
 import * as Tone from "tone";
-import type {
-  BaseDuration,
-  Chord,
-  Note,
-  Pitch,
-  ToneJSDuration,
-} from "@/music/types";
-import { bassNotes, middleNotes, quarterDurations } from "@/music/constants";
+import type { BaseDuration, Chord, Pitch, ToneJSDuration } from "@/music/types";
+import { bassNotes, middleNotes } from "@/music/constants";
 import {
   getDiminishedSeventh,
   getMajorFifth,
@@ -61,19 +56,25 @@ export const addDurationObjects = (
 
 const volumeSlider = document.querySelector("#volumeSlider");
 volumeSlider?.addEventListener("change", (event) => {
-  instrument.volume.value = (event.target as any).value;
-  if (instrument.volume.value == -50) {
-    instrument.volume.value = -5000;
+  primaryInstrument.volume.value = (event.target as any).value;
+  if (primaryInstrument.volume.value == -50) {
+    primaryInstrument.volume.value = -5000;
   }
 });
 
 const instrumentVolume = -24;
 let allowAudio = true;
 
-const instrument = new PianoMp3({
-  minify: true,
-}).toDestination("main");
-instrument.volume.value = instrumentVolume;
+const isCreepy = Math.random() > 0.8;
+
+const primaryInstrument = isCreepy
+  ? new Violin({
+      minify: true,
+    }).toDestination("main")
+  : new ElectricGuitar({
+      minify: true,
+    }).toDestination("main");
+primaryInstrument.volume.value = instrumentVolume;
 
 const handleKeypress = (event: any) => {
   if (allowAudio) {
@@ -87,7 +88,6 @@ const handleKeypress = (event: any) => {
 document
   .querySelector("#musical-box")
   ?.addEventListener("keypress", handleKeypress);
-
 
 const getPitches = ({ rootNote, chordType }: Chord) => {
   const pitches = [rootNote];
@@ -122,7 +122,7 @@ const getAndPushMelody = (
 ) => {
   let pitch = chord.rootNote;
   let lastDuration = "8n";
-  if (allowAudio && instrument.loaded) {
+  if (allowAudio && primaryInstrument.loaded) {
     for (let i = 0; i < tonejsDurationTo16thCount(chordDuration); i++) {
       const pitchRadomiser = Math.random();
       const jazzRandomiser = Math.random();
@@ -143,13 +143,16 @@ const getAndPushMelody = (
         lastDuration = "16n";
         continue;
       }
-      let pentatonicScale = []
+      let pentatonicScale = [];
       if (jazzRandomiser < 1) {
         pentatonicScale = getMajorPentatonicScale(key, availableNotes);
         pitch =
           pentatonicScale[Math.floor(pitchRadomiser * pentatonicScale.length)];
       } else {
-        pentatonicScale = getMinorPentatonicScale(chord.rootNote, availableNotes);
+        pentatonicScale = getMinorPentatonicScale(
+          chord.rootNote,
+          availableNotes
+        );
         pitch =
           pentatonicScale[Math.floor(pitchRadomiser * pentatonicScale.length)];
       }
@@ -168,7 +171,7 @@ const getAndPushMelody = (
       } else {
         duration = "2n";
       }
-      instrument.triggerAttackRelease(pitch, duration, currentTime);
+      primaryInstrument.triggerAttackRelease(pitch, duration, currentTime);
       lastDuration = duration;
       currentTime = addToneJSDurations(currentTime, { "16n": 1 });
     }
@@ -182,13 +185,12 @@ const pushChord = (
   duration: ToneJSDuration,
   allowAudio: boolean
 ) => {
-  if (allowAudio && instrument.loaded) {
+  if (allowAudio && primaryInstrument.loaded) {
     for (const pitch of getPitches(chord)) {
-      instrument.triggerAttackRelease(pitch, duration, currentTime);
+      primaryInstrument.triggerAttackRelease(pitch, duration, currentTime);
     }
   }
 };
-
 
 let isTransitioning = false;
 const fadeIncrementDb = 1.4;
@@ -197,17 +199,19 @@ const fadeIncrements = 22;
 
 const fadeOutThenIn = async () => {
   for (let i = 0; i < fadeIncrements; i++) {
-    instrument.volume.value = instrument.volume.value - fadeIncrementDb;
+    primaryInstrument.volume.value =
+      primaryInstrument.volume.value - fadeIncrementDb;
     await new Promise((r) => setTimeout(r, fadeIncrementMilliseconds));
   }
   Tone.start();
-  instrument.releaseAll();
+  primaryInstrument.releaseAll();
   Tone.Transport.cancel();
-  instrument.sync();
+  primaryInstrument.sync();
   for (let i = 1; i < fadeIncrements + 1; i++) {
     setTimeout(
       () =>
-        (instrument.volume.value = instrument.volume.value + fadeIncrementDb),
+        (primaryInstrument.volume.value =
+          primaryInstrument.volume.value + fadeIncrementDb),
       fadeIncrementMilliseconds * i
     );
     if (i === 15) {
