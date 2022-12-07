@@ -72,7 +72,7 @@ export default defineComponent({
                 <LocationInfo v-if="location === selectedLocation" :selected-location="location"
                     :setTranslatedWord="setTranslatedWord" />
             </div>
-            <button class="napoleonic-button infoBoxButton"
+            <button v-if="selectedLocation" class="napoleonic-button infoBoxButton"
                 :onclick="() => handleDistrictAttack(selectedLocation)">Attack</button>
 
         </div>
