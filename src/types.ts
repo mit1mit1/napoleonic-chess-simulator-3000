@@ -62,3 +62,8 @@ export interface LocationInfo {
   descriptionEnglish: string;
   influenceAvailable: number;
 }
+
+export type Dictionary = Record<
+  string,
+  { translations: string[]; englishDefinition: string }
+>;

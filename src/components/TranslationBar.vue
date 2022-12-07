@@ -39,8 +39,19 @@ export default defineComponent({
             <a class="readable-word" :onclick="() => speakWord(translationInfo.lookupWord, fromLanguage)">{{
                     translationInfo.lookupWord
             }}</a>
-            ({{ fromLanguage }}): <span v-for="translationWord in translationInfo.translations"><a class="readable-word"
-                    :onclick="() => speakWord(translationWord, toLanguage)">{{ translationWord }}</a>; </span>
+            ({{ fromLanguage }}):
+            <span v-for="translationWord in translationInfo.translations">
+                <a class="readable-word" :onclick="() => speakWord(translationWord, toLanguage)">
+                    {{ translationWord }}
+                </a>;
+            </span>
+            <span v-if="translationInfo.englishDefinition">
+                <a class="readable-word" :onclick="() => speakWord(translationInfo.englishDefinition ?? '', 'en')">
+                    {{ translationInfo.englishDefinition }}
+                </a>.
+            </span>
+
+
         </div>
     </div>
 </template>
