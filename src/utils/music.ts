@@ -1,7 +1,14 @@
 import ElectricGuitar from "tonejs-instrument-guitar-electric-mp3";
 import Violin from "tonejs-instrument-violin-mp3";
 import * as Tone from "tone";
-import type { BaseDuration, Chord, Pitch, ToneJSDuration } from "@/music/types";
+import type {
+  BaseDuration,
+  Chord,
+  Pitch,
+  pitchLineParameters,
+  ToneJSDuration,
+  Vibe,
+} from "@/music/types";
 import { bassNotes, middleNotes } from "@/music/constants";
 import {
   getDiminishedSeventh,
@@ -29,8 +36,17 @@ import {
   getPowerSixth,
 } from "@/music/keysAndChords";
 import { tonejsDurationTo16thCount } from "@/music/durations";
+import {
+  getBPM,
+  getInstruments,
+  getInitialMelodyParameters,
+  getInitialCountermelodyParameters,
+  incrementParameters,
+} from "@/music/vibes";
 
 let instrumentVolume = -24;
+const startCreepy = Math.random() > 0.5;
+let currentVibe: Vibe = startCreepy ? "creepy" : "picky";
 
 const violin = new Violin({
   minify: true,
@@ -39,16 +55,7 @@ const electricGuitar = new ElectricGuitar({
   minify: true,
 }).toDestination("main");
 
-const availableInstruments = [violin, electricGuitar];
-
-let melodyInstrument = electricGuitar;
-let playMelodyInstrument = true;
-
-let countermelodyInstrument = electricGuitar;
-let playCountermelodyInstrument = true;
-
-let chordsInstrument = electricGuitar;
-let playChordsInstrument = true;
+const availableInstruments = { violin, electricGuitar };
 
 export const addToneJSDurations = (
   durationObject1: ToneJSDuration,
@@ -76,7 +83,7 @@ export const addDurationObjects = (
 
 export const setVolume = (volume: number) => {
   instrumentVolume = volume;
-  availableInstruments.forEach((instrument) => {
+  Object.values(availableInstruments).forEach((instrument) => {
     instrument.volume.value = volume;
     if (instrument.volume.value == -50) {
       instrument.volume.value = -5000;
@@ -86,39 +93,9 @@ export const setVolume = (volume: number) => {
 setVolume(instrumentVolume);
 
 export const setVibe = (vibe: string) => {
-  if (vibe === "picky") {
-    melodyInstrument = electricGuitar;
-    playMelodyInstrument = true;
-
-    countermelodyInstrument = electricGuitar;
-    playCountermelodyInstrument = true;
-
-    chordsInstrument = electricGuitar;
-    playChordsInstrument = true;
-  } else if (vibe === "creepy") {
-    melodyInstrument = violin;
-    playMelodyInstrument = true;
-
-    countermelodyInstrument = violin;
-    playCountermelodyInstrument = true;
-
-    playChordsInstrument = false;
-  } else if (vibe === "bumpish") {
-    melodyInstrument = violin;
-    playMelodyInstrument = true;
-
-    countermelodyInstrument = electricGuitar;
-    playCountermelodyInstrument = true;
-
-    playChordsInstrument = false;
-  }
+  currentVibe = vibe as Vibe;
 };
-const startCreepy = Math.random() > 0.5;
-if (startCreepy) {
-  setVibe("creepy");
-} else {
-  setVibe("picky");
-}
+setVibe(currentVibe);
 
 const getPitches = ({ rootNote, chordType }: Chord) => {
   const pitches = [rootNote];
@@ -140,6 +117,28 @@ const getPitches = ({ rootNote, chordType }: Chord) => {
   return pitches;
 };
 
+// const pickPitch = (
+//   chord: Chord,
+//   key: Pitch,
+//   availableNotes: Pitch[],
+//   jazziness: number
+// ) => {
+//   const jazzRandomiser = Math.random();
+//   const pitchRandomiser = Math.random();
+//   let pentatonicScale = [];
+//   let pitch = availableNotes[getAvailableNote(chord.rootNote, availableNotes)];
+//   if (jazzRandomiser < jazziness) {
+//     pentatonicScale = getMinorPentatonicScale(chord.rootNote, availableNotes);
+//     pitch =
+//       pentatonicScale[Math.floor(pitchRandomiser * pentatonicScale.length)];
+//   } else {
+//     pentatonicScale = getMajorPentatonicScale(key, availableNotes);
+//     pitch =
+//       pentatonicScale[Math.floor(pitchRandomiser * pentatonicScale.length)];
+//   }
+//   return pitch;
+// };
+
 const getAndPushMelody = (
   key: Pitch,
   chord: Chord,
@@ -147,9 +146,8 @@ const getAndPushMelody = (
   chordDuration: ToneJSDuration,
   lastNote: Pitch,
   instrument: any,
-  availableNotes: Pitch[] = middleNotes,
-  skippiness: number = 1,
-  rapidity: number = 1
+  parameters: pitchLineParameters,
+  availableNotes: Pitch[] = middleNotes
 ) => {
   let pitch = chord.rootNote;
   let lastDuration = "8n";
@@ -158,15 +156,21 @@ const getAndPushMelody = (
       const pitchRadomiser = Math.random();
       const jazzRandomiser = Math.random();
       const skipRandomiser = Math.random();
-      if (skipRandomiser < 0.15 * skippiness && lastDuration === "16n") {
+      if (
+        skipRandomiser < 0.15 * parameters.skippiness &&
+        lastDuration === "16n"
+      ) {
         currentTime = addToneJSDurations(currentTime, { "16n": 1 });
         lastDuration = "16n";
         continue;
       }
-      if (skipRandomiser < 0.55 * skippiness && lastDuration !== "16n") {
-        if (jazzRandomiser < 0.12 * skippiness) {
+      if (
+        skipRandomiser < 0.55 * parameters.skippiness &&
+        lastDuration !== "16n"
+      ) {
+        if (jazzRandomiser < 0.12 * parameters.skippiness) {
           currentTime = addToneJSDurations(currentTime, { "8n": 1 });
-        } else if (jazzRandomiser < 0.2 * skippiness) {
+        } else if (jazzRandomiser < 0.2 * parameters.skippiness) {
           currentTime = addToneJSDurations(currentTime, { "8n.": 1 });
         } else {
           currentTime = addToneJSDurations(currentTime, { "16n": 1 });
@@ -189,15 +193,15 @@ const getAndPushMelody = (
       }
       let duration = "8n";
       const durationRandomiser = Math.random();
-      if (durationRandomiser < 0.25 * rapidity) {
+      if (durationRandomiser < 0.25 * parameters.rapidity) {
         duration = "16n";
-      } else if (durationRandomiser < 0.45 * rapidity) {
+      } else if (durationRandomiser < 0.45 * parameters.rapidity) {
         duration = "8n";
-      } else if (durationRandomiser < 0.6 * rapidity) {
+      } else if (durationRandomiser < 0.6 * parameters.rapidity) {
         duration = "8n.";
-      } else if (durationRandomiser < 0.7 * rapidity) {
+      } else if (durationRandomiser < 0.7 * parameters.rapidity) {
         duration = "4n";
-      } else if (durationRandomiser < 0.8 * rapidity) {
+      } else if (durationRandomiser < 0.8 * parameters.rapidity) {
         duration = "4n.";
       } else {
         duration = "2n";
@@ -230,22 +234,22 @@ const fadeOutThenIn = async () => {
   const fadeIncrementMilliseconds = 90;
   const fadeIncrements = 22;
   for (let i = 0; i < fadeIncrements; i++) {
-    availableInstruments.forEach((instrument) => {
+    Object.values(availableInstruments).forEach((instrument) => {
       instrument.volume.value = instrument.volume.value - fadeIncrementDb;
     });
     await new Promise((r) => setTimeout(r, fadeIncrementMilliseconds));
   }
   Tone.start();
-  availableInstruments.forEach((instrument) => {
+  Object.values(availableInstruments).forEach((instrument) => {
     instrument.releaseAll();
   });
   Tone.Transport.cancel();
-  availableInstruments.forEach((instrument) => {
+  Object.values(availableInstruments).forEach((instrument) => {
     instrument.sync();
   });
   for (let i = 1; i < fadeIncrements + 1; i++) {
     setTimeout(() => {
-      availableInstruments.forEach((instrument) => {
+      Object.values(availableInstruments).forEach((instrument) => {
         instrument.volume.value = instrument.volume.value + fadeIncrementDb;
       });
     }, fadeIncrementMilliseconds * i);
@@ -349,7 +353,7 @@ const getKey = (key: Pitch, currentChord: Chord) => {
 };
 
 export const startNewSong = async () => {
-  Tone.Transport.bpm.value = 100;
+  Tone.Transport.bpm.value = getBPM(currentVibe);
   Tone.Transport.position = "0:0:0";
   if (!isTransitioning) {
     isTransitioning = true;
@@ -365,37 +369,53 @@ export const startNewSong = async () => {
     let lastMelodyNote: Pitch = "B4";
     let lastCounterMelodyNote: Pitch = "E2";
     let i: number = 0;
+
+    let melodyParameters = getInitialMelodyParameters(currentVibe);
+    let countermelodyParameters =
+      getInitialCountermelodyParameters(currentVibe);
+    const bandInstruments = getInstruments(currentVibe, availableInstruments);
     while (i < 100) {
       const currentChord = getChord(key, lastChord);
       const chordDuration = getChordLength(i);
       key = getKey(key, currentChord);
-      if (playChordsInstrument) {
-        pushChord(currentChord, currentTime, chordDuration, chordsInstrument);
+      if (bandInstruments.playChordsInstrument) {
+        pushChord(
+          currentChord,
+          currentTime,
+          chordDuration,
+          bandInstruments.chordsInstrument
+        );
       }
-      if (playMelodyInstrument) {
+      if (bandInstruments.playMelodyInstrument) {
         lastMelodyNote = getAndPushMelody(
           key,
           currentChord,
           currentTime,
           chordDuration,
           lastMelodyNote,
-          melodyInstrument
+          bandInstruments.melodyInstrument,
+          melodyParameters
         );
       }
-      if (playCountermelodyInstrument) {
+      if (bandInstruments.playCountermelodyInstrument) {
         lastCounterMelodyNote = getAndPushMelody(
           key,
           currentChord,
           currentTime,
           chordDuration,
           lastCounterMelodyNote,
-          countermelodyInstrument,
-          bassNotes,
-          1.3
+          bandInstruments.countermelodyInstrument,
+          countermelodyParameters,
+          bassNotes
         );
       }
       currentTime = addToneJSDurations(currentTime, chordDuration);
       lastChord = currentChord;
+      melodyParameters = incrementParameters(melodyParameters, currentVibe);
+      countermelodyParameters = incrementParameters(
+        countermelodyParameters,
+        currentVibe
+      );
       i++;
     }
 

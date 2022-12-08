@@ -57,7 +57,7 @@ export const pitchNames = [
   "G#5",
   "A5",
   "A#5",
-  "B5"
+  "B5",
 ] as const;
 
 export const durationNames = [
@@ -79,6 +79,19 @@ export const durationNames = [
 export type BaseDuration = typeof durationNames[number];
 export type Pitch = typeof pitchNames[number];
 export type Chord = {
-    rootNote: Pitch,
-    chordType: "major" | "minor" | "diminished" | "power"
-}
+  rootNote: Pitch;
+  chordType: "major" | "minor" | "diminished" | "power";
+};
+
+export type Vibe = "creepy" | "picky" | "bumpish";
+
+export type pitchLineParameters = {
+  skippiness: number;
+  skippinessDelta: number;
+  rapidity: number;
+  rapidityDelta: number;
+  jazziness: number;
+  jazzinessDelta: number;
+  jumpiness: number;
+  jumpinessDelta: number;
+};
