@@ -34,6 +34,7 @@ import {
   getPowerFourth,
   getPowerFifth,
   getPowerSixth,
+  getAvailableNote,
 } from "@/music/keysAndChords";
 import { tonejsDurationTo16thCount } from "@/music/durations";
 import {
@@ -117,27 +118,27 @@ const getPitches = ({ rootNote, chordType }: Chord) => {
   return pitches;
 };
 
-// const pickPitch = (
-//   chord: Chord,
-//   key: Pitch,
-//   availableNotes: Pitch[],
-//   jazziness: number
-// ) => {
-//   const jazzRandomiser = Math.random();
-//   const pitchRandomiser = Math.random();
-//   let pentatonicScale = [];
-//   let pitch = availableNotes[getAvailableNote(chord.rootNote, availableNotes)];
-//   if (jazzRandomiser < jazziness) {
-//     pentatonicScale = getMinorPentatonicScale(chord.rootNote, availableNotes);
-//     pitch =
-//       pentatonicScale[Math.floor(pitchRandomiser * pentatonicScale.length)];
-//   } else {
-//     pentatonicScale = getMajorPentatonicScale(key, availableNotes);
-//     pitch =
-//       pentatonicScale[Math.floor(pitchRandomiser * pentatonicScale.length)];
-//   }
-//   return pitch;
-// };
+const pickPitch = (
+  chord: Chord,
+  key: Pitch,
+  availableNotes: Pitch[],
+  jazziness: number
+) => {
+  const jazzRandomiser = Math.random();
+  const pitchRandomiser = Math.random();
+  let pentatonicScale = [];
+  let pitch = availableNotes[getAvailableNote(chord.rootNote, availableNotes)];
+  if (jazzRandomiser < jazziness) {
+    pentatonicScale = getMinorPentatonicScale(chord.rootNote, availableNotes);
+    pitch =
+      pentatonicScale[Math.floor(pitchRandomiser * pentatonicScale.length)];
+  } else {
+    pentatonicScale = getMajorPentatonicScale(key, availableNotes);
+    pitch =
+      pentatonicScale[Math.floor(pitchRandomiser * pentatonicScale.length)];
+  }
+  return pitch;
+};
 
 const getAndPushMelody = (
   key: Pitch,
@@ -156,6 +157,8 @@ const getAndPushMelody = (
       const pitchRadomiser = Math.random();
       const jazzRandomiser = Math.random();
       const skipRandomiser = Math.random();
+      const jumpinessRandomiser = Math.random();
+
       if (
         skipRandomiser < 0.15 * parameters.skippiness &&
         lastDuration === "16n"
@@ -178,18 +181,35 @@ const getAndPushMelody = (
         lastDuration = "16n";
         continue;
       }
-      let pentatonicScale = [];
-      if (jazzRandomiser < 1) {
-        pentatonicScale = getMajorPentatonicScale(key, availableNotes);
-        pitch =
-          pentatonicScale[Math.floor(pitchRadomiser * pentatonicScale.length)];
-      } else {
-        pentatonicScale = getMinorPentatonicScale(
-          chord.rootNote,
-          availableNotes
-        );
-        pitch =
-          pentatonicScale[Math.floor(pitchRadomiser * pentatonicScale.length)];
+      pitch = pickPitch(chord, key, availableNotes, parameters.jazziness);
+      if (
+        Math.abs(
+          getAvailableNote(pitch, availableNotes) -
+            getAvailableNote(lastNote, availableNotes)
+        ) >
+        12 * parameters.jumpiness * jumpinessRandomiser
+      ) {
+        pitch = pickPitch(chord, key, availableNotes, parameters.jazziness);
+      }
+      if (
+        Math.abs(
+          getAvailableNote(pitch, availableNotes) -
+            getAvailableNote(lastNote, availableNotes)
+        ) >
+          15 * parameters.jumpiness * jumpinessRandomiser &&
+        parameters.jumpiness * jumpinessRandomiser > 2
+      ) {
+        pitch = pickPitch(chord, key, availableNotes, parameters.jazziness);
+      }
+      if (
+        Math.abs(
+          getAvailableNote(pitch, availableNotes) -
+            getAvailableNote(lastNote, availableNotes)
+        ) >
+          15 * parameters.jumpiness * jumpinessRandomiser &&
+        parameters.jumpiness * jumpinessRandomiser > 3
+      ) {
+        pitch = pickPitch(chord, key, availableNotes, parameters.jazziness);
       }
       let duration = "8n";
       const durationRandomiser = Math.random();

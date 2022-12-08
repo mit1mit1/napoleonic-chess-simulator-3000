@@ -4,7 +4,7 @@ import { pitchNames } from "./types";
 
 const allPitches = [...pitchNames];
 
-const getAvailableNote = (
+export const getAvailableNote = (
   baseNote: Pitch,
   availableNotes: Pitch[] = middleNotes
 ) => {
