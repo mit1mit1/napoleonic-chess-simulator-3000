@@ -32,8 +32,6 @@ import { tonejsDurationTo16thCount } from "@/music/durations";
 
 let instrumentVolume = -24;
 
-const isCreepy = Math.random() > 0.5;
-
 const violin = new Violin({
   minify: true,
 }).toDestination("main");
@@ -43,16 +41,13 @@ const electricGuitar = new ElectricGuitar({
 
 const availableInstruments = [violin, electricGuitar];
 
-let melodyInstrument = isCreepy ? violin : electricGuitar;
-melodyInstrument.volume.value = instrumentVolume;
+let melodyInstrument = electricGuitar;
 let playMelodyInstrument = true;
 
-let countermelodyInstrument = isCreepy ? violin : electricGuitar;
-countermelodyInstrument.volume.value = instrumentVolume;
+let countermelodyInstrument = electricGuitar;
 let playCountermelodyInstrument = true;
 
-let chordsInstrument = isCreepy ? violin : electricGuitar;
-chordsInstrument.volume.value = instrumentVolume;
+let chordsInstrument = electricGuitar;
 let playChordsInstrument = true;
 
 export const addToneJSDurations = (
@@ -88,6 +83,7 @@ export const setVolume = (volume: number) => {
     }
   });
 };
+setVolume(instrumentVolume);
 
 export const setVibe = (vibe: string) => {
   if (vibe === "picky") {
@@ -117,6 +113,12 @@ export const setVibe = (vibe: string) => {
     playChordsInstrument = false;
   }
 };
+const startCreepy = Math.random() > 0.5;
+if (startCreepy) {
+  setVibe("creepy");
+} else {
+  setVibe("picky");
+}
 
 const getPitches = ({ rootNote, chordType }: Chord) => {
   const pitches = [rootNote];
