@@ -5,9 +5,9 @@ import TranslatableText from './components/TranslatableText.vue';
 import TranslationBar from './components/TranslationBar.vue';
 import { Languages, Locations, Players } from "./types";
 import DividedFrance from './components/DividedFrance.vue';
-import { startMusic } from "./utils/music";
 import { initialDialogs } from "./initialDialogs";
 import { defineComponent } from "vue";
+import MusicControl from './components/MusicControl.vue';
 let displayChessBoard = false;
 let displayDividedFrance = true;
 let displayDialogOverlay = true;
@@ -40,20 +40,21 @@ export default defineComponent({
             this.displayChessBoard = false;
         },
 
-        onSoundTrigger() {
-            startMusic();
-        },
 
         setTranslatedWord(word: string, fromLanguage: Languages, toLanguage: Languages) {
             this.translatedWord = word;
             this.fromLanguage = fromLanguage;
             this.toLanguage = toLanguage;
         }
-
     },
 
     components: {
-        ChessBoard, DividedFrance, TranslatableText, DialogOverlay, TranslationBar
+        ChessBoard,
+        DividedFrance,
+        TranslatableText,
+        DialogOverlay,
+        TranslationBar,
+        MusicControl
     }
 });
 </script>
@@ -64,14 +65,16 @@ export default defineComponent({
             <TranslatableText :setTranslatedWord="setTranslatedWord" :from-language="Languages.English"
                 :to-language="Languages.French" text="Napoleonic Chess Simulator 0.01" />
         </h1>
-        <div class="game-screen" id="musical-box">
+        <div class="game-screen">
             <ChessBoard v-if="displayChessBoard" :onVictory="onVictory" :attacked-location="attackedLocation" />
             <DividedFrance v-if="displayDividedFrance" :onAttackLocation="onAttackLocation"
                 :setTranslatedWord="setTranslatedWord" />
+            <div class="music-control-box">
+                <MusicControl />
+            </div>
             <DialogOverlay v-if="displayDialogOverlay"
                 :on-finished-dialog="() => displayDialogOverlay = !displayDialogOverlay" :dialog-lines="availableDialog"
                 :setTranslatedWord="setTranslatedWord" />
-            <button class="napoleonic-button" :onclick="onSoundTrigger">Music?</button>
         </div>
         <TranslationBar :translatedWord="translatedWord" :fromLanguage="fromLanguage" :toLanguage="toLanguage" />
     </main>
@@ -94,7 +97,7 @@ html {
     margin-left: auto;
     margin-right: auto;
     max-width: 1100px;
-    margin-bottom: 40px;
+    margin-bottom: 100px;
 }
 
 
@@ -114,5 +117,10 @@ html {
 .napoleonic-button:hover {
     background-color: #ffb7c5;
     cursor: pointer;
+}
+
+.music-control-box {
+    position: absolute;
+    top: 40px;
 }
 </style>
