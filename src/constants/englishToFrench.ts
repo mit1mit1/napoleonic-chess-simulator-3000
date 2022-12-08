@@ -2,89 +2,239 @@ import type { Dictionary } from "@/types";
 
 export const englishToFrench: Dictionary = {
   ["3000"]: {
-    translations: ["trois mille", "trois milles"],
     englishDefinition: "",
+    translations: ["trois mille", "trois milles"]
   },
-  april: { translations: ["Avril"], englishDefinition: "" },
-  as: { translations: ["comme", "en tant que"], englishDefinition: "" },
-  beg: { translations: ["demander", "supplier"], englishDefinition: "" },
-  butts: { translations: ["mégots", "fesses"], englishDefinition: "" },
-  by: { translations: ["par", "de"], englishDefinition: "" },
-  chess: { translations: ["jeu d'échecs"], englishDefinition: "" },
+  ah: {
+    englishDefinition: "hestitant or excited interjection",
+    translations: ["ah"]
+  },
+  apologise: {
+    englishDefinition: "say sorry, admit wrong",
+    translations: ["s'excuser", "présenter ses excuses"]
+  },
+  april: {
+    englishDefinition: "",
+    translations: ["Avril"]
+  },
+  as: {
+    englishDefinition: "",
+    translations: ["comme", "en tant que"]
+  },
+  beg: {
+    englishDefinition: "ask humbly",
+    translations: ["demander", "supplier"]
+  },
+  butts: {
+    englishDefinition: "",
+    translations: ["mégots", "fesses"]
+  },
+  by: {
+    englishDefinition: "",
+    translations: ["par", "de"]
+  },
+  chess: {
+    englishDefinition: "",
+    translations: ["jeu d'échecs"]
+  },
   district: {
-    translations: ["district", "quartier", "le district"],
     englishDefinition: "",
+    translations: ["district", "quartier", "le district"]
   },
-  every: { translations: ["chaque", "tous les"], englishDefinition: "" },
-  fact: { translations: ["fait"], englishDefinition: "" },
+  ["don't"]: {
+    englishDefinition: "do not",
+    translations: ["ne le faites pas", "ne"]
+  },
+  every: {
+    englishDefinition: "",
+    translations: ["chaque", "tous les"]
+  },
+  fact: {
+    englishDefinition: "",
+    translations: ["fait"]
+  },
   fans: {
-    translations: ["ventilateurs", "fans", "supporters"],
     englishDefinition: "",
+    translations: ["ventilateurs", "fans", "supporters"]
   },
-  for: { translations: ["pour", "pour le site"], englishDefinition: "" },
-  french: { translations: ["français"], englishDefinition: "" },
-  full: { translations: ["complet", "pleine page"], englishDefinition: "" },
-  how: { translations: ["comment"], englishDefinition: "" },
-  i: { translations: ["je"], englishDefinition: "" },
-  in: { translations: ["sur", "à", "à l'adresse"], englishDefinition: "" },
-  is: { translations: ["est", "c'est"], englishDefinition: "" },
-  kick: { translations: ["coup de pied", "kick"], englishDefinition: "" },
-  known: { translations: ["connu", "connu sous"], englishDefinition: "" },
-  ["let's"]: { translations: ["allons-y", "allons"], englishDefinition: "" },
-  mustard: { translations: ["moutarde"], englishDefinition: "" },
-  mind: { translations: ["esprit", "l'esprit"], englishDefinition: "" },
-  never: { translations: ["jamais"], englishDefinition: "" },
-  no: { translations: ["pas de", "non", "aucun"], englishDefinition: "" },
-  of: { translations: ["de", "du site", "sur", "de"], englishDefinition: "" },
-  one: { translations: ["un", "une"], englishDefinition: "" },
-  other: { translations: ["autre", "autres"], englishDefinition: "" },
-  pardon: { translations: ["pardon", "la grâce"], englishDefinition: "" },
-  produces: { translations: ["produit"], englishDefinition: "" },
+  for: {
+    englishDefinition: "",
+    translations: ["pour", "pour le site"]
+  },
+  forgot: {
+    englishDefinition: "failed to remember",
+    translations: ["a oublié", "J'ai oublié"]
+  },
+  french: {
+    englishDefinition: "",
+    translations: ["français"]
+  },
+  full: {
+    englishDefinition: "",
+    translations: ["complet", "pleine page"]
+  },
+  how: {
+    englishDefinition: "",
+    translations: ["comment"]
+  },
+  i: {
+    englishDefinition: "",
+    translations: ["je"]
+  },
+  in: {
+    englishDefinition: "",
+    translations: ["sur", "à", "à l'adresse"]
+  },
+  is: {
+    englishDefinition: "",
+    translations: ["est", "c'est"]
+  },
+  kick: {
+    englishDefinition: "",
+    translations: ["coup de pied", "kick"]
+  },
+  known: {
+    englishDefinition: "",
+    translations: ["connu", "connu sous"]
+  },
+  ["let's"]: {
+    englishDefinition: "",
+    translations: ["allons-y", "allons"]
+  },
+  mind: {
+    englishDefinition: "",
+    translations: ["esprit", "l'esprit"]
+  },
+  mustard: {
+    englishDefinition: "",
+    translations: ["moutarde"]
+  },
+  never: {
+    englishDefinition: "",
+    translations: ["jamais"]
+  },
+  no: {
+    englishDefinition: "",
+    translations: ["pas de", "non", "aucun"]
+  },
+  of: {
+    englishDefinition: "",
+    translations: ["de", "du site", "sur", "de"]
+  },
+  one: {
+    englishDefinition: "",
+    translations: ["un", "une"]
+  },
+  other: {
+    englishDefinition: "",
+    translations: ["autre", "autres"]
+  },
+  pardon: {
+    englishDefinition: "",
+    translations: ["pardon", "la grâce"]
+  },
+  produces: {
+    englishDefinition: "",
+    translations: ["produit"]
+  },
   ["re-enacted"]: {
-    translations: ["réédité", "rétabli"],
     englishDefinition: "",
+    translations: ["réédité", "rétabli"]
   },
-  renowned: { translations: ["renommé", "célèbre"], englishDefinition: "" },
-  say: { translations: ["dites", "dire"], englishDefinition: "" },
-  scene: { translations: ["scène"], englishDefinition: "" },
+  renowned: {
+    englishDefinition: "",
+    translations: ["renommé", "célèbre"]
+  },
+  say: {
+    englishDefinition: "",
+    translations: ["dites", "dire"]
+  },
+  scene: {
+    englishDefinition: "",
+    translations: ["scène"]
+  },
   simulator: {
-    translations: ["simulatrice", "simulateur"],
     englishDefinition: "",
+    translations: ["simulatrice", "simulateur"]
   },
-  ski: { translations: ["ski", "le ski"], englishDefinition: "" },
+  sire: {
+    englishDefinition: "respectful title to address a monarch",
+    translations: ["sire", "le sire", "le seigneur"]
+  },
+  ski: {
+    englishDefinition: "",
+    translations: ["ski", "le ski"]
+  },
   some: {
-    translations: ["un peu de", "quelques", "un certain"],
     englishDefinition: "",
+    translations: ["un peu de", "quelques", "un certain"]
   },
-  stop: { translations: ["arrêter", "arrêtez", "stop"], englishDefinition: "" },
-  the: { translations: ["le", "le site"], englishDefinition: "" },
-  thing: { translations: ["chose", "objet", "truc"], englishDefinition: "" },
+  speak: {
+    englishDefinition: "say aloud, or, understand (a language)",
+    translations: ["parler", "s'adresser", "exprimer"]
+  },
+  stop: {
+    englishDefinition: "",
+    translations: ["arrêter", "arrêtez", "stop"]
+  },
+  the: {
+    englishDefinition: "",
+    translations: ["le", "le site"]
+  },
+  thing: {
+    englishDefinition: "",
+    translations: ["chose", "objet", "truc"]
+  },
   things: {
-    translations: ["choses", "les choses", "sites"],
     englishDefinition: "",
+    translations: ["choses", "les choses", "sites"]
   },
-  thousands: { translations: ["milliers"], englishDefinition: "" },
-  uh: { translations: ["hum"], englishDefinition: "" },
-  warlord: {
-    translations: ["seigneur de guerre", "chef de guerre"],
+  thousands: {
     englishDefinition: "",
+    translations: ["milliers"]
+  },
+  uh: {
+    englishDefinition: "",
+    translations: ["hum"]
+  },
+  um: {
+    englishDefinition: "uncertain exclamation",
+    translations: ["hum", "um"]
+  },
+  warlord: {
+    englishDefinition: "",
+    translations: ["seigneur de guerre", "chef de guerre"]
   },
   wassup: {
-    translations: ["quoi de neuf", "qu'est-ce qui se passe"],
     englishDefinition: "",
+    translations: ["quoi de neuf", "qu'est-ce qui se passe"]
   },
   wassupppp: {
-    translations: ["quoi de neuf", "qu'est-ce qui se passe"],
     englishDefinition: "",
+    translations: ["quoi de neuf", "qu'est-ce qui se passe"]
   },
   waterfall: {
-    translations: ["cascade", "chute d'eau"],
     englishDefinition: "",
+    translations: ["cascade", "chute d'eau"]
   },
-  world: { translations: ["monde"], englishDefinition: "" },
-  yo: { translations: ["bonjour", "salut", "hé"], englishDefinition: "" },
-  you: { translations: ["vous", "tu"], englishDefinition: "" },
-  your: { translations: ["votre", "vous"], englishDefinition: "" },
-  sire: { translations: ["sire", "le sire", "le seigneur"], englishDefinition: "Respectful title to address a monarch."}
-
+  world: {
+    englishDefinition: "",
+    translations: ["monde"]
+  },
+  yes: {
+    englishDefinition: "agreement or affirmative - it is correct or right",
+    translations: ["oui"],
+  },
+  yo: {
+    englishDefinition: "",
+    translations: ["bonjour", "salut", "hé"]
+  },
+  you: {
+    englishDefinition: "",
+    translations: ["vous", "tu"]
+  },
+  your: {
+    englishDefinition: "",
+    translations: ["votre", "vous"]
+  }
 };

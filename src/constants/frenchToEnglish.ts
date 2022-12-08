@@ -1,34 +1,88 @@
 import type { Dictionary } from "@/types";
 
 export const frenchToEnglish: Dictionary = {
-  hum: { translations: ["um"], englishDefinition: "expression of uncertainty or hesitence" },
-  depuis: { translations: ["since", "from"], englishDefinition: "" },
-  quand: { translations: ["when", "at"], englishDefinition: "" },
-  ce: { translations: ["this", "that"], englishDefinition: "" },
-  mot: { translations: ["word", "note"], englishDefinition: "" },
-  connaissez: { translations: ["know", "know about"], englishDefinition: "" },
-  vous: { translations: ["you", "you at"], englishDefinition: "" },
+  à: {
+    englishDefinition: "",
+    translations: ["in", "to", "at"]
+  },
+  ai: {
+    englishDefinition: "",
+    translations: ["have"]
+  },
+  ce: {
+    englishDefinition: "",
+    translations: ["this", "that"]
+  },
+  connaissez: {
+    englishDefinition: "",
+    translations: ["know", "know about"]
+  },
   ["connaissez-vous"]: {
-    translations: ["do you know", "are you familiar with"],
     englishDefinition: "",
+    translations: ["do you know", "are you familiar with"]
   },
-  j: { translations: ["I"], englishDefinition: "" },
-  ai: { translations: ["have"], englishDefinition: "" },
-  ["j'ai"]: { translations: ["I have"], englishDefinition: "" },
-  oublié: { translations: ["forgotten", "forgot"], englishDefinition: "" },
+  depuis: {
+    englishDefinition: "",
+    translations: ["since", "from"]
+  },
+  français: {
+    englishDefinition: "",
+    translations: ["French"]
+  },
+  hum: {
+    englishDefinition: "expression of uncertainty or hesitence",
+    translations: ["um"]
+  },
+  j: {
+    englishDefinition: "",
+    translations: ["I"]
+  },
+  ["j'ai"]: {
+    englishDefinition: "",
+    translations: ["I have"]
+  },
   ["l'anglais"]: {
-    translations: ["English", "the English language"],
     englishDefinition: "",
+    translations: ["English", "the English language"]
   },
-  ["n'existait"]: { translations: ["didn't exist"], englishDefinition: "" },
-  pas: { translations: ["no", "not", "step"], englishDefinition: "" },
   ["l'époque"]: {
-    translations: ["the time", "at the time", "the era"],
     englishDefinition: "",
+    translations: ["the time", "at the time", "the era"]
   },
-  à: { translations: ["in", "to", "at"], englishDefinition: "" },
-  le: { translations: ["the"], englishDefinition: "" },
-  français: { translations: ["French"], englishDefinition: "" },
-  sire: { translations: ["sire"], englishDefinition: "respectful title to address a monarch."}
-
+  le: {
+    englishDefinition: "",
+    translations: ["the"]
+  },
+  mot: {
+    englishDefinition: "",
+    translations: ["word", "note"]
+  },
+  ["n'existait"]: {
+    englishDefinition: "",
+    translations: ["didn't exist"]
+  },
+  oh: {
+    englishDefinition: "interjection of surprise or realisation",
+    translations: ["oh"]
+  },
+  oublié: {
+    englishDefinition: "",
+    translations: ["forgotten", "forgot"]
+  },
+  pas: {
+    englishDefinition: "",
+    translations: ["no", "not", "step"]
+  },
+  quand: {
+    englishDefinition: "",
+    translations: ["when", "at"]
+  },
+  sire: {
+    englishDefinition: "respectful title to address a monarch",
+    translations: ["sire"]
+  },
+  vous: {
+    englishDefinition: "",
+    translations: ["you", "you at"]
+  }
 };

@@ -5,7 +5,7 @@ import TranslatableText from './components/TranslatableText.vue';
 import TranslationBar from './components/TranslationBar.vue';
 import { Languages, Locations, Players } from "./types";
 import DividedFrance from './components/DividedFrance.vue';
-import { initialDialogs } from "./initialDialogs";
+import { initialDialogs } from "./constants/initialDialogs";
 import { defineComponent } from "vue";
 import MusicControl from './components/MusicControl.vue';
 let displayChessBoard = false;

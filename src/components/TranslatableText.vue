@@ -29,6 +29,7 @@ export default defineComponent({
             }
             const translatedWords = translate(word, this.fromLanguage as Languages, this.toLanguage as Languages).translations;
             if (translatedWords.length === 0) {
+                console.log('no transations for ', word)
                 const originalLanguageMessage = new SpeechSynthesisUtterance();
                 originalLanguageMessage.text = word;
                 originalLanguageMessage.lang = Languages.French;

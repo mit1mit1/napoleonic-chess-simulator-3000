@@ -1,4 +1,4 @@
-import { Languages } from "./types";
+import { Languages } from "@/types";
 
 export const initialDialogs = [
   {

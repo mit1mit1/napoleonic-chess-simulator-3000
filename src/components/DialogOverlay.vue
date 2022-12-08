@@ -3,10 +3,21 @@ import NapoleonFigure from "@/vue-svgs/NapoleonFigure.vue";
 import TranslatableText from "@/components/TranslatableText.vue";
 import SoldierFigure from "@/vue-svgs/SoldierFigure.vue";
 import { defineComponent } from "vue";
+import { Languages } from "@/types";
 
 let dialogLineNumber = 0;
 let line = [] as Array<{ words: string, fromLanguage: string, toLanguage: string }>;
 let speaker = ""
+
+const getLang = (speaker: string, fromLanguage: string) => {
+    if (speaker === "Pierre") {
+        return Languages.French;
+    }
+    if (speaker === "Napoleon") {
+        return Languages.English;
+    }
+    return fromLanguage;
+}
 export default defineComponent({
     props: {
         onFinishedDialog: Function,
@@ -32,11 +43,15 @@ export default defineComponent({
             }
         },
         incrementLine() {
+            if (this.dialogLineNumber === 0) {
+                this.readLine();
+            }
             if (this.dialogLineNumber + 1 < this.lineCount) {
                 this.dialogLineNumber = this.dialogLineNumber + 1;
                 const dialogLine = ((this.dataDialogLines ? this.dataDialogLines[this.dialogLineNumber] : []) as { line: Array<{ words: string, fromLanguage: string, toLanguage: string }>, speaker: string });
                 this.line = dialogLine.line;
                 this.speaker = dialogLine.speaker;
+                this.readLine()
             }
         },
         decrementLine() {
@@ -45,8 +60,17 @@ export default defineComponent({
                 const dialogLine = ((this.dataDialogLines ? this.dataDialogLines[this.dialogLineNumber] : []) as { line: Array<{ words: string, fromLanguage: string, toLanguage: string }>, speaker: string });
                 this.line = dialogLine.line;
                 this.speaker = dialogLine.speaker;
+                this.readLine()
             }
         },
+        readLine() {
+            const newUtterence = new SpeechSynthesisUtterance();
+            this.line.forEach(chunk => {
+                newUtterence.text = newUtterence.text.concat(" ", chunk.words);
+            })
+            newUtterence.lang = getLang(this.speaker, "fr");
+            window.speechSynthesis.speak(newUtterence);
+        }
     },
 
     components: {
@@ -70,9 +94,8 @@ export default defineComponent({
                     <SoldierFigure />
                 </svg>
                 <div v-if="lineCount > 0" class="textBlock">
-                    <TranslatableText v-for="chunk in line" v-bind:key="chunk.words"
-                        :from-language="chunk.fromLanguage" :to-language="chunk.toLanguage" :text="chunk.words"
-                        :setTranslatedWord="setTranslatedWord" />
+                    <TranslatableText v-for="chunk in line" v-bind:key="chunk.words" :from-language="chunk.fromLanguage"
+                        :to-language="chunk.toLanguage" :text="chunk.words" :setTranslatedWord="setTranslatedWord" />
                 </div>
             </div>
             <div>
