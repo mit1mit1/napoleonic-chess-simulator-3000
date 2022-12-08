@@ -47,7 +47,7 @@ import {
 
 let instrumentVolume = -24;
 const startCreepy = Math.random() > 0.5;
-let currentVibe: Vibe = startCreepy ? "creepy" : "picky";
+let currentVibe: Vibe = startCreepy ? "creepy" : "pleasentlypicky";
 
 const violin = new Violin({
   minify: true,

@@ -28,9 +28,11 @@ export default defineComponent({
         <div>
             <select @input="(event: any) => setVibe(event.target.value)" name="music-vibes" id="music-vibes">
                 <option value="">Select your option</option>
-                <option value="picky">Picky</option>
+                <option value="pleasentlypicky">Picky</option>
                 <option value="creepy">Creepy</option>
                 <option value="bumpish">Bumpish</option>
+                <option value="basicpicky">Picky (Basic)</option>
+                <option value="funkypicky">Picky (Funky)</option>
             </select>
         </div>
     </div>

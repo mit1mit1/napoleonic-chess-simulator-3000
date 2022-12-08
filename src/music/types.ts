@@ -83,15 +83,23 @@ export type Chord = {
   chordType: "major" | "minor" | "diminished" | "power";
 };
 
-export type Vibe = "creepy" | "picky" | "bumpish";
+export type Vibe = "creepy" | "pleasentlypicky" | "bumpish" | "basicpicky" | "funkypicky";
 
 export type pitchLineParameters = {
   skippiness: number;
+  maxSkippiness: number;
+  minSkippiness: number;
   skippinessDelta: number;
   rapidity: number;
+  maxRapidity: number;
+  minRapidity: number;
   rapidityDelta: number;
   jazziness: number;
+  maxJazziness: number;
+  minJazziness: number;
   jazzinessDelta: number;
   jumpiness: number;
+  maxJumpiness: number;
+  minJumpiness: number;
   jumpinessDelta: number;
 };
