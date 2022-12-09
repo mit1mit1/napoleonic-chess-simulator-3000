@@ -50,6 +50,24 @@ export const allLocations = Object.values(Locations).sort((a, b) =>
   a.localeCompare(b)
 );
 
+export type DialogLineChunk = {
+  words: string;
+  fromLanguage?: Languages;
+  toLanguage?: Languages;
+};
+
+export type DialogLine = {
+  speaker: "Pierre" | "Napoleon";
+  chunks: Array<DialogLineChunk>;
+  vibe?: "muttered";
+};
+
+export type Dialogs = Array<{
+  triggerCondition: (gameState: Record<string, any>) => boolean;
+  triggered: boolean;
+  lines: Array<DialogLine>;
+}>;
+
 export interface LocationInfo {
   name: string;
   cityCoordinates: {
@@ -67,3 +85,7 @@ export type Dictionary = Record<
   string,
   { translations: string[]; englishDefinition: string }
 >;
+
+export type GameState = {
+  selectedLocation?: Locations;
+};

@@ -25,6 +25,7 @@ export default defineComponent({
     props: {
         onAttackLocation: Function,
         setTranslatedWord: Function,
+        onSelectLocation: Function,
     },
 
     data() {
@@ -38,6 +39,7 @@ export default defineComponent({
             this.startedGame = true;
             this.selectedLocation = (clickedLocation === this.selectedLocation) ? Locations.None : clickedLocation;
             this.selectedLocationInfo = locationInfos[this.selectedLocation];
+            this.onSelectLocation && this.onSelectLocation(this.selectedLocation);
         },
         handleDistrictAttack(clickedLocation: Locations) {
             alert('Attacking ' + locationInfos[clickedLocation]?.name);

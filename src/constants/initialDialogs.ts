@@ -1,12 +1,13 @@
-import { Languages } from "@/types";
+import { type Dialogs, Languages, type GameState } from "@/types";
 
-export const initialDialogs = [
+export const initialDialogs: Dialogs = [
   {
-    triggerCondition: () => true,
+    triggerCondition: (gameState: GameState) => true,
+    triggered: false,
     lines: [
       {
         speaker: "Napoleon",
-        line: [
+        chunks: [
           {
             words: "Pierre?!? Yo, wassupppp!",
             fromLanguage: Languages.English,
@@ -16,7 +17,7 @@ export const initialDialogs = [
       },
       {
         speaker: "Pierre",
-        line: [
+        chunks: [
           {
             words: "Hum, '",
             fromLanguage: Languages.French,
@@ -37,7 +38,7 @@ export const initialDialogs = [
       },
       {
         speaker: "Napoleon",
-        line: [
+        chunks: [
           {
             words: "Uh - I beg your pardon?",
             fromLanguage: Languages.English,
@@ -47,7 +48,7 @@ export const initialDialogs = [
       },
       {
         speaker: "Pierre",
-        line: [
+        chunks: [
           {
             words: "Oh, j'ai oublié, le français n'existait pas à l'époque.",
             fromLanguage: Languages.French,
@@ -58,9 +59,10 @@ export const initialDialogs = [
       },
       {
         speaker: "Pierre",
-        line: [
+        chunks: [
           {
-            words: "Ah, I, um, apologise sire. I forgot, you don't speak French.",
+            words:
+              "Ah, I, um, apologise sire. I forgot, you don't speak French.",
             fromLanguage: Languages.English,
             toLanguage: Languages.French,
           },
@@ -68,7 +70,7 @@ export const initialDialogs = [
       },
       {
         speaker: "Napoleon",
-        line: [
+        chunks: [
           {
             words: "Frennnnchhh??",
             fromLanguage: Languages.English,
@@ -78,9 +80,10 @@ export const initialDialogs = [
       },
       {
         speaker: "Pierre",
-        line: [
+        chunks: [
           {
-            words: "Uh - never mind, Sire. Let's kick some warlord - how you say? Ah yes, butts. ",
+            words:
+              "Uh - never mind, Sire. Let's kick some warlord - how you say? Ah yes, butts. ",
             fromLanguage: Languages.English,
             toLanguage: Languages.French,
           },
@@ -88,6 +91,48 @@ export const initialDialogs = [
             words: "Scrableau!",
             fromLanguage: Languages.French,
             toLanguage: Languages.English,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    triggerCondition: (gameState: GameState) =>
+      !!gameState.selectedLocation,
+    triggered: false,
+    lines: [
+      {
+        speaker: "Napoleon",
+        chunks: [
+          {
+            words: "Pierre?!? What the hell is this?",
+            fromLanguage: Languages.English,
+            toLanguage: Languages.French,
+          },
+        ],
+      },
+      {
+        speaker: "Pierre",
+        chunks: [
+          {
+            words: "Hum... ",
+            fromLanguage: Languages.French,
+            toLanguage: Languages.English,
+          },
+          {
+            words: "'French', Sire.",
+            fromLanguage: Languages.English,
+            toLanguage: Languages.French,
+          },
+        ],
+      },
+      {
+        speaker: "Napoleon",
+        chunks: [
+          {
+            words: "Urgh",
+            fromLanguage: Languages.English,
+            toLanguage: Languages.French,
           },
         ],
       },

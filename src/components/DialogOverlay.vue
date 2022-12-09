@@ -3,10 +3,10 @@ import NapoleonFigure from "@/vue-svgs/NapoleonFigure.vue";
 import TranslatableText from "@/components/TranslatableText.vue";
 import SoldierFigure from "@/vue-svgs/SoldierFigure.vue";
 import { defineComponent } from "vue";
-import { Languages } from "@/types";
+import { type DialogLine, type DialogLineChunk, Languages } from "@/types";
 
 let dialogLineNumber = 0;
-let line = [] as Array<{ words: string, fromLanguage: string, toLanguage: string }>;
+let line = [] as Array<DialogLineChunk>;
 let speaker = ""
 
 const getLang = (speaker: string, fromLanguage: string) => {
@@ -18,18 +18,43 @@ const getLang = (speaker: string, fromLanguage: string) => {
     }
     return fromLanguage;
 }
+
+const getVoice = (speaker: string) => {
+    const synth = window.speechSynthesis;
+    const voices = synth.getVoices();
+
+    if (speaker === "Pierre") {
+        return voices.find(voice => voice.name === "Google français");
+    }
+    if (speaker === "Napoleon") {
+        return voices.find(voice => voice.name === "Microsoft James - English (Australia)");
+    }
+}
+
+const getRate = (speaker: string) => {
+    if (speaker === "Pierre") {
+        return 1.2;
+    }
+    if (speaker === "Napoleon") {
+        return 1.1;
+    }
+    return 1;
+}
+
 export default defineComponent({
     props: {
         onFinishedDialog: Function,
-        dialogLines: Array,
+        dialogLines: Array<DialogLine>,
         setTranslatedWord: Function,
     },
 
     data(props) {
         if (props.dialogLines && line.length === 0) {
-            const dialogLine = (props.dialogLines[dialogLineNumber] as { line: Array<{ words: string, fromLanguage: string, toLanguage: string }>, speaker: string });
-            line = dialogLine.line;
-            speaker = dialogLine.speaker;
+            const dialogLine = (props.dialogLines[dialogLineNumber] as DialogLine);
+            if (dialogLine) {
+                line = dialogLine.chunks;
+                speaker = dialogLine.speaker;
+            }
         }
         return {
             dataDialogLines: props.dialogLines, dialogLineNumber, line, lineCount: props.dialogLines?.length ?? 0, speaker
@@ -48,8 +73,8 @@ export default defineComponent({
             }
             if (this.dialogLineNumber + 1 < this.lineCount) {
                 this.dialogLineNumber = this.dialogLineNumber + 1;
-                const dialogLine = ((this.dataDialogLines ? this.dataDialogLines[this.dialogLineNumber] : []) as { line: Array<{ words: string, fromLanguage: string, toLanguage: string }>, speaker: string });
-                this.line = dialogLine.line;
+                const dialogLine = ((this.dataDialogLines ? this.dataDialogLines[this.dialogLineNumber] : []) as DialogLine);
+                this.line = dialogLine.chunks;
                 this.speaker = dialogLine.speaker;
                 this.readLine()
             }
@@ -57,8 +82,8 @@ export default defineComponent({
         decrementLine() {
             if (this.dialogLineNumber > 0) {
                 this.dialogLineNumber = this.dialogLineNumber - 1;
-                const dialogLine = ((this.dataDialogLines ? this.dataDialogLines[this.dialogLineNumber] : []) as { line: Array<{ words: string, fromLanguage: string, toLanguage: string }>, speaker: string });
-                this.line = dialogLine.line;
+                const dialogLine = ((this.dataDialogLines ? this.dataDialogLines[this.dialogLineNumber] : []) as DialogLine);
+                this.line = dialogLine.chunks;
                 this.speaker = dialogLine.speaker;
                 this.readLine()
             }
@@ -69,6 +94,11 @@ export default defineComponent({
                 newUtterence.text = newUtterence.text.concat(" ", chunk.words);
             })
             newUtterence.lang = getLang(this.speaker, "fr");
+            const customVoice = getVoice(this.speaker);
+            newUtterence.rate = getRate(this.speaker);
+            if (customVoice) {
+                newUtterence.voice = customVoice;
+            }
             window.speechSynthesis.speak(newUtterence);
         }
     },
@@ -84,8 +114,8 @@ export default defineComponent({
     <div class="visibleModal">
         <div class="modalContent" @keyup.esc="handleFinished" tabindex="0">
             <button class="modalCloseButton napoleonic-button" :onclick="handleFinished">x</button>
-            <div>
-                <h2 class="modalTitle">{{ speaker }}</h2>
+            <h2 class="modalTitle">{{ speaker }}</h2>
+            <div class="speaker-div">
                 <svg class="speaker-svg" v-if="speaker === 'Napoleon'" viewBox="0 0 300 350" height="200" width="200"
                     xmlns="http://www.w3.org/2000/svg">
                     <NapoleonFigure />
@@ -93,10 +123,10 @@ export default defineComponent({
                 <svg class="speaker-svg" v-if="speaker === 'Pierre'" viewBox="0 0 300 350" height="200" width="200">
                     <SoldierFigure />
                 </svg>
-                <div v-if="lineCount > 0" class="textBlock">
-                    <TranslatableText v-for="chunk in line" v-bind:key="chunk.words" :from-language="chunk.fromLanguage"
-                        :to-language="chunk.toLanguage" :text="chunk.words" :setTranslatedWord="setTranslatedWord" />
-                </div>
+            </div>
+            <div v-if="lineCount > 0" class="textBlock">
+                <TranslatableText v-for="chunk in line" v-bind:key="chunk.words" :from-language="chunk.fromLanguage"
+                    :to-language="chunk.toLanguage" :text="chunk.words" :setTranslatedWord="setTranslatedWord" />
             </div>
             <div>
                 <!-- <button v-if="dialogLineNumber > 0" :onclick="decrementLine">Prev</button> -->
@@ -112,6 +142,11 @@ export default defineComponent({
 .speaker-svg {
     max-height: 150px;
     max-width: 175px;
+}
+
+.speaker-div {
+    display: inline-block;
+    height: 100%;
 }
 
 .textBlock {
@@ -149,6 +184,7 @@ export default defineComponent({
     padding: 20px 30px 25px 30px;
     height: inherit;
     overflow: auto;
+    min-height: 150px;
     padding-bottom: 50px;
 }
 
