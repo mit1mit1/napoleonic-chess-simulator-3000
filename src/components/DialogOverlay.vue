@@ -58,7 +58,6 @@ export default defineComponent({
     methods: {
         handleFinished() {
             if (this.currentDialog) {
-                console.log('setting triggered on dialog')
                 this.currentDialog.triggered = true;
                 this.dialogLineNumber = 0;
             }
