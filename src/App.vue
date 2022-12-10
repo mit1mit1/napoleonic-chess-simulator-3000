@@ -3,16 +3,12 @@ import ChessBoard from './components/ChessBoard.vue';
 import DialogOverlay from './components/DialogOverlay.vue';
 import TranslatableText from './components/TranslatableText.vue';
 import TranslationBar from './components/TranslationBar.vue';
-import { Languages, Locations, Players, type GameState } from "./types";
+import { Languages, Locations, Players, } from "./types";
 import DividedFrance from './components/DividedFrance.vue';
-import { initialDialogs } from "./constants/initialDialogs";
 import { defineComponent } from "vue";
 import MusicControl from './components/MusicControl.vue';
 let displayChessBoard = false;
 let displayDividedFrance = true;
-let displayDialogOverlay = true;
-const availableDialogs = [...initialDialogs];
-let gameState: GameState = {};
 
 let translatedWord = "";
 let fromLanguage = Languages.English
@@ -23,7 +19,7 @@ let attackedLocation: Locations | undefined = undefined;
 export default defineComponent({
     data() {
         return {
-            gameState, Languages, displayChessBoard, displayDividedFrance, displayDialogOverlay, attackedLocation, translatedWord, fromLanguage, toLanguage, availableDialogs
+            Languages, displayChessBoard, displayDividedFrance, attackedLocation, translatedWord, fromLanguage, toLanguage
         }
     },
 
@@ -46,23 +42,6 @@ export default defineComponent({
             this.fromLanguage = fromLanguage;
             this.toLanguage = toLanguage;
         },
-
-        setSelectedLocation(location?: Locations) {
-            this.gameState.selectedLocation = location;
-        },
-
-        // Maybe move this inside dialog overlay?
-        checkCurrentDialog() {
-            const dialog = availableDialogs.find(dialog => dialog.triggerCondition(gameState) && !dialog.triggered);
-            if (dialog) {
-                // dialog.triggered = true;
-                this.displayDialogOverlay = true;
-                return availableDialogs.indexOf(dialog);
-            } else {
-                this.displayDialogOverlay = false;
-            }
-        }
-
     },
 
     components: {
@@ -85,15 +64,11 @@ export default defineComponent({
         <div class="game-screen">
             <ChessBoard v-if="displayChessBoard" :onVictory="onVictory" :attacked-location="attackedLocation" />
             <DividedFrance v-if="displayDividedFrance" :onAttackLocation="onAttackLocation"
-                :onSelectLocation="setSelectedLocation" :setTranslatedWord="setTranslatedWord" />
+                :setTranslatedWord="setTranslatedWord" />
             <div class="music-control-box">
                 <MusicControl />
             </div>
-            <div v-for="(dialog, index) in availableDialogs">
-                <DialogOverlay v-if="displayDialogOverlay && index === checkCurrentDialog()"
-                    :on-finished-dialog="() => displayDialogOverlay = !displayDialogOverlay"
-                    :dialog-lines="dialog.lines" :setTranslatedWord="setTranslatedWord" />
-            </div>
+            <DialogOverlay :setTranslatedWord="setTranslatedWord" />
         </div>
         <TranslationBar :translatedWord="translatedWord" :fromLanguage="fromLanguage" :toLanguage="toLanguage" />
     </main>

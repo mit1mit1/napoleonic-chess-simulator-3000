@@ -17,6 +17,7 @@ import ValenceDistrict from '@/vue-svgs/france/ValenceDistrict.vue';
 import { defineComponent } from 'vue';
 import TranslatableText from '@/components/TranslatableText.vue';
 import LocationInfo from './LocationInfo.vue';
+import { gameState } from '@/gameState'
 
 
 let startedGame = false;
@@ -25,7 +26,6 @@ export default defineComponent({
     props: {
         onAttackLocation: Function,
         setTranslatedWord: Function,
-        onSelectLocation: Function,
     },
 
     data() {
@@ -39,7 +39,7 @@ export default defineComponent({
             this.startedGame = true;
             this.selectedLocation = (clickedLocation === this.selectedLocation) ? Locations.None : clickedLocation;
             this.selectedLocationInfo = locationInfos[this.selectedLocation];
-            this.onSelectLocation && this.onSelectLocation(this.selectedLocation);
+            gameState.setSelectedLocation(this.selectedLocation);
         },
         handleDistrictAttack(clickedLocation: Locations) {
             alert('Attacking ' + locationInfos[clickedLocation]?.name);

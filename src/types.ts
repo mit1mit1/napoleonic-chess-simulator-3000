@@ -1,3 +1,9 @@
+export type GameState = {
+  selectedLocation?: Locations;
+  setSelectedLocation: (location: Locations) => void;
+  viewedDialogue: Array<number>;
+};
+
 export enum Languages {
   English = "en",
   French = "fr",
@@ -63,7 +69,7 @@ export type DialogLine = {
 };
 
 export type Dialogs = Array<{
-  triggerCondition: (gameState: Record<string, any>) => boolean;
+  triggerCondition: (gameState: GameState) => boolean;
   triggered: boolean;
   lines: Array<DialogLine>;
 }>;
@@ -85,7 +91,3 @@ export type Dictionary = Record<
   string,
   { translations: string[]; englishDefinition: string }
 >;
-
-export type GameState = {
-  selectedLocation?: Locations;
-};

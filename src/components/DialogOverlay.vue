@@ -2,12 +2,13 @@
 import NapoleonFigure from "@/vue-svgs/NapoleonFigure.vue";
 import TranslatableText from "@/components/TranslatableText.vue";
 import SoldierFigure from "@/vue-svgs/SoldierFigure.vue";
-import { defineComponent } from "vue";
+import { defineComponent, reactive } from "vue";
 import { type DialogLine, type DialogLineChunk, Languages } from "@/types";
-
+import { initialDialogs } from "@/constants/initialDialogs";
+import { gameState } from "@/gameState";
+const availableDialogs = reactive([...initialDialogs]);
 let dialogLineNumber = 0;
-let line = [] as Array<DialogLineChunk>;
-let speaker = ""
+let displayDialogOverlay = false;
 
 const getLang = (speaker: string, fromLanguage: string) => {
     if (speaker === "Pierre") {
@@ -43,64 +44,69 @@ const getRate = (speaker: string) => {
 
 export default defineComponent({
     props: {
-        onFinishedDialog: Function,
         dialogLines: Array<DialogLine>,
         setTranslatedWord: Function,
     },
 
     data(props) {
-        if (props.dialogLines && line.length === 0) {
-            const dialogLine = (props.dialogLines[dialogLineNumber] as DialogLine);
-            if (dialogLine) {
-                line = dialogLine.chunks;
-                speaker = dialogLine.speaker;
-            }
-        }
         return {
-            dataDialogLines: props.dialogLines, dialogLineNumber, line, lineCount: props.dialogLines?.length ?? 0, speaker
+            dataDialogLines: props.dialogLines, dialogLineNumber, displayDialogOverlay,
         }
     },
 
+
     methods: {
         handleFinished() {
-            if (this.onFinishedDialog) {
-                this.onFinishedDialog();
+            if (this.currentDialog) {
+                console.log('setting triggered on dialog')
+                this.currentDialog.triggered = true;
+                this.dialogLineNumber = 0;
             }
+
         },
         incrementLine() {
             if (this.dialogLineNumber === 0) {
-                this.readLine();
+                this.readLine(this.dialogLineNumber);
             }
-            if (this.dialogLineNumber + 1 < this.lineCount) {
+            if (this.dialogLineNumber + 1 < (this.currentDialog?.lines?.length ?? 0)) {
                 this.dialogLineNumber = this.dialogLineNumber + 1;
-                const dialogLine = ((this.dataDialogLines ? this.dataDialogLines[this.dialogLineNumber] : []) as DialogLine);
-                this.line = dialogLine.chunks;
-                this.speaker = dialogLine.speaker;
-                this.readLine()
+                this.readLine(this.dialogLineNumber)
             }
         },
         decrementLine() {
             if (this.dialogLineNumber > 0) {
                 this.dialogLineNumber = this.dialogLineNumber - 1;
-                const dialogLine = ((this.dataDialogLines ? this.dataDialogLines[this.dialogLineNumber] : []) as DialogLine);
-                this.line = dialogLine.chunks;
-                this.speaker = dialogLine.speaker;
-                this.readLine()
+                this.readLine(this.dialogLineNumber)
             }
         },
-        readLine() {
+        readLine(lineNumber: number) {
             const newUtterence = new SpeechSynthesisUtterance();
-            this.line.forEach(chunk => {
+            const readLine = this.currentDialog?.lines[lineNumber];
+            readLine?.chunks.forEach(chunk => {
                 newUtterence.text = newUtterence.text.concat(" ", chunk.words);
             })
-            newUtterence.lang = getLang(this.speaker, "fr");
-            const customVoice = getVoice(this.speaker);
-            newUtterence.rate = getRate(this.speaker);
+            newUtterence.lang = getLang(readLine?.speaker ?? "", "fr");
+            const customVoice = getVoice(readLine?.speaker ?? "");
+            newUtterence.rate = getRate(readLine?.speaker ?? "");
             if (customVoice) {
                 newUtterence.voice = customVoice;
             }
             window.speechSynthesis.speak(newUtterence);
         }
+    },
+
+    computed: {
+        currentDialog() {
+            const dialog = availableDialogs.find(dialog => dialog.triggerCondition(gameState) && !dialog.triggered);
+            if (dialog) {
+                return dialog;
+            } else {
+                return undefined;
+            }
+        },
+        currentLine() {
+            return this.currentDialog?.lines[this.dialogLineNumber]
+        },
     },
 
     components: {
@@ -110,29 +116,33 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="greyBackground" :onclick="handleFinished"></div>
-    <div class="visibleModal">
-        <div class="modalContent" @keyup.esc="handleFinished" tabindex="0">
-            <button class="modalCloseButton napoleonic-button" :onclick="handleFinished">x</button>
-            <h2 class="modalTitle">{{ speaker }}</h2>
-            <div class="speaker-div">
-                <svg class="speaker-svg" v-if="speaker === 'Napoleon'" viewBox="0 0 300 350" height="200" width="200"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <NapoleonFigure />
-                </svg>
-                <svg class="speaker-svg" v-if="speaker === 'Pierre'" viewBox="0 0 300 350" height="200" width="200">
-                    <SoldierFigure />
-                </svg>
-            </div>
-            <div v-if="lineCount > 0" class="textBlock">
-                <TranslatableText v-for="chunk in line" v-bind:key="chunk.words" :from-language="chunk.fromLanguage"
-                    :to-language="chunk.toLanguage" :text="chunk.words" :setTranslatedWord="setTranslatedWord" />
-            </div>
-            <div>
-                <!-- <button v-if="dialogLineNumber > 0" :onclick="decrementLine">Prev</button> -->
-                <button class="napoleonic-button " v-if="dialogLineNumber + 1 < lineCount"
-                    :onclick="incrementLine">Next</button>
-                <button class="napoleonic-button" v-else :onclick="handleFinished">Close</button>
+    <div v-if="currentDialog !== undefined">
+        <div class="greyBackground" :onclick="handleFinished"></div>
+        <div class="visibleModal">
+            <div class="modalContent" @keyup.esc="handleFinished" tabindex="0">
+                <button class="modalCloseButton napoleonic-button" :onclick="handleFinished">x</button>
+                <h2 class="modalTitle">{{ currentLine?.speaker }}</h2>
+                <div class="speaker-div">
+                    <svg class="speaker-svg" v-if="currentLine?.speaker === 'Napoleon'" viewBox="0 0 300 350"
+                        height="200" width="200" xmlns="http://www.w3.org/2000/svg">
+                        <NapoleonFigure />
+                    </svg>
+                    <svg class="speaker-svg" v-if="currentLine?.speaker === 'Pierre'" viewBox="0 0 300 350" height="200"
+                        width="200">
+                        <SoldierFigure />
+                    </svg>
+                </div>
+                <div v-if="currentLine" class="textBlock">
+                    <TranslatableText v-for="chunk in  currentDialog?.lines[dialogLineNumber].chunks ?? []"
+                        v-bind:key="chunk.words" :from-language="chunk.fromLanguage" :to-language="chunk.toLanguage"
+                        :text="chunk.words" :setTranslatedWord="setTranslatedWord" />
+                </div>
+                <div>
+                    <!-- <button v-if="dialogLineNumber > 0" :onclick="decrementLine">Prev</button> -->
+                    <button class="napoleonic-button " v-if="dialogLineNumber + 1 < currentDialog.lines.length"
+                        :onclick="incrementLine">Next</button>
+                    <button class="napoleonic-button" v-else :onclick="handleFinished">Close</button>
+                </div>
             </div>
         </div>
     </div>

@@ -97,8 +97,7 @@ export const initialDialogs: Dialogs = [
     ],
   },
   {
-    triggerCondition: (gameState: GameState) =>
-      !!gameState.selectedLocation,
+    triggerCondition: (gameState: GameState) => !!gameState.selectedLocation,
     triggered: false,
     lines: [
       {
