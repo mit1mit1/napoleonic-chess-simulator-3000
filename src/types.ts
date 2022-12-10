@@ -75,7 +75,8 @@ export type Dialogs = Array<{
 }>;
 
 export interface LocationInfo {
-  name: string;
+  nameEnglish: string;
+  nameFrench: string;
   cityCoordinates: {
     latitude: number;
     longitude: number;
@@ -83,7 +84,9 @@ export interface LocationInfo {
   cityHectares: number;
   districtHectares: number;
   subtitleEnglish: string;
+  subtitleFrench: string;
   descriptionEnglish: string;
+  descriptionFrench: string;
   influenceAvailable: number;
 }
 
