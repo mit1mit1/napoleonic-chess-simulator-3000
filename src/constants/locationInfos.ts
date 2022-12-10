@@ -21,61 +21,59 @@ export const locationInfos: { [key in Locations]: LocationInfo | undefined } = {
 
   [Locations.AimensDistrict]: {
     nameEnglish: "Aimens District",
-    nameFrench: "Aimens District",
+    nameFrench: "District d'Aimens",
     cityCoordinates: {
       latitude: 23,
       longitude: 45,
     },
     cityHectares: 58,
     districtHectares: 108,
-    subtitleEnglish: "Once opulent heart",
-    subtitleFrench: "Once opulent heart",
-    descriptionEnglish:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
-    descriptionFrench:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
-    influenceAvailable: 55,
+    subtitleEnglish: "The agreeable land",
+    subtitleFrench: "La terre agréable",
+    descriptionEnglish: "Friendliest of the districts.",
+    descriptionFrench: "Le plus amical des districts.",
+    influenceAvailable: 40,
   },
 
   [Locations.RennesDistrictWest]: {
     nameEnglish: "Rennes District (West)",
-    nameFrench: "Rennes District (West)",
+    nameFrench: "District de Rennes (Ouest)",
     cityCoordinates: {
       latitude: 23,
       longitude: 45,
     },
     cityHectares: 58,
     districtHectares: 108,
-    subtitleEnglish: "Once opulent heart",
-    subtitleFrench: "Once opulent heart",
+    subtitleEnglish: "King of the North",
+    subtitleFrench: "Roi du Nord",
     descriptionEnglish:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+      "One of the only districts able to co-operate with another, perhaps because their fellows to the east share a title and green skin.",
     descriptionFrench:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+      "L'un des seuls districts capables de coopérer, peut-être parce que leurs homologues de l'est partagent un titre et une peau verte.",
     influenceAvailable: 55,
   },
 
   [Locations.RennesDistrictEast]: {
     nameEnglish: "Rennes District (East)",
-    nameFrench: "Rennes District (East)",
+    nameFrench: "District de Rennes (Est)",
     cityCoordinates: {
       latitude: 23,
       longitude: 45,
     },
     cityHectares: 58,
     districtHectares: 108,
-    subtitleEnglish: "Once opulent heart",
-    subtitleFrench: "Once opulent heart",
+    subtitleEnglish: "Queen of the North",
+    subtitleFrench: "Reine du Nord",
     descriptionEnglish:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+      "One of the only districts able to co-operate, perhaps because their fellows to the west share a title and green skin.",
     descriptionFrench:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+      "L'un des seuls districts capables de coopérer, peut-être parce que leurs homologues de l'ouest partagent un titre et une peau verte.",
     influenceAvailable: 55,
   },
 
   [Locations.PotiersDistrict]: {
     nameEnglish: "Potiers District",
-    nameFrench: "Potiers District",
+    nameFrench: "Quartier des Potiers",
     cityCoordinates: {
       latitude: 23,
       longitude: 45,
@@ -83,17 +81,15 @@ export const locationInfos: { [key in Locations]: LocationInfo | undefined } = {
     cityHectares: 58,
     districtHectares: 108,
     subtitleEnglish: "Once opulent heart",
-    subtitleFrench: "Once opulent heart",
-    descriptionEnglish:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
-    descriptionFrench:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+    subtitleFrench: "Le pays de la drogue",
+    descriptionEnglish: "If you want to get high, this is the place.",
+    descriptionFrench: "Si vous voulez vous défoncer, c'est l'endroit idéal.",
     influenceAvailable: 55,
   },
 
   [Locations.OrleansDistrict]: {
     nameEnglish: "Orleans District",
-    nameFrench: "Orleans District",
+    nameFrench: "Le district d'Orléans",
     cityCoordinates: {
       latitude: 23,
       longitude: 45,
@@ -111,127 +107,123 @@ export const locationInfos: { [key in Locations]: LocationInfo | undefined } = {
 
   [Locations.BordeauxDistrict]: {
     nameEnglish: "Bordeaux District",
-    nameFrench: "Bordeaux District",
+    nameFrench: "Quartier de Bordeaux",
     cityCoordinates: {
       latitude: 23,
       longitude: 45,
     },
     cityHectares: 58,
     districtHectares: 108,
-    subtitleEnglish: "Once opulent heart",
-    subtitleFrench: "Once opulent heart",
+    subtitleEnglish: "Castle capital",
+    subtitleFrench: "Capitale du château",
     descriptionEnglish:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+      "Did you know 'Bordeaux' is actually french for 'castle'? Hence the name of this district - it's full of ancient ruins.",
     descriptionFrench:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+      'Saviez-vous que le mot "Bordeaux" signifie "château" en français ? D\'où le nom de ce quartier, qui regorge de ruines anciennes.',
     influenceAvailable: 55,
   },
 
   [Locations.TolouseDistrict]: {
     nameEnglish: "Tolouse District",
-    nameFrench: "Tolouse District",
+    nameFrench: "District de la Tolouse",
     cityCoordinates: {
       latitude: 23,
       longitude: 45,
     },
     cityHectares: 58,
     districtHectares: 108,
-    subtitleEnglish: "Once opulent heart",
-    subtitleFrench: "Once opulent heart",
+    subtitleEnglish: "Get ready to lose",
+    subtitleFrench: "Préparez-vous à perdre",
     descriptionEnglish:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+      "Or to pee, I'm not quite sure of the correct pronunciation.",
     descriptionFrench:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+      "Ou pour faire pipi, je ne suis pas sûr de la prononciation correcte.",
     influenceAvailable: 55,
   },
 
   [Locations.MarsielleDistrict]: {
     nameEnglish: "Marsielle District",
-    nameFrench: "Marsielle District",
+    nameFrench: "District de Marsielle",
     cityCoordinates: {
       latitude: 23,
       longitude: 45,
     },
     cityHectares: 58,
     districtHectares: 108,
-    subtitleEnglish: "Once opulent heart",
-    subtitleFrench: "Once opulent heart",
+    subtitleEnglish: "Peak of philosophy",
+    subtitleFrench: "Sommet de la philosophie",
     descriptionEnglish:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+      "The site of the famous debate between Saint Paul and Plato, Marsielle has maintained it's reputation for robust debate ever since. ",
     descriptionFrench:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+      "Le site du célèbre débat entre Saint Paul et Platon, Marsielle a maintenu sa réputation de débat robuste depuis lors. ",
     influenceAvailable: 55,
   },
 
   [Locations.ValenceDistrict]: {
     nameEnglish: "Valence District",
-    nameFrench: "Valence District",
+    nameFrench: "Quartier de Valence",
     cityCoordinates: {
       latitude: 23,
       longitude: 45,
     },
     cityHectares: 58,
     districtHectares: 108,
-    subtitleEnglish: "Once opulent heart",
-    subtitleFrench: "Once opulent heart",
-    descriptionEnglish:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
-    descriptionFrench:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+    subtitleEnglish: "Charged science",
+    subtitleFrench: "La science en charges",
+    descriptionEnglish: "After the bomb, nuclear chemistry flourished here",
+    descriptionFrench: "Après la bombe, la chimie nucléaire a prospéré ici.",
     influenceAvailable: 55,
   },
 
   [Locations.LyonDistrict]: {
     nameEnglish: "Lyon District",
-    nameFrench: "Lyon District",
+    nameFrench: "District de Lyon",
     cityCoordinates: {
       latitude: 23,
       longitude: 45,
     },
     cityHectares: 58,
     districtHectares: 108,
-    subtitleEnglish: "Once opulent heart",
-    subtitleFrench: "Once opulent heart",
+    subtitleEnglish: "Britannica's last foothold",
+    subtitleFrench: "Le dernier pied de Britannica",
     descriptionEnglish:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+      "In defense of their national animal, English troops invaded Lyon in 1750. As nations around the world fell into republicanism, Lyon remained faithful.",
     descriptionFrench:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+      "Pour défendre leur animal national, les troupes anglaises envahissent Lyon en 1750. Alors que les nations du monde entier tombent dans le républicanisme, Lyon reste fidèle.",
     influenceAvailable: 55,
   },
 
   [Locations.DijonDistrict]: {
     nameEnglish: "Dijon District",
-    nameFrench: "Dijon District",
+    nameFrench: "Le district de Dijon",
     cityCoordinates: {
       latitude: 80,
       longitude: 50,
     },
     cityHectares: 59,
     districtHectares: 160,
-    subtitleEnglish: "Mustard land",
-    subtitleFrench: "Mustard land",
+    subtitleEnglish: "Mustard and magic",
+    subtitleFrench: "Moutarde et magie",
     descriptionEnglish:
       "Dijon is known for two things. One is the renowned Hermione ski scene, re-enacted by thousands of fans every April. The other is mustard production. No other district in the world produces mustard by waterfall. In fact, no other district in the world produces mustard, full stop.",
     descriptionFrench:
-      "Dijon is known for two things. One is the renowned Hermione ski scene, re-enacted by thousands of fans every April. The other is mustard production. No other district in the world produces mustard by waterfall. In fact, no other district in the world produces mustard, full stop.",
+      "Dijon est connue pour deux choses. La première est la célèbre scène de ski d'Hermione, rejouée par des milliers de fans chaque année en avril. L'autre est la production de moutarde. Aucun autre district au monde ne produit de la moutarde en cascade. En fait, aucun autre district au monde ne produit de moutarde, point final.",
     influenceAvailable: 80,
   },
 
   [Locations.ReimsDistrict]: {
     nameEnglish: "Reims District",
-    nameFrench: "Reims District",
+    nameFrench: "Quartier Reims",
     cityCoordinates: {
       latitude: 23,
       longitude: 45,
     },
     cityHectares: 58,
     districtHectares: 108,
-    subtitleEnglish: "Once opulent heart",
-    subtitleFrench: "Once opulent heart",
-    descriptionEnglish:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
-    descriptionFrench:
-      "Once a heart of opulence in the world, now destroyed by political infighting.",
+    subtitleEnglish: "Edge of the chasm",
+    subtitleFrench: "Le bord du gouffre",
+    descriptionEnglish: "Edge of the chasm - edge of the world.",
+    descriptionFrench: "Le bord du gouffre - le bord du monde.",
     influenceAvailable: 55,
   },
 
