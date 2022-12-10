@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { Locations } from '@/types';
+import { Languages, type Locations } from '@/types';
 import { locationInfos } from '@/constants';
 import { defineComponent } from 'vue';
 import TranslatableText from '@/components/TranslatableText.vue';
@@ -12,7 +12,7 @@ export default defineComponent({
 
     data(props) {
         return {
-            selectedLocationInfo: locationInfos[props.selectedLocation as Locations]
+            selectedLocationInfo: locationInfos[props.selectedLocation as Locations], Languages
         }
     },
 
@@ -25,17 +25,17 @@ export default defineComponent({
 <template>
     <div v-if="selectedLocationInfo !== undefined">
         <h2 class="infoBoxTitle">
-            <TranslatableText :setTranslatedWord="setTranslatedWord" from-language="en" to-language="fr"
-                :text="selectedLocationInfo?.name" />
+            <TranslatableText :setTranslatedWord="setTranslatedWord" :from-language="Languages.French"
+                :to-language="Languages.English" :text="selectedLocationInfo?.nameFrench" />
         </h2>
         <div class="infoBoxInfo">
             <div class="infoBoxSubitle"><i>
-                    <TranslatableText :setTranslatedWord="setTranslatedWord" from-language="en" to-language="fr"
-                        :text="selectedLocationInfo?.subtitleEnglish" />
+                    <TranslatableText :setTranslatedWord="setTranslatedWord" :from-language="Languages.French"
+                        :to-language="Languages.English" :text="selectedLocationInfo?.subtitleFrench" />
                 </i></div>
             <div class="infoBoxDescription">
-                <TranslatableText :setTranslatedWord="setTranslatedWord" from-language="en" to-language="fr"
-                    :text="selectedLocationInfo?.descriptionEnglish" />
+                <TranslatableText :setTranslatedWord="setTranslatedWord" :from-language="Languages.French"
+                    :to-language="Languages.English" :text="selectedLocationInfo?.descriptionFrench" />
             </div>
             <div class="infoBoxNumericInfo">City Co-ordinates: ({{
                     selectedLocationInfo?.cityCoordinates.latitude

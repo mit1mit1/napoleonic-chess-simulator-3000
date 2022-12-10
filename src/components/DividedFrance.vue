@@ -42,7 +42,7 @@ export default defineComponent({
             gameState.setSelectedLocation(this.selectedLocation);
         },
         handleDistrictAttack(clickedLocation: Locations) {
-            alert('Attacking ' + locationInfos[clickedLocation]?.name);
+            alert('Attacking ' + locationInfos[clickedLocation]?.nameFrench);
             this.onAttackLocation && this.onAttackLocation(clickedLocation);
         }
     },
