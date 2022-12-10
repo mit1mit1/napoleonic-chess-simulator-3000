@@ -1,4 +1,4 @@
 export * from "./chess";
-export * from "./map";
+export * from "./locationInfos";
 export * from "./englishToFrench";
 export * from "./frenchToEnglish";
