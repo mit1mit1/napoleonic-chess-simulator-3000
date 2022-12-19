@@ -3,7 +3,7 @@ import NapoleonFigure from "@/vue-svgs/NapoleonFigure.vue";
 import TranslatableText from "@/components/TranslatableText.vue";
 import SoldierFigure from "@/vue-svgs/SoldierFigure.vue";
 import { defineComponent, reactive } from "vue";
-import { type DialogLine, type DialogLineChunk, Languages } from "@/types";
+import { type DialogLine, Languages } from "@/types";
 import { initialDialogs } from "@/constants/initialDialogs";
 import { gameState } from "@/gameState";
 const availableDialogs = reactive([...initialDialogs]);
@@ -58,6 +58,9 @@ export default defineComponent({
     methods: {
         handleFinished() {
             if (this.currentDialog) {
+                gameState.pushToastMessage('test new message')
+                setTimeout(() =>
+                    gameState.pushToastMessage('test new message 2'), 280)
                 this.currentDialog.triggered = true;
                 this.dialogLineNumber = 0;
             }
@@ -98,8 +101,10 @@ export default defineComponent({
         currentDialog() {
             const dialog = availableDialogs.find(dialog => dialog.triggerCondition(gameState) && !dialog.triggered);
             if (dialog) {
+                setTimeout(() => { this.displayDialogOverlay = true }, dialog.delayMilliseconds);
                 return dialog;
             } else {
+                this.displayDialogOverlay = false;
                 return undefined;
             }
         },
@@ -115,7 +120,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <div v-if="currentDialog !== undefined">
+    <div v-if="currentDialog !== undefined && displayDialogOverlay">
         <div class="greyBackground" :onclick="handleFinished"></div>
         <div class="visibleModal">
             <div class="modalContent" @keyup.esc="handleFinished" tabindex="0">

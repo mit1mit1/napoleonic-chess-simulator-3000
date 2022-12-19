@@ -3,9 +3,11 @@ import ChessBoard from './components/ChessBoard.vue';
 import DialogOverlay from './components/DialogOverlay.vue';
 import TranslatableText from './components/TranslatableText.vue';
 import TranslationBar from './components/TranslationBar.vue';
+import ToastNotification from './components/ToastNotification.vue';
 import { Languages, Locations, Players, } from "./types";
 import DividedFrance from './components/DividedFrance.vue';
 import { defineComponent } from "vue";
+import { gameState } from "./gameState";
 import MusicControl from './components/MusicControl.vue';
 let displayChessBoard = false;
 let displayDividedFrance = true;
@@ -31,7 +33,7 @@ export default defineComponent({
         },
 
         onVictory(victor: Players | "tie") {
-            alert(victor + " won!")
+            gameState.pushToastMessage(victor + " won!")
             this.displayDividedFrance = true;
             this.displayChessBoard = false;
         },
@@ -50,7 +52,8 @@ export default defineComponent({
         TranslatableText,
         DialogOverlay,
         TranslationBar,
-        MusicControl
+        MusicControl,
+        ToastNotification,
     }
 });
 </script>
@@ -71,6 +74,7 @@ export default defineComponent({
             <DialogOverlay :setTranslatedWord="setTranslatedWord" />
         </div>
         <TranslationBar :translatedWord="translatedWord" :fromLanguage="fromLanguage" :toLanguage="toLanguage" />
+        <ToastNotification />
     </main>
 </template>
 

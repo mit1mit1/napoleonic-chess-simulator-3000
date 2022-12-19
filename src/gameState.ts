@@ -9,4 +9,9 @@ export const gameState = reactive<GameState>({
     this.selectedLocation = location;
   },
   viewedDialogue: [],
+  toastMessages: [],
+  pushToastMessage(message: string) {
+    this.toastMessages.push(message);
+    setTimeout(() => this.toastMessages.shift(), 2000)
+  }
 });

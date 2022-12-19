@@ -2,6 +2,9 @@ export type GameState = {
   selectedLocation?: Locations;
   setSelectedLocation: (location: Locations) => void;
   viewedDialogue: Array<number>;
+  toastMessages: string[];
+  pushToastMessage: (message: string) => void;
+
 };
 
 export enum Languages {
@@ -71,6 +74,7 @@ export type DialogLine = {
 export type Dialogs = Array<{
   triggerCondition: (gameState: GameState) => boolean;
   triggered: boolean;
+  delayMilliseconds: number;
   lines: Array<DialogLine>;
 }>;
 
