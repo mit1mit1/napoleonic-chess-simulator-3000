@@ -97,11 +97,11 @@ export const locationInfos: { [key in Locations]: LocationInfo | undefined } = {
     cityHectares: 45,
     districtHectares: 108,
     subtitleEnglish: "Blues capital of the old world",
-    subtitleFrench: "Blues capital of the old world",
+    subtitleFrench: "Capitale du blues du vieux monde",
     descriptionEnglish:
       "Famous for it's swamps and guitars, Orleans is famous as the setting for Disney's \"The Princess and the Frog (2032)\".",
     descriptionFrench:
-      "Famous for it's swamps and guitars, Orleans is famous as the setting for Disney's \"The Princess and the Frog (2032)\".",
+      'Célèbre pour ses marécages et ses guitares, Orléans est connu comme le décor du film de Disney "La Princesse et la Grenouille (2032)".',
     influenceAvailable: 50,
   },
 

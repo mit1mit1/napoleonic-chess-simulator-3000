@@ -37,14 +37,18 @@ export default defineComponent({
                 <TranslatableText :setTranslatedWord="setTranslatedWord" :from-language="Languages.French"
                     :to-language="Languages.English" :text="selectedLocationInfo?.descriptionFrench" />
             </div>
-            <div class="infoBoxNumericInfo">City Co-ordinates: ({{
+            <div class="infoBoxNumericInfo"><TranslatableText :setTranslatedWord="setTranslatedWord" :from-language="Languages.French"
+                    :to-language="Languages.English" text="Coordonnées de la ville" />: ({{
                     selectedLocationInfo?.cityCoordinates.latitude
             }},
                 {{ selectedLocationInfo?.cityCoordinates.longitude }})</div>
-            <div class="infoBoxNumericInfo">City Size: {{ selectedLocationInfo?.cityHectares }}ha</div>
-            <div class="infoBoxNumericInfo">District Size: {{ selectedLocationInfo?.districtHectares }}ha
+            <div class="infoBoxNumericInfo"><TranslatableText :setTranslatedWord="setTranslatedWord" :from-language="Languages.French"
+                    :to-language="Languages.English" text="Taille de la ville" />: {{ selectedLocationInfo?.cityHectares }}ha</div>
+            <div class="infoBoxNumericInfo"><TranslatableText :setTranslatedWord="setTranslatedWord" :from-language="Languages.French"
+                    :to-language="Languages.English" text="Taille du district" />: {{ selectedLocationInfo?.districtHectares }}ha
             </div>
-            <div class="infoBoxNumericInfo">Area Influence: {{ selectedLocationInfo?.influenceAvailable
+            <div class="infoBoxNumericInfo"><TranslatableText :setTranslatedWord="setTranslatedWord" :from-language="Languages.French"
+                    :to-language="Languages.English" text="Influence de la zone" />: {{ selectedLocationInfo?.influenceAvailable
             }}</div>
         </div>
     </div>

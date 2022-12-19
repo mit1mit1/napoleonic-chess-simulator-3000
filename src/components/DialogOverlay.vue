@@ -58,9 +58,6 @@ export default defineComponent({
     methods: {
         handleFinished() {
             if (this.currentDialog) {
-                gameState.pushToastMessage('test new message')
-                setTimeout(() =>
-                    gameState.pushToastMessage('test new message 2'), 280)
                 this.currentDialog.triggered = true;
                 this.dialogLineNumber = 0;
             }

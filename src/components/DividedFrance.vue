@@ -75,7 +75,7 @@ export default defineComponent({
                     :setTranslatedWord="setTranslatedWord" />
             </div>
             <button v-if="selectedLocation" class="napoleonic-button infoBoxButton"
-                :onclick="() => handleDistrictAttack(selectedLocation)">Attack</button>
+                :onclick="() => handleDistrictAttack(selectedLocation)">Combat</button>
 
         </div>
         <div class="mapSVGBox">
