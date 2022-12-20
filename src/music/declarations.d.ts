@@ -1,8 +1,0 @@
-declare module 'tonejs-instrument-piano-mp3'
-declare module 'tonejs-instrument-harp-mp3'
-declare module 'tonejs-instrument-harmonium-mp3'
-declare module 'tonejs-instrument-clarinet-mp3'
-declare module 'tonejs-instrument-guitar-electric-mp3'
-declare module 'tonejs-instrument-guitar-acoustic-mp3'
-declare module 'tonejs-instrument-guitar-nylon-mp3'
-declare module 'tonejs-instrument-violin-mp3'

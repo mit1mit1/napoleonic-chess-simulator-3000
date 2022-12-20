@@ -4,3 +4,6 @@
 [submodule "src/vue-svgs"]
 	path = src/vue-svgs
 	url = git@github.com:mit1mit1/vue-svgs.git
+[submodule "src/gameMusic"]
+	path = src/gameMusic
+	url = git@github.com:mit1mit1/gameMusicUtils.git
