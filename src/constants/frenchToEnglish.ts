@@ -5,17 +5,33 @@ export const frenchToEnglish: Dictionary = {
     englishDefinition: "",
     translations: ["in", "to", "at"],
   },
+  agréable: {
+    englishDefinition: "",
+    translations: ["pleasant", "nice", "enjoyable"],
+  },
   ai: {
     englishDefinition: "",
     translations: ["have"],
   },
-  ce: {
+  amical: {
     englishDefinition: "",
-    translations: ["this", "that"],
+    translations: ["friendly", "friendliness"],
+  },
+  ["aujourd'hui"]: {
+    englishDefinition: "",
+    translations: ["now", "today", "nowdays"],
+  },
+  autrefois: {
+    englishDefinition: "",
+    translations: ["formerly", "once", "previously"],
   },
   ["c'est"]: {
     englishDefinition: "",
     translations: ["it is", "is", "this is"],
+  },
+  ce: {
+    englishDefinition: "",
+    translations: ["this", "that"],
   },
   connaissez: {
     englishDefinition: "",
@@ -28,6 +44,14 @@ export const frenchToEnglish: Dictionary = {
   coordonnées: {
     englishDefinition: "",
     translations: ["contact details", "co-ordinates"],
+  },
+  cœur: {
+    englishDefinition: "",
+    translations: ["heart", "core"],
+  },
+  dans: {
+    englishDefinition: "",
+    translations: ["in", "at", "on"],
   },
   de: {
     englishDefinition: "",
@@ -45,13 +69,33 @@ export const frenchToEnglish: Dictionary = {
     englishDefinition: "",
     translations: ["of", "from", "of the"],
   },
-  du: {
+  détruit: {
     englishDefinition: "",
-    translations: ["from", "of", "of the", "at"],
+    translations: ["destroyed", "destroys"],
+  },
+  district: {
+    englishDefinition: "",
+    translations: ["district"],
+  },
+  districts: {
+    englishDefinition: "",
+    translations: ["districts", "regions"],
+  },
+  ["d'opulence"]: {
+    englishDefinition: "",
+    translations: ["of opulence"],
   },
   drogue: {
     englishDefinition: "",
     translations: ["drug", "drugs"],
+  },
+  du: {
+    englishDefinition: "",
+    translations: ["from", "of", "of the", "at"],
+  },
+  est: {
+    englishDefinition: "",
+    translations: ["is", "est", "east"],
   },
   français: {
     englishDefinition: "",
@@ -65,6 +109,14 @@ export const frenchToEnglish: Dictionary = {
     englishDefinition: "",
     translations: ["ideal", "best", "perfect"],
   },
+  influence: {
+    englishDefinition: "",
+    translations: ["influence", "impact"],
+  },
+  intestines: {
+    englishDefinition: "",
+    translations: ["intestines", "internal", "intestinal"],
+  },
   j: {
     englishDefinition: "",
     translations: ["I"],
@@ -72,10 +124,6 @@ export const frenchToEnglish: Dictionary = {
   ["j'ai"]: {
     englishDefinition: "",
     translations: ["I have"],
-  },
-  la: {
-    englishDefinition: "",
-    translations: ["the"],
   },
   ["l'anglais"]: {
     englishDefinition: "",
@@ -89,9 +137,29 @@ export const frenchToEnglish: Dictionary = {
     englishDefinition: "",
     translations: ["the time", "at the time", "the era"],
   },
-  le: {
+  ["l'un"]: {
     englishDefinition: "",
+    translations: ["one of the", "the one"],
+  },
+  la: {
+    englishDefinition: "definite article (feminine singular)",
     translations: ["the"],
+  },
+  le: {
+    englishDefinition: "definite article (masculine singular)",
+    translations: ["the"],
+  },
+  les: {
+    englishDefinition: "Definite article (plural)",
+    translations: ["the"],
+  },
+  luttes: {
+    englishDefinition: "",
+    translations: ["fights", "struggles"],
+  },
+  monde: {
+    englishDefinition: "",
+    translations: ["world"],
   },
   mot: {
     englishDefinition: "",
@@ -101,13 +169,29 @@ export const frenchToEnglish: Dictionary = {
     englishDefinition: "",
     translations: ["didn't exist"],
   },
+  nord: {
+    englishDefinition: "",
+    translations: ["north", "northern"],
+  },
   oh: {
     englishDefinition: "interjection of surprise or realisation",
     translations: ["oh"],
   },
+  opulent: {
+    englishDefinition: "",
+    translations: ["opulent", "abundant"],
+  },
   oublié: {
     englishDefinition: "",
     translations: ["forgotten", "forgot"],
+  },
+  ouest: {
+    englishDefinition: "",
+    translations: ["west", "western"],
+  },
+  par: {
+    englishDefinition: "",
+    translations: ["by", "through"],
   },
   pas: {
     englishDefinition: "",
@@ -117,6 +201,14 @@ export const frenchToEnglish: Dictionary = {
     englishDefinition: "",
     translations: ["country", "countries"],
   },
+  plus: {
+    englishDefinition: "",
+    translations: ["more", "plus", "most"],
+  },
+  politiques: {
+    englishDefinition: "",
+    translations: ["policies", "policy","politics"],
+  },
   quand: {
     englishDefinition: "",
     translations: ["when", "at"],
@@ -124,6 +216,18 @@ export const frenchToEnglish: Dictionary = {
   quartier: {
     englishDefinition: "",
     translations: ["district", "neighbourhood"],
+  },
+  reine: {
+    englishDefinition: "",
+    translations: ["queen"],
+  },
+  roi: {
+    englishDefinition: "",
+    translations: ["king"],
+  },
+  seuls: {
+    englishDefinition: "",
+    translations: ["only", "alone"],
   },
   si: {
     englishDefinition: "",
@@ -137,16 +241,28 @@ export const frenchToEnglish: Dictionary = {
     englishDefinition: "",
     translations: ["size", "height"],
   },
+  terre: {
+    englishDefinition: "",
+    translations: ["earth", "land", "ground", "soil"],
+  },
+  un: {
+    englishDefinition: "",
+    translations: ["a", "one", "an"],
+  },
   ville: {
     englishDefinition: "",
     translations: ["city", "town"],
+  },
+  voulez: {
+    englishDefinition: "",
+    translations: ["want", "want to"],
   },
   vous: {
     englishDefinition: "",
     translations: ["you", "you at"],
   },
-  voulez: {
+  zone: {
     englishDefinition: "",
-    translations: ["want", "want to"],
+    translations: ["zone", "area"],
   },
 };

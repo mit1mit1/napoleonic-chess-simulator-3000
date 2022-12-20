@@ -8,7 +8,7 @@ import { Languages, Locations, Players, } from "./types";
 import DividedFrance from './components/DividedFrance.vue';
 import { defineComponent } from "vue";
 import { gameState } from "./gameState";
-import MusicControl from './components/MusicControl.vue';
+import MusicControl from './gameMusic/MusicControl.vue';
 let displayChessBoard = false;
 let displayDividedFrance = true;
 
