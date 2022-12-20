@@ -1,10 +1,11 @@
 <script lang="ts">
-import { ChessPieces, Locations, Players, allLocations } from "@/types";
+import { ChessPieces, Locations, Players, allLocations, Languages } from "@/types";
 import type { ChessState } from "@/types";
 import { chessBoardLength, normalStartingChessBoard } from "@/constants";
 import { getGreediestMove, hasPieceOfColor, isValidMove, getStateAfterMove, getVictor, getFischerBoard } from "@/utils/chess";
 import { defineComponent } from "vue";
 import ChessPieceFigure from "./ChessPieceFigure.vue";
+import TranslatableText from "./TranslatableText.vue";
 import { getNthPrime } from "@/utils/math";
 import { Player } from "tone";
 const length = 400;
@@ -49,7 +50,7 @@ export default defineComponent({
         return {
             length, chessState, selectedSquareX, selectedSquareY, ChessPieces, Players, lightSquareColor,
             darkSquareColor, squareIndicies: [...Array(chessBoardLength).keys()], aiPlayers, startedGame,
-            chessBoardLength, isAttemptingAiMove, attackedLocation: props.attackedLocation, startOfTurn, completedTurnsTimes,
+            chessBoardLength, isAttemptingAiMove, attackedLocation: props.attackedLocation, startOfTurn, completedTurnsTimes, Languages,
         }
     },
 
@@ -123,7 +124,7 @@ export default defineComponent({
     },
 
     components: {
-        ChessPieceFigure
+        ChessPieceFigure, TranslatableText
     }
 });
 </script>
@@ -152,12 +153,18 @@ export default defineComponent({
         </svg>
         <div class="game-text">
 
-            <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && startedGame">Thinking...
+            <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && startedGame">
+                <TranslatableText :from-language="Languages.French" :to-language="Languages.English"
+                    text="Penser..." />
             </div>
-            <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && !startedGame">Click to
-                start</div>
-            <div>White time: {{ ((completedTurnsTimes[Players.White]) / 1000).toFixed(2) }}s</div>
-            <div>Black time: {{ ((completedTurnsTimes[Players.Black]) / 1000).toFixed(2) }}s</div>
+            <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && !startedGame">
+                <TranslatableText :from-language="Languages.French" :to-language="Languages.English"
+                    text="Cliquez pour commencer" />
+            </div>
+            <div><TranslatableText :from-language="Languages.French" :to-language="Languages.English"
+                    text="Temps blanc" />: {{ ((completedTurnsTimes[Players.White]) / 1000).toFixed(2) }}s</div>
+            <div><TranslatableText :from-language="Languages.French" :to-language="Languages.English"
+                    text="Temps noir" />: {{ ((completedTurnsTimes[Players.Black]) / 1000).toFixed(2) }}s</div>
         </div>
     </div>
 </template>

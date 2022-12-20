@@ -2,13 +2,13 @@
 import { defineComponent } from "vue";
 import { Languages } from "../types";
 import { translate } from "../utils/translate";
+import { gameState } from "@/gameState";
 
 export default defineComponent({
     props: {
         fromLanguage: String,
         toLanguage: String,
         text: String,
-        setTranslatedWord: Function,
     },
     data() {
         return {
@@ -39,7 +39,7 @@ export default defineComponent({
             let index = 0;
             for (let translatedWord of translatedWords) {
                 if (index === 0) {
-                    this.setTranslatedWord && this.setTranslatedWord(word, this.fromLanguage, this.toLanguage);
+                    gameState.setTranslatedWord(word, this.fromLanguage as Languages, this.toLanguage as Languages);
                     if (this.toLanguage === Languages.French) {
                         setTimeout(() => {
                             const translatedMessage = new SpeechSynthesisUtterance();

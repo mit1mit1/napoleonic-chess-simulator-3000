@@ -21,7 +21,7 @@ let attackedLocation: Locations | undefined = undefined;
 export default defineComponent({
     data() {
         return {
-            Languages, displayChessBoard, displayDividedFrance, attackedLocation, translatedWord, fromLanguage, toLanguage
+            Languages, displayChessBoard, displayDividedFrance, attackedLocation, translatedWord, fromLanguage, toLanguage, gameState
         }
     },
 
@@ -36,13 +36,6 @@ export default defineComponent({
             gameState.pushToastMessage(victor + " won!")
             this.displayDividedFrance = true;
             this.displayChessBoard = false;
-        },
-
-
-        setTranslatedWord(word: string, fromLanguage: Languages, toLanguage: Languages) {
-            this.translatedWord = word;
-            this.fromLanguage = fromLanguage;
-            this.toLanguage = toLanguage;
         },
     },
 
@@ -61,19 +54,19 @@ export default defineComponent({
 <template>
     <main>
         <h1>
-            <TranslatableText :setTranslatedWord="setTranslatedWord" :from-language="Languages.English"
-                :to-language="Languages.French" text="Napoleonic Chess Simulator 0.05" />
+            <TranslatableText :from-language="Languages.English" :to-language="Languages.French"
+                text="Napoleonic Chess Simulator 0.05" />
         </h1>
         <div class="game-screen">
             <ChessBoard v-if="displayChessBoard" :onVictory="onVictory" :attacked-location="attackedLocation" />
-            <DividedFrance v-if="displayDividedFrance" :onAttackLocation="onAttackLocation"
-                :setTranslatedWord="setTranslatedWord" />
+            <DividedFrance v-if="displayDividedFrance" :onAttackLocation="onAttackLocation" />
             <div class="music-control-box">
                 <MusicControl />
             </div>
-            <DialogOverlay :setTranslatedWord="setTranslatedWord" />
+            <DialogOverlay />
         </div>
-        <TranslationBar :translatedWord="translatedWord" :fromLanguage="fromLanguage" :toLanguage="toLanguage" />
+        <TranslationBar :translatedWord="gameState.translatedWord" :fromLanguage="gameState.translatedWordFromLanguage"
+            :toLanguage="gameState.translatedWordToLanguage" />
         <ToastNotification />
     </main>
 </template>

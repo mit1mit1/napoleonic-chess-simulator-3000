@@ -25,7 +25,6 @@ let selectedLocation = Locations.None;
 export default defineComponent({
     props: {
         onAttackLocation: Function,
-        setTranslatedWord: Function,
     },
 
     data() {
@@ -71,8 +70,7 @@ export default defineComponent({
     <div class="mapScreen">
         <div class="locationInfoBox">
             <div v-for="location in Locations">
-                <LocationInfo v-if="location === selectedLocation" :selected-location="location"
-                    :setTranslatedWord="setTranslatedWord" />
+                <LocationInfo v-if="location === selectedLocation" :selected-location="location" />
             </div>
             <button v-if="selectedLocation" class="napoleonic-button infoBoxButton"
                 :onclick="() => handleDistrictAttack(selectedLocation)">Combat</button>

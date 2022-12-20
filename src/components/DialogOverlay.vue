@@ -45,7 +45,6 @@ const getRate = (speaker: string) => {
 export default defineComponent({
     props: {
         dialogLines: Array<DialogLine>,
-        setTranslatedWord: Function,
     },
 
     data(props) {
@@ -136,7 +135,7 @@ export default defineComponent({
                 <div v-if="currentLine" class="textBlock">
                     <TranslatableText v-for="chunk in  currentDialog?.lines[dialogLineNumber].chunks ?? []"
                         v-bind:key="chunk.words" :from-language="chunk.fromLanguage" :to-language="chunk.toLanguage"
-                        :text="chunk.words" :setTranslatedWord="setTranslatedWord" />
+                        :text="chunk.words"  />
                 </div>
                 <div>
                     <!-- <button v-if="dialogLineNumber > 0" :onclick="decrementLine">Prev</button> -->

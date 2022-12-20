@@ -1,10 +1,17 @@
 export type GameState = {
+  translatedWord: string | undefined;
+  translatedWordFromLanguage: string | undefined;
+  translatedWordToLanguage: string | undefined;
   selectedLocation?: Locations;
   setSelectedLocation: (location: Locations) => void;
   viewedDialogue: Array<number>;
   toastMessages: string[];
   pushToastMessage: (message: string) => void;
-
+  setTranslatedWord: (
+    word: string,
+    fromLanguage: Languages,
+    toLanguage: Languages
+  ) => void;
 };
 
 export enum Languages {
