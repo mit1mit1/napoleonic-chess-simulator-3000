@@ -14,7 +14,7 @@ export const gameState = reactive<GameState>({
   toastMessages: [],
   pushToastMessage(message: string) {
     this.toastMessages.push(message);
-    setTimeout(() => this.toastMessages.shift(), 2000);
+    setTimeout(() => this.toastMessages.shift(), 2500);
   },
   setTranslatedWord(
     word: string,

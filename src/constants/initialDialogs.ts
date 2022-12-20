@@ -100,7 +100,7 @@ export const initialDialogs: Dialogs = [
   {
     triggerCondition: (gameState: GameState) => !!gameState.selectedLocation,
     triggered: false,
-    delayMilliseconds: 300,
+    delayMilliseconds: 500,
     lines: [
       {
         speaker: "Napoleon",

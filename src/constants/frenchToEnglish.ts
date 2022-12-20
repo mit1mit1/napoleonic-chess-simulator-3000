@@ -25,6 +25,14 @@ export const frenchToEnglish: Dictionary = {
     englishDefinition: "",
     translations: ["formerly", "once", "previously"],
   },
+  coopérer: {
+    englishDefinition: "",
+    translations: ["co-operate", "collaborate"],
+  },
+  capables: {
+    englishDefinition: "",
+    translations: ["able", "capable", "competent"],
+  },
   ["c'est"]: {
     englishDefinition: "",
     translations: ["it is", "is", "this is"],
@@ -149,8 +157,16 @@ export const frenchToEnglish: Dictionary = {
     englishDefinition: "definite article (masculine singular)",
     translations: ["the"],
   },
+  bord: {
+    englishDefinition: "",
+    translations: ["edge"],
+  },
+  gouffre: {
+    englishDefinition: "",
+    translations: ["chasm", "gulf", "maw"],
+  },
   les: {
-    englishDefinition: "Definite article (plural)",
+    englishDefinition: "definite article (plural)",
     translations: ["the"],
   },
   luttes: {
@@ -201,21 +217,73 @@ export const frenchToEnglish: Dictionary = {
     englishDefinition: "",
     translations: ["country", "countries"],
   },
+  parce: {
+    englishDefinition: "",
+    translations: ["country", "countries"],
+  },
+  ["peut-être"]: {
+    englishDefinition: "",
+    translations: ["by"],
+  },
   plus: {
     englishDefinition: "",
     translations: ["more", "plus", "most"],
   },
   politiques: {
     englishDefinition: "",
-    translations: ["policies", "policy","politics"],
+    translations: ["policies", "policy", "politics"],
   },
   quand: {
     englishDefinition: "",
     translations: ["when", "at"],
   },
+  ["l'est "]: {
+    englishDefinition: "",
+    translations: ["the east"],
+  },
+  peau: {
+    englishDefinition: "",
+    translations: ["skin"],
+  },
+  verte: {
+    englishDefinition: "",
+    translations: ["green"],
+  },
+  et: {
+    englishDefinition: "",
+    translations: ["and"],
+  },
+  une: {
+    englishDefinition: "feminine article",
+    translations: ["a", "an"],
+  },
+  titre: {
+    englishDefinition: "",
+    translations: ["title", "headline", "capacity"],
+  },
+  partagent: {
+    englishDefinition: "",
+    translations: ["share", "divide", "split"],
+  },
+  ["l'ouest "]: {
+    englishDefinition: "",
+    translations: ["the west"],
+  },
+  leurs: {
+    englishDefinition: "",
+    translations: ["their"],
+  },
+  homologues: {
+    englishDefinition: "",
+    translations: ["counterparts", "counterpart"],
+  },
   quartier: {
     englishDefinition: "",
     translations: ["district", "neighbourhood"],
+  },
+  que: {
+    englishDefinition: "",
+    translations: ["that", "than", "whether"],
   },
   reine: {
     englishDefinition: "",
