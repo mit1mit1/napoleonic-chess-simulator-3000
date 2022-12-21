@@ -10,7 +10,7 @@ export const translate = (
   englishDefinition?: string;
   lookupWord: string;
 } => {
-  const lookupWord = word.toLowerCase().replace(/[.,/#!$%^&*;:{}=_`~()?]/g, "");
+  const lookupWord = word.toLowerCase().replace(/[.,/#!$%^&*;":{}=_`~()?]/g, "");
   const nullReturn = { translations: [], englishDefinition: "", lookupWord };
   if (fromLanguage === toLanguage) {
     return { translations: [lookupWord], englishDefinition: "", lookupWord };

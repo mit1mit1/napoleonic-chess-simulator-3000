@@ -179,11 +179,13 @@ export default defineComponent({
     vertical-align: top;
     background-color: #def;
     padding: 15px;
+    margin-bottom: 40px;
     min-height: 420px;
 }
 
 .mapSVGBox {
     height: 480px;
+    margin-bottom: 40px;
     display: inline-block;
 }
 </style>

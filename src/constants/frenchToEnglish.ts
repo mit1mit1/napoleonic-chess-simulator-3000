@@ -3,334 +3,570 @@ import type { Dictionary } from "@/types";
 export const frenchToEnglish: Dictionary = {
   à: {
     englishDefinition: "",
-    translations: ["in", "to", "at"],
+    translations: ["in", "to", "at"]
   },
   agréable: {
     englishDefinition: "",
-    translations: ["pleasant", "nice", "enjoyable"],
+    translations: ["pleasant", "nice", "enjoyable"]
   },
   ai: {
     englishDefinition: "",
-    translations: ["have"],
+    translations: ["have"]
   },
   amical: {
     englishDefinition: "",
-    translations: ["friendly", "friendliness"],
+    translations: ["friendly", "friendliness"]
+  },
+  anciennes: {
+    englishDefinition: "",
+    translations: ["old", "former", "ancient"]
+  },
+  année: {
+    englishDefinition: "",
+    translations: ["year", "twelvemonth"]
   },
   ["aujourd'hui"]: {
     englishDefinition: "",
-    translations: ["now", "today", "nowdays"],
+    translations: ["now", "today", "nowdays"]
   },
   autrefois: {
     englishDefinition: "",
-    translations: ["formerly", "once", "previously"],
+    translations: ["formerly", "once", "previously"]
   },
-  coopérer: {
+  avril: {
     englishDefinition: "",
-    translations: ["co-operate", "collaborate"],
+    translations: ["april"]
   },
-  capables: {
+  blues: {
     englishDefinition: "",
-    translations: ["able", "capable", "competent"],
-  },
-  ["c'est"]: {
-    englishDefinition: "",
-    translations: ["it is", "is", "this is"],
-  },
-  ce: {
-    englishDefinition: "",
-    translations: ["this", "that"],
-  },
-  connaissez: {
-    englishDefinition: "",
-    translations: ["know", "know about"],
-  },
-  ["connaissez-vous"]: {
-    englishDefinition: "",
-    translations: ["do you know", "are you familiar with"],
-  },
-  coordonnées: {
-    englishDefinition: "",
-    translations: ["contact details", "co-ordinates"],
-  },
-  cœur: {
-    englishDefinition: "",
-    translations: ["heart", "core"],
-  },
-  dans: {
-    englishDefinition: "",
-    translations: ["in", "at", "on"],
-  },
-  de: {
-    englishDefinition: "",
-    translations: ["from", "of", "at"],
-  },
-  ["défoncer"]: {
-    englishDefinition: "",
-    translations: ["smash", "bash", "break"],
-  },
-  depuis: {
-    englishDefinition: "",
-    translations: ["since", "from"],
-  },
-  des: {
-    englishDefinition: "",
-    translations: ["of", "from", "of the"],
-  },
-  détruit: {
-    englishDefinition: "",
-    translations: ["destroyed", "destroys"],
-  },
-  district: {
-    englishDefinition: "",
-    translations: ["district"],
-  },
-  districts: {
-    englishDefinition: "",
-    translations: ["districts", "regions"],
-  },
-  ["d'opulence"]: {
-    englishDefinition: "",
-    translations: ["of opulence"],
-  },
-  drogue: {
-    englishDefinition: "",
-    translations: ["drug", "drugs"],
-  },
-  du: {
-    englishDefinition: "",
-    translations: ["from", "of", "of the", "at"],
-  },
-  est: {
-    englishDefinition: "",
-    translations: ["is", "est", "east"],
-  },
-  français: {
-    englishDefinition: "",
-    translations: ["French"],
-  },
-  hum: {
-    englishDefinition: "expression of uncertainty or hesitence",
-    translations: ["um"],
-  },
-  idéal: {
-    englishDefinition: "",
-    translations: ["ideal", "best", "perfect"],
-  },
-  influence: {
-    englishDefinition: "",
-    translations: ["influence", "impact"],
-  },
-  intestines: {
-    englishDefinition: "",
-    translations: ["intestines", "internal", "intestinal"],
-  },
-  j: {
-    englishDefinition: "",
-    translations: ["I"],
-  },
-  ["j'ai"]: {
-    englishDefinition: "",
-    translations: ["I have"],
-  },
-  ["l'anglais"]: {
-    englishDefinition: "",
-    translations: ["English", "the English language"],
-  },
-  ["l'endroit"]: {
-    englishDefinition: "",
-    translations: ["the place", "the location"],
-  },
-  ["l'époque"]: {
-    englishDefinition: "",
-    translations: ["the time", "at the time", "the era"],
-  },
-  ["l'un"]: {
-    englishDefinition: "",
-    translations: ["one of the", "the one"],
-  },
-  la: {
-    englishDefinition: "definite article (feminine singular)",
-    translations: ["the"],
-  },
-  le: {
-    englishDefinition: "definite article (masculine singular)",
-    translations: ["the"],
+    translations: ["blues"]
   },
   bord: {
     englishDefinition: "",
-    translations: ["edge"],
+    translations: ["edge"]
   },
-  gouffre: {
+  ["c'est"]: {
     englishDefinition: "",
-    translations: ["chasm", "gulf", "maw"],
+    translations: ["it is", "is", "this is"]
   },
-  les: {
-    englishDefinition: "definite article (plural)",
-    translations: ["the"],
-  },
-  luttes: {
+  capables: {
     englishDefinition: "",
-    translations: ["fights", "struggles"],
+    translations: ["able", "capable", "competent"]
   },
-  monde: {
+  capitale: {
     englishDefinition: "",
-    translations: ["world"],
+    translations: ["capital", "capital city", "capital letter"]
   },
-  mot: {
+  ce: {
     englishDefinition: "",
-    translations: ["word", "note"],
+    translations: ["this", "that"]
   },
-  ["n'existait"]: {
+  célèbre: {
     englishDefinition: "",
-    translations: ["didn't exist"],
+    translations: ["famous", "celebrated", "renowned"]
   },
-  nord: {
+  chaque: {
     englishDefinition: "",
-    translations: ["north", "northern"],
+    translations: ["each", "every"]
   },
-  oh: {
-    englishDefinition: "interjection of surprise or realisation",
-    translations: ["oh"],
-  },
-  opulent: {
+  final: {
     englishDefinition: "",
-    translations: ["opulent", "abundant"],
+    translations: ["final", "ultimate", "concluding"]
   },
-  oublié: {
+  point: {
     englishDefinition: "",
-    translations: ["forgotten", "forgot"],
+    translations: ["point", "item", "dot"]
   },
-  ouest: {
+  château: {
     englishDefinition: "",
-    translations: ["west", "western"],
+    translations: ["chateau", "castle", "palace", "mansion"]
   },
-  par: {
+  choses: {
     englishDefinition: "",
-    translations: ["by", "through"],
+    translations: ["things"]
   },
-  pas: {
+  cœur: {
     englishDefinition: "",
-    translations: ["no", "not", "step"],
+    translations: ["heart", "core"]
   },
-  pays: {
+  comme: {
     englishDefinition: "",
-    translations: ["country", "countries"],
+    translations: ["as", "since", "as though"]
   },
-  parce: {
+  connaissez: {
     englishDefinition: "",
-    translations: ["country", "countries"],
+    translations: ["know", "know about"]
   },
-  ["peut-être"]: {
+  ["connaissez-vous"]: {
     englishDefinition: "",
-    translations: ["by"],
+    translations: ["do you know", "are you familiar with"]
   },
-  plus: {
+  connu: {
     englishDefinition: "",
-    translations: ["more", "plus", "most"],
+    translations: ["known", "famous", "familiar"]
   },
-  politiques: {
+  connue: {
     englishDefinition: "",
-    translations: ["policies", "policy", "politics"],
+    translations: ["known", "famous", "familiar"]
   },
-  quand: {
+  coopérer: {
     englishDefinition: "",
-    translations: ["when", "at"],
+    translations: ["co-operate", "collaborate"]
   },
-  ["l'est "]: {
+  coordonnées: {
     englishDefinition: "",
-    translations: ["the east"],
+    translations: ["contact details", "co-ordinates"]
   },
-  peau: {
+  correcte: {
     englishDefinition: "",
-    translations: ["skin"],
+    translations: ["correct", "proper", "reasonable"]
   },
-  verte: {
+  ["d'opulence"]: {
     englishDefinition: "",
-    translations: ["green"],
+    translations: ["of opulence"]
+  },
+  ["d'où"]: {
+    englishDefinition: "",
+    translations: ["from where", "whence", "hence"]
+  },
+  dans: {
+    englishDefinition: "",
+    translations: ["in", "at", "on"]
+  },
+  de: {
+    englishDefinition: "",
+    translations: ["from", "of", "at"]
+  },
+  décor: {
+    englishDefinition: "",
+    translations: ["decor", "setting", "scenery"]
+  },
+  ["défoncer"]: {
+    englishDefinition: "",
+    translations: ["smash", "bash", "break"]
+  },
+  depuis: {
+    englishDefinition: "",
+    translations: ["since", "from"]
+  },
+  des: {
+    englishDefinition: "",
+    translations: ["of", "from", "of the"]
+  },
+  détruit: {
+    englishDefinition: "",
+    translations: ["destroyed", "destroys"]
+  },
+  deux: {
+    englishDefinition: "",
+    translations: ["two"]
+  },
+  district: {
+    englishDefinition: "",
+    translations: ["district"]
+  },
+  districts: {
+    englishDefinition: "",
+    translations: ["districts", "regions"]
+  },
+  drogue: {
+    englishDefinition: "",
+    translations: ["drug", "drugs"]
+  },
+  du: {
+    englishDefinition: "",
+    translations: ["from", "of", "of the", "at"]
+  },
+  production: {
+    englishDefinition: "",
+    translations: ["production", "output", "generation"]
+  },
+  en: {
+    englishDefinition: "",
+    translations: ["in", "into", "to", "of", "at", "thereof"]
+  },
+  est: {
+    englishDefinition: "",
+    translations: ["is", "est", "east"]
   },
   et: {
     englishDefinition: "",
-    translations: ["and"],
+    translations: ["and"]
   },
-  une: {
-    englishDefinition: "feminine article",
-    translations: ["a", "an"],
-  },
-  titre: {
+  faire: {
     englishDefinition: "",
-    translations: ["title", "headline", "capacity"],
+    translations: ["to do", "do", "make", "take"]
   },
-  partagent: {
+  fait: {
     englishDefinition: "",
-    translations: ["share", "divide", "split"],
+    translations: ["do", "fact", "event", "occurrence"]
   },
-  ["l'ouest "]: {
+  fans: {
     englishDefinition: "",
-    translations: ["the west"],
+    translations: ["fans"]
   },
-  leurs: {
+  film: {
     englishDefinition: "",
-    translations: ["their"],
+    translations: ["film", "movie", "picture", "cinema"]
+  },
+  français: {
+    englishDefinition: "",
+    translations: ["French"]
+  },
+  gouffre: {
+    englishDefinition: "",
+    translations: ["chasm", "gulf", "maw"]
+  },
+  grenouille: {
+    englishDefinition: "",
+    translations: ["frog"]
+  },
+  guitares: {
+    englishDefinition: "",
+    translations: ["guitares", "guitar"]
   },
   homologues: {
     englishDefinition: "",
-    translations: ["counterparts", "counterpart"],
+    translations: ["counterparts", "counterpart"]
+  },
+  hum: {
+    englishDefinition: "expression of uncertainty or hesitence",
+    translations: ["um"]
+  },
+  idéal: {
+    englishDefinition: "",
+    translations: ["ideal", "best", "perfect"]
+  },
+  influence: {
+    englishDefinition: "",
+    translations: ["influence", "impact"]
+  },
+  intestines: {
+    englishDefinition: "",
+    translations: ["intestines", "internal", "intestinal"]
+  },
+  j: {
+    englishDefinition: "",
+    translations: ["I"]
+  },
+  ["j'ai"]: {
+    englishDefinition: "",
+    translations: ["I have"]
+  },
+  je: {
+    englishDefinition: "",
+    translations: ["I"]
+  },
+  ["l'anglais"]: {
+    englishDefinition: "",
+    translations: ["English", "the English language"]
+  },
+  ["l'endroit"]: {
+    englishDefinition: "",
+    translations: ["the place", "the location"]
+  },
+  ["l'époque"]: {
+    englishDefinition: "",
+    translations: ["the time", "at the time", "the era"]
+  },
+  ["l'est"]: {
+    englishDefinition: "",
+    translations: ["the east"]
+  },
+  ["l'ouest "]: {
+    englishDefinition: "",
+    translations: ["the west"]
+  },
+  ["l'un"]: {
+    englishDefinition: "",
+    translations: ["one of the", "the one"]
+  },
+  la: {
+    englishDefinition: "definite article (feminine singular)",
+    translations: ["the"]
+  },
+  le: {
+    englishDefinition: "definite article (masculine singular)",
+    translations: ["the"]
+  },
+  les: {
+    englishDefinition: "definite article (plural)",
+    translations: ["the"]
+  },
+  leurs: {
+    englishDefinition: "",
+    translations: ["their"]
+  },
+  luttes: {
+    englishDefinition: "",
+    translations: ["fights", "struggles"]
+  },
+  magie: {
+    englishDefinition: "",
+    translations: ["magic", "wizardry", "witchery"]
+  },
+  marécages: {
+    englishDefinition: "",
+    translations: ["swamps", "marsh", "bog"]
+  },
+  milliers: {
+    englishDefinition: "",
+    translations: ["thousands"]
+  },
+  monde: {
+    englishDefinition: "",
+    translations: ["world"]
+  },
+  mot: {
+    englishDefinition: "",
+    translations: ["word", "note"]
+  },
+  moutarde: {
+    englishDefinition: "",
+    translations: ["mustard"]
+  },
+  cascade: {
+    englishDefinition: "",
+    translations: ["cascade", "stunt", "waterfall"]
+  },
+  ["n'existait"]: {
+    englishDefinition: "",
+    translations: ["didn't exist"]
+  },
+  ne: {
+    englishDefinition: "",
+    translations: ["not"]
+  },
+  nom: {
+    englishDefinition: "",
+    translations: ["name", "noun"]
+  },
+  nord: {
+    englishDefinition: "",
+    translations: ["north", "northern"]
+  },
+  oh: {
+    englishDefinition: "interjection of surprise or realisation",
+    translations: ["oh"]
+  },
+  opulent: {
+    englishDefinition: "",
+    translations: ["opulent", "abundant"]
+  },
+  ou: {
+    englishDefinition: "",
+    translations: ["where", "whither", "whereabouts"]
+  },
+  oublié: {
+    englishDefinition: "",
+    translations: ["forgotten", "forgot"]
+  },
+  ouest: {
+    englishDefinition: "",
+    translations: ["west", "western"]
+  },
+  par: {
+    englishDefinition: "",
+    translations: ["by", "through"]
+  },
+  parce: {
+    englishDefinition: "",
+    translations: ["country", "countries"]
+  },
+  partagent: {
+    englishDefinition: "",
+    translations: ["share", "divide", "split"]
+  },
+  pas: {
+    englishDefinition: "",
+    translations: ["no", "not", "step"]
+  },
+  produit: {
+    englishDefinition: "",
+    translations: ["product", "produce", "yield"]
+  },
+  pays: {
+    englishDefinition: "",
+    translations: ["country", "countries"]
+  },
+  au: {
+    englishDefinition: "",
+    translations: ["to"]
+  },
+  peau: {
+    englishDefinition: "",
+    translations: ["skin"]
+  },
+  perdre: {
+    englishDefinition: "",
+    translations: ["to lose", "lose", "waste", "shed"]
+  },
+  ["peut-être"]: {
+    englishDefinition: "",
+    translations: ["by"]
+  },
+  pipi: {
+    englishDefinition: "",
+    translations: ["pee", "wee", "wee-wee"]
+  },
+  plus: {
+    englishDefinition: "",
+    translations: ["more", "plus", "most"]
+  },
+  politiques: {
+    englishDefinition: "",
+    translations: ["policies", "policy", "politics"]
+  },
+  pour: {
+    englishDefinition: "",
+    translations: ["to", "for", "of"]
+  },
+  première: {
+    englishDefinition: "",
+    translations: ["first", "premiere", "first ear"]
+  },
+  ["préparez-vous"]: {
+    englishDefinition: "",
+    translations: ["prepare yourselves"]
+  },
+  princesse: {
+    englishDefinition: "",
+    translations: ["princess"]
+  },
+  prononciation: {
+    englishDefinition: "",
+    translations: ["pronunciation", "pronouncement", "spoke"]
+  },
+  quand: {
+    englishDefinition: "",
+    translations: ["when", "at"]
   },
   quartier: {
     englishDefinition: "",
-    translations: ["district", "neighbourhood"],
+    translations: ["district", "neighbourhood"]
   },
   que: {
     englishDefinition: "",
-    translations: ["that", "than", "whether"],
+    translations: ["that", "than", "whether"]
+  },
+  qui: {
+    englishDefinition: "",
+    translations: ["who", "which", "that"]
+  },
+  ["l'autre"]: {
+    englishDefinition: "",
+    translations: ["the other"]
+  },
+  regorge: {
+    englishDefinition: "",
+    translations: ["abounds", "abound", "overflow"]
   },
   reine: {
     englishDefinition: "",
-    translations: ["queen"],
+    translations: ["queen"]
+  },
+  rejouée: {
+    englishDefinition: "",
+    translations: ["replayed"]
   },
   roi: {
     englishDefinition: "",
-    translations: ["king"],
+    translations: ["king"]
+  },
+  ruines: {
+    englishDefinition: "",
+    translations: ["ruins", "remains"]
+  },
+  ["saviez-vous"]: {
+    englishDefinition: "",
+    translations: ["did you know?"]
+  },
+  scène: {
+    englishDefinition: "",
+    translations: ["scene", "stage"]
+  },
+  ses: {
+    englishDefinition: "",
+    translations: ["its", "his", "her"]
   },
   seuls: {
     englishDefinition: "",
-    translations: ["only", "alone"],
+    translations: ["only", "alone"]
   },
   si: {
     englishDefinition: "",
-    translations: ["if", "so"],
+    translations: ["if", "so"]
+  },
+  signifie: {
+    englishDefinition: "",
+    translations: ["means", "mean", "signify", "imply", "notify", "denote"]
   },
   sire: {
     englishDefinition: "respectful title to address a monarch",
-    translations: ["sire"],
+    translations: ["sire"]
+  },
+  ski: {
+    englishDefinition: "",
+    translations: ["ski"]
+  },
+  suis: {
+    englishDefinition: "",
+    translations: ["am"]
+  },
+  sûr: {
+    englishDefinition: "",
+    translations: ["sure", "safe", "secure"]
+  },
+  aucun: {
+    englishDefinition: "",
+    translations: ["none", "no"]
+  },
+  autre: {
+    englishDefinition: "",
+    translations: ["other", "another"]
   },
   taille: {
     englishDefinition: "",
-    translations: ["size", "height"],
+    translations: ["size", "height"]
   },
   terre: {
     englishDefinition: "",
-    translations: ["earth", "land", "ground", "soil"],
+    translations: ["earth", "land", "ground", "soil"]
+  },
+  titre: {
+    englishDefinition: "",
+    translations: ["title", "headline", "capacity"]
   },
   un: {
     englishDefinition: "",
-    translations: ["a", "one", "an"],
+    translations: ["a", "one", "an"]
+  },
+  une: {
+    englishDefinition: "feminine article",
+    translations: ["a", "an"]
+  },
+  verte: {
+    englishDefinition: "",
+    translations: ["green"]
+  },
+  vieux: {
+    englishDefinition: "",
+    translations: ["old", "ancient", "aged"]
   },
   ville: {
     englishDefinition: "",
-    translations: ["city", "town"],
+    translations: ["city", "town"]
   },
   voulez: {
     englishDefinition: "",
-    translations: ["want", "want to"],
+    translations: ["want", "want to"]
   },
   vous: {
     englishDefinition: "",
-    translations: ["you", "you at"],
+    translations: ["you", "you at"]
   },
   zone: {
     englishDefinition: "",
-    translations: ["zone", "area"],
-  },
-};
+    translations: ["zone", "area"]
+  }
+}

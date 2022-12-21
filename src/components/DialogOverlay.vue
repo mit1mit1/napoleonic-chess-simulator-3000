@@ -168,7 +168,7 @@ export default defineComponent({
 }
 
 .visibleModal {
-    position: absolute;
+    position: fixed;
     left: 0;
     right: 0;
     top: 50px;
