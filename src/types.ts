@@ -3,7 +3,15 @@ export type GameState = {
   translatedWordFromLanguage: string | undefined;
   translatedWordToLanguage: string | undefined;
   selectedLocation?: Locations;
+  locationChessResults: Record<
+    Locations,
+    { wins: number; losses: number; ties: number }
+  >;
   setSelectedLocation: (location: Locations) => void;
+  pushLocationChessResult: (
+    location: Locations,
+    result: "win" | "loss" | "tie"
+  ) => void;
   viewedDialogue: Array<number>;
   toastMessages: string[];
   pushToastMessage: (message: string) => void;
@@ -46,7 +54,7 @@ export interface ChessState {
 }
 
 export enum Locations {
-  None = "",
+  None = "None",
   ParisDistrict = "ParisDistrict",
   AimensDistrict = "AimensDistrict",
   RennesDistrictWest = "RennesDistrictWest",

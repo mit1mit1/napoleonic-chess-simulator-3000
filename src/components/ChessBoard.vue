@@ -90,7 +90,13 @@ export default defineComponent({
             setTimeout(() => {
                 const victor = getVictor(this.chessState)
                 if (victor) {
-                    this.onVictory && this.onVictory(victor)
+                    if (this.onVictory) {
+                        if (victor === "tie") {
+                            this.onVictory(victor);
+                        } else {
+                            this.onVictory(this.aiPlayers.includes(victor) ? "enemy" : "napoleon")
+                        }
+                    }
                 }
             }, 1);
         },
@@ -154,17 +160,20 @@ export default defineComponent({
         <div class="game-text">
 
             <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && startedGame">
-                <TranslatableText :from-language="Languages.French" :to-language="Languages.English"
-                    text="Penser..." />
+                <TranslatableText :from-language="Languages.French" :to-language="Languages.English" text="Penser..." />
             </div>
             <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && !startedGame">
                 <TranslatableText :from-language="Languages.French" :to-language="Languages.English"
                     text="Cliquez pour commencer" />
             </div>
-            <div><TranslatableText :from-language="Languages.French" :to-language="Languages.English"
-                    text="Temps blanc" />: {{ ((completedTurnsTimes[Players.White]) / 1000).toFixed(2) }}s</div>
-            <div><TranslatableText :from-language="Languages.French" :to-language="Languages.English"
-                    text="Temps noir" />: {{ ((completedTurnsTimes[Players.Black]) / 1000).toFixed(2) }}s</div>
+            <div>
+                <TranslatableText :from-language="Languages.French" :to-language="Languages.English"
+                    text="Temps blanc" />: {{ ((completedTurnsTimes[Players.White]) / 1000).toFixed(2) }}s
+            </div>
+            <div>
+                <TranslatableText :from-language="Languages.French" :to-language="Languages.English"
+                    text="Temps noir" />: {{ ((completedTurnsTimes[Players.Black]) / 1000).toFixed(2) }}s
+            </div>
         </div>
     </div>
 </template>

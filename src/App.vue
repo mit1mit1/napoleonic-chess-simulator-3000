@@ -32,8 +32,9 @@ export default defineComponent({
             this.displayChessBoard = true;
         },
 
-        onVictory(victor: Players | "tie") {
-            gameState.pushToastMessage(victor + " won!")
+        onVictory(victor: "napoleon" | "enemy" | "tie") {
+            
+            gameState.pushToastMessage(victor + " won!");
             this.displayDividedFrance = true;
             this.displayChessBoard = false;
         },

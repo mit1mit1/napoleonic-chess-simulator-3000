@@ -1,12 +1,40 @@
 // store.js
 import { reactive } from "vue";
-import type { GameState, Locations, Languages } from "./types";
+import type { GameState, Languages } from "./types";
+import { Locations } from "./types";
+
+const chessResults: Partial<
+  Record<Locations, { wins: number; losses: number; ties: number }>
+> = {};
+Object.values(Locations).forEach((location) => {
+  chessResults[location] = {
+    wins: 0,
+    losses: 0,
+    ties: 0,
+  };
+});
 
 export const gameState = reactive<GameState>({
   translatedWord: undefined,
   translatedWordFromLanguage: undefined,
   translatedWordToLanguage: undefined,
   selectedLocation: undefined,
+  locationChessResults: chessResults as Record<
+    Locations,
+    { wins: number; losses: number; ties: number }
+  >,
+  pushLocationChessResult(location: Locations, result: "win" | "loss" | "tie") {
+    // if (!this.locationChessResults[location]) {
+    //   this.locationChessResults[location] = {
+    //     wins: 0,
+    //     losses: 0,
+    //     ties: 0,
+    //   };
+    // }
+    this.locationChessResults[location].wins += result === "win" ? 1 : 0;
+    this.locationChessResults[location].losses += result === "loss" ? 1 : 0;
+    this.locationChessResults[location].ties += result === "tie" ? 1 : 0;
+  },
   setSelectedLocation(location: Locations) {
     this.selectedLocation = location;
   },
