@@ -277,6 +277,18 @@ export const frenchToEnglish: Dictionary = {
     englishDefinition: "",
     translations: ["do", "fact", "event", "occurrence"],
   },
+  égalités: {
+    englishDefinition: "",
+    translations: ["equalities", "ties", " draws"],
+  },
+  défaites: {
+    englishDefinition: "",
+    translations: ["defeats", " losses"],
+  },
+  victoires: {
+    englishDefinition: "",
+    translations: ["victories", "wins"],
+  },
   fans: {
     englishDefinition: "",
     translations: ["fans"],

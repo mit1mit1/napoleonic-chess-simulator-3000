@@ -4,8 +4,9 @@ import DialogOverlay from './components/DialogOverlay.vue';
 import TranslatableText from './components/TranslatableText.vue';
 import TranslationBar from './components/TranslationBar.vue';
 import ToastNotification from './components/ToastNotification.vue';
-import { Languages, Locations, Players, } from "./types";
+import { Languages, Locations, } from "./types";
 import DividedFrance from './components/DividedFrance.vue';
+import { generateSassyFrenchMessage } from './utils/dialogue';
 import { defineComponent } from "vue";
 import { gameState } from "./gameState";
 import MusicControl from './gameMusic/MusicControl.vue';
@@ -32,9 +33,10 @@ export default defineComponent({
             this.displayChessBoard = true;
         },
 
-        onVictory(victor: "napoleon" | "enemy" | "tie") {
-            
-            gameState.pushToastMessage(victor + " won!");
+        onKingTaken(result: "win" | "loss" | "tie") {
+            const message = generateSassyFrenchMessage(result);
+            gameState.pushToastMessage(message);
+            gameState.pushLocationChessResult(this.attackedLocation as Locations, result);
             this.displayDividedFrance = true;
             this.displayChessBoard = false;
         },
@@ -59,7 +61,7 @@ export default defineComponent({
                 text="Napoleonic Chess Simulator 0.05" />
         </h1>
         <div class="game-screen">
-            <ChessBoard v-if="displayChessBoard" :onVictory="onVictory" :attacked-location="attackedLocation" />
+            <ChessBoard v-if="displayChessBoard" :onKingTaken="onKingTaken" :attacked-location="attackedLocation" />
             <DividedFrance v-if="displayDividedFrance" :onAttackLocation="onAttackLocation" />
             <div class="music-control-box">
                 <MusicControl />

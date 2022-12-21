@@ -1,12 +1,14 @@
+export type LocationChessResults = Record<
+  Locations,
+  { wins: number; losses: number; ties: number }
+>;
+
 export type GameState = {
   translatedWord: string | undefined;
   translatedWordFromLanguage: string | undefined;
   translatedWordToLanguage: string | undefined;
   selectedLocation?: Locations;
-  locationChessResults: Record<
-    Locations,
-    { wins: number; losses: number; ties: number }
-  >;
+  locationChessResults: LocationChessResults;
   setSelectedLocation: (location: Locations) => void;
   pushLocationChessResult: (
     location: Locations,

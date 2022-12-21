@@ -1,11 +1,9 @@
 // store.js
 import { reactive } from "vue";
-import type { GameState, Languages } from "./types";
+import type { GameState, Languages, LocationChessResults } from "./types";
 import { Locations } from "./types";
 
-const chessResults: Partial<
-  Record<Locations, { wins: number; losses: number; ties: number }>
-> = {};
+const chessResults: Partial<LocationChessResults> = {};
 Object.values(Locations).forEach((location) => {
   chessResults[location] = {
     wins: 0,
@@ -19,10 +17,7 @@ export const gameState = reactive<GameState>({
   translatedWordFromLanguage: undefined,
   translatedWordToLanguage: undefined,
   selectedLocation: undefined,
-  locationChessResults: chessResults as Record<
-    Locations,
-    { wins: number; losses: number; ties: number }
-  >,
+  locationChessResults: chessResults as LocationChessResults,
   pushLocationChessResult(location: Locations, result: "win" | "loss" | "tie") {
     // if (!this.locationChessResults[location]) {
     //   this.locationChessResults[location] = {

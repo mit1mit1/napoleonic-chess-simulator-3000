@@ -1,13 +1,12 @@
 <script lang="ts">
 import { ChessPieces, Locations, Players, allLocations, Languages } from "@/types";
 import type { ChessState } from "@/types";
-import { chessBoardLength, normalStartingChessBoard } from "@/constants";
+import { chessBoardLength } from "@/constants";
 import { getGreediestMove, hasPieceOfColor, isValidMove, getStateAfterMove, getVictor, getFischerBoard } from "@/utils/chess";
 import { defineComponent } from "vue";
 import ChessPieceFigure from "./ChessPieceFigure.vue";
 import TranslatableText from "./TranslatableText.vue";
 import { getNthPrime } from "@/utils/math";
-import { Player } from "tone";
 const length = 400;
 let selectedSquareX = -1;
 let selectedSquareY = -1;
@@ -39,7 +38,7 @@ const darkSquareColor = "#c7b3a3";
 let isAttemptingAiMove = false;
 export default defineComponent({
     props: {
-        onVictory: Function,
+        onKingTaken: Function,
         attackedLocation: String,
         playerLocationWins: Number,
     },
@@ -90,11 +89,11 @@ export default defineComponent({
             setTimeout(() => {
                 const victor = getVictor(this.chessState)
                 if (victor) {
-                    if (this.onVictory) {
+                    if (this.onKingTaken) {
                         if (victor === "tie") {
-                            this.onVictory(victor);
+                            this.onKingTaken(victor);
                         } else {
-                            this.onVictory(this.aiPlayers.includes(victor) ? "enemy" : "napoleon")
+                            this.onKingTaken(this.aiPlayers.includes(victor) ? "loss" : "win")
                         }
                     }
                 }
@@ -113,8 +112,8 @@ export default defineComponent({
                 for (let i = 0; i < chessBoardLength; i++) {
                     for (let j = 0; j < chessBoardLength; j++) {
                         await new Promise(resolve => setTimeout(() => {
-                            // the player can spend resources to change the probability of looking forward (0.95)
-                            greediestMove = getGreediestMove(this.chessState, 0, 2, 0.95, greediestMove, { minX: i, minY: j, maxX: i + 1, maxY: j + 1 });
+                            // TODO: allow the player to spend resources to change the probability of looking forward (0.95)
+                            greediestMove = getGreediestMove(this.chessState, 0, 2, 0.98, greediestMove, { minX: i, minY: j, maxX: i + 1, maxY: j + 1 });
                             resolve(undefined);
                         }, 10));
                     }
