@@ -1,6 +1,6 @@
-import { ChessPieces, Players } from "@/types";
+import { ChessPieces, Players, type ValidMoves } from "@/types";
 import type { Square, ChessState } from "@/types";
-import { chessBoardLength, INFINITE_VALUE } from "@/constants";
+import { squaresPerRow, INFINITE_VALUE } from "@/constants";
 
 const getFirstFreeNumber = (steps: number, takenNumbers: Array<number>) => {
   let result = 0;
@@ -44,13 +44,13 @@ export const getFischerBoard = (primeGreaterThanFive: number) => {
   );
   let rookPlaced = false;
   let kingPlaced = false;
-  for (let i = 0; i < chessBoardLength; i++) {
+  for (let i = 0; i < squaresPerRow; i++) {
     if (i === blackBishopIndex || i === whiteBishopIndex) {
       squares[i][0] = {
         player: Players.Black,
         piece: ChessPieces.Bishop,
       };
-      squares[i][chessBoardLength - 1] = {
+      squares[i][squaresPerRow - 1] = {
         player: Players.White,
         piece: ChessPieces.Bishop,
       };
@@ -59,7 +59,7 @@ export const getFischerBoard = (primeGreaterThanFive: number) => {
         player: Players.Black,
         piece: ChessPieces.Queen,
       };
-      squares[i][chessBoardLength - 1] = {
+      squares[i][squaresPerRow - 1] = {
         player: Players.White,
         piece: ChessPieces.Queen,
       };
@@ -68,7 +68,7 @@ export const getFischerBoard = (primeGreaterThanFive: number) => {
         player: Players.Black,
         piece: ChessPieces.Knight,
       };
-      squares[i][chessBoardLength - 1] = {
+      squares[i][squaresPerRow - 1] = {
         player: Players.White,
         piece: ChessPieces.Knight,
       };
@@ -77,7 +77,7 @@ export const getFischerBoard = (primeGreaterThanFive: number) => {
         player: Players.Black,
         piece: ChessPieces.Rook,
       };
-      squares[i][chessBoardLength - 1] = {
+      squares[i][squaresPerRow - 1] = {
         player: Players.White,
         piece: ChessPieces.Rook,
       };
@@ -87,7 +87,7 @@ export const getFischerBoard = (primeGreaterThanFive: number) => {
         player: Players.Black,
         piece: ChessPieces.King,
       };
-      squares[i][chessBoardLength - 1] = {
+      squares[i][squaresPerRow - 1] = {
         player: Players.White,
         piece: ChessPieces.King,
       };
@@ -97,7 +97,7 @@ export const getFischerBoard = (primeGreaterThanFive: number) => {
       player: Players.Black,
       piece: ChessPieces.Pawn,
     };
-    squares[i][chessBoardLength - 2] = {
+    squares[i][squaresPerRow - 2] = {
       player: Players.White,
       piece: ChessPieces.Pawn,
     };
@@ -175,7 +175,7 @@ const isPromoting = (
 ): boolean => {
   return !!(
     hasPieceOfType(startX, startY, ChessPieces.Pawn, chessState.squares) &&
-    (endY === 0 || endY === chessBoardLength - 1)
+    (endY === 0 || endY === squaresPerRow - 1)
   );
 };
 
@@ -369,7 +369,7 @@ export const greedyMoveValue = (toSquare?: Square) => {
 };
 
 const getCoprimeWithEight = () => {
-  const randomNumber = Math.floor(Math.random() * (chessBoardLength - 1));
+  const randomNumber = Math.floor(Math.random() * (squaresPerRow - 1));
   return 1 + randomNumber + (randomNumber % 2);
 };
 const getFirstValue = () => {
@@ -408,13 +408,13 @@ export const getGreediestMove = (
   const yCoprime = getCoprimeWithEight();
   for (
     let startXMultiplier = 0;
-    startXMultiplier < chessBoardLength;
+    startXMultiplier < squaresPerRow;
     startXMultiplier++
   ) {
     const startX = ((startXMultiplier + firstX) * xCoprime) % 8;
     for (
       let startYMultiplier = 0;
-      startYMultiplier < chessBoardLength;
+      startYMultiplier < squaresPerRow;
       startYMultiplier++
     ) {
       const startY = ((startYMultiplier + firstY) * yCoprime) % 8;
@@ -428,12 +428,12 @@ export const getGreediestMove = (
       ) {
         for (
           let endX = investigateRange?.minX ?? 0;
-          endX < (investigateRange?.maxX ?? chessBoardLength);
+          endX < (investigateRange?.maxX ?? squaresPerRow);
           endX++
         ) {
           for (
             let endY = investigateRange?.minY ?? 0;
-            endY < (investigateRange?.maxY ?? chessBoardLength);
+            endY < (investigateRange?.maxY ?? squaresPerRow);
             endY++
           ) {
             if (isValidMove(chessState, startX, startY, endX, endY)) {
@@ -560,8 +560,8 @@ export const getVictor = (
 ): Players | "tie" | undefined => {
   const playersWithKings = new Set([] as Players[]);
   let anyValidMoves = false;
-  for (let startX = 0; startX < chessBoardLength; startX++) {
-    for (let startY = 0; startY < chessBoardLength; startY++) {
+  for (let startX = 0; startX < squaresPerRow; startX++) {
+    for (let startY = 0; startY < squaresPerRow; startY++) {
       if (
         hasPieceOfType(startX, startY, ChessPieces.King, chessState.squares)
       ) {
@@ -569,8 +569,8 @@ export const getVictor = (
         piecePlayer && playersWithKings.add(piecePlayer);
       }
       if (!anyValidMoves && !!getPiece(startX, startY, chessState.squares)) {
-        for (let endX = 0; endX < chessBoardLength; endX++) {
-          for (let endY = 0; endY < chessBoardLength; endY++) {
+        for (let endX = 0; endX < squaresPerRow; endX++) {
+          for (let endY = 0; endY < squaresPerRow; endY++) {
             if (!anyValidMoves) {
               if (isValidMove(chessState, startX, startY, endX, endY)) {
                 anyValidMoves = true;
@@ -590,4 +590,26 @@ export const getVictor = (
   if (!anyValidMoves) {
     return "tie";
   }
+};
+
+export const getValidMoves = (chessState: ChessState) => {
+  const validMoves: ValidMoves = {};
+  for (let x = 0; x < squaresPerRow; x++) {
+    for (let y = 0; y < squaresPerRow; y++) {
+      validMoves[`x${x}y${y}`] = [];
+      for (let investigateX = 0; investigateX < squaresPerRow; investigateX++) {
+        validMoves[`x${x}y${y}`][investigateX] = [];
+        for (
+          let investigateY = 0;
+          investigateY < squaresPerRow;
+          investigateY++
+        ) {
+          validMoves[`x${x}y${y}`][investigateX].push(
+            isValidMove(chessState, x, y, investigateX, investigateY)
+          );
+        }
+      }
+    }
+  }
+  return validMoves;
 };

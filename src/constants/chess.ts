@@ -1,6 +1,6 @@
 import { ChessPieces, Players, type Square } from "@/types";
 
-export const chessBoardLength = 8;
+export const squaresPerRow = 8;
 
 export const emptyChessBoard: Square[][] = [[], [], [], [], [], [], [], []];
 export const normalStartingChessBoard: Array<Array<Square | undefined>> = [

@@ -55,6 +55,8 @@ export interface ChessState {
   enPassantableSquare?: [number, number];
 }
 
+export type ValidMoves = Record<string, Array<Array<boolean>>>;
+
 export enum Locations {
   None = "None",
   ParisDistrict = "ParisDistrict",
