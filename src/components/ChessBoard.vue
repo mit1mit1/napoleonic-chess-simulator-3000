@@ -6,7 +6,9 @@ import { getGreediestMove, hasPieceOfColor, isValidMove, getStateAfterMove, getV
 import { defineComponent } from "vue";
 import ChessPieceFigure from "./ChessPieceFigure.vue";
 import TranslatableText from "./TranslatableText.vue";
+import MusicControl from '../gameMusic/MusicControl.vue';
 import { getNthPrime } from "@/utils/math";
+
 const length = 400;
 let selectedSquareX = -1;
 let selectedSquareY = -1;
@@ -139,7 +141,7 @@ export default defineComponent({
     },
 
     components: {
-        ChessPieceFigure, TranslatableText
+        ChessPieceFigure, TranslatableText, MusicControl
     }
 });
 </script>
@@ -149,11 +151,9 @@ export default defineComponent({
         <svg :height="length" :width="length" class="boardSVG">
             <g v-for="x in squareIndicies" v-bind:key="`row-${x}`">
                 <g :class="!(aiPlayers.includes(chessState.currentPlayer) && startedGame) && 'chessSquare'"
-                    :onClick="() => handleSquareClick(x, y)" v-for="y in squareIndicies"
-                    v-bind:key="`square-${x}-${y}`">
-                    <rect :height="length / squaresPerRow" :width="length / squaresPerRow"
-                        :x="x * length / squaresPerRow" :y="y * length / squaresPerRow"
-                        :fill="((x + y) % 2) ? darkSquareColor : lightSquareColor" />
+                    :onClick="() => handleSquareClick(x, y)" v-for="y in squareIndicies" v-bind:key="`square-${x}-${y}`">
+                    <rect :height="length / squaresPerRow" :width="length / squaresPerRow" :x="x * length / squaresPerRow"
+                        :y="y * length / squaresPerRow" :fill="((x + y) % 2) ? darkSquareColor : lightSquareColor" />
                     <rect :height="(length * 0.9) / squaresPerRow" :width="(length * 0.9) / squaresPerRow"
                         :x="(x + 0.05) * length / squaresPerRow" :y="(y + 0.05) * length / squaresPerRow"
                         :fill="formerSquareX === x && formerSquareY === y ? '#a34' : 'transparent'" />
@@ -171,28 +171,39 @@ export default defineComponent({
                 </g>
             </g>
         </svg>
-        <div class="game-text">
-
-            <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && startedGame">
-                <TranslatableText :from-language="Languages.French" :to-language="Languages.English" text="Penser..." />
+        <div class="right-panel">
+            <div class="music-control-box">
+                <MusicControl />
             </div>
-            <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && !startedGame">
-                <TranslatableText :from-language="Languages.French" :to-language="Languages.English"
-                    text="Cliquez pour commencer" />
-            </div>
-            <div>
-                <TranslatableText :from-language="Languages.French" :to-language="Languages.English"
+            <div class="game-text">
+                <div>
+                    <TranslatableText :from-language="Languages.French" :to-language="Languages.English"
                     text="Temps blanc" />: {{ ((completedTurnsTimes[Players.White]) / 1000).toFixed(2) }}s
-            </div>
-            <div>
-                <TranslatableText :from-language="Languages.French" :to-language="Languages.English"
+                </div>
+                <div>
+                    <TranslatableText :from-language="Languages.French" :to-language="Languages.English"
                     text="Temps noir" />: {{ ((completedTurnsTimes[Players.Black]) / 1000).toFixed(2) }}s
+                </div>
+                <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && startedGame">
+                    <TranslatableText :from-language="Languages.French" :to-language="Languages.English" text="Penser..." />
+                </div>
+                <div class="loadingMessage" v-if="aiPlayers.includes(chessState.currentPlayer) && !startedGame">
+                    <TranslatableText :from-language="Languages.French" :to-language="Languages.English"
+                        text="Cliquez pour commencer" />
+                </div>
             </div>
+
         </div>
     </div>
 </template>
 
 <style>
+.music-control-box {
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 40px;
+}
+
 .clickable {
     cursor: pointer;
 }
@@ -213,7 +224,12 @@ export default defineComponent({
     vertical-align: top;
 }
 
-.game-text {
+.right-panel {
+    vertical-align: top;
     display: inline-block;
+}
+
+.game-text {
+    vertical-align: bottom;
 }
 </style>

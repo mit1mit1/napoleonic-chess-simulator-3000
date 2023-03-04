@@ -61,7 +61,7 @@ export default defineComponent({
         MarsielleDistrict,
         ValenceDistrict,
         TranslatableText,
-        LocationInfo
+        LocationInfo,
     }
 });
 </script>
@@ -72,7 +72,8 @@ export default defineComponent({
             <div v-for="location in Locations">
                 <LocationInfo v-if="location === selectedLocation" :selected-location="location" />
             </div>
-            <button v-if="selectedLocation" class="napoleonic-button infoBoxButton"
+            
+            <button v-if="selectedLocation !== Locations.None" class="napoleonic-button infoBoxButton"
                 :onclick="() => handleDistrictAttack(selectedLocation)">Combat</button>
 
         </div>

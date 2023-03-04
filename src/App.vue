@@ -9,7 +9,6 @@ import DividedFrance from './components/DividedFrance.vue';
 import { generateSassyFrenchMessage } from './utils/dialogue';
 import { defineComponent } from "vue";
 import { gameState } from "./gameState";
-import MusicControl from './gameMusic/MusicControl.vue';
 let displayChessBoard = false;
 let displayDividedFrance = true;
 
@@ -48,7 +47,6 @@ export default defineComponent({
         TranslatableText,
         DialogOverlay,
         TranslationBar,
-        MusicControl,
         ToastNotification,
     }
 });
@@ -63,9 +61,6 @@ export default defineComponent({
         <div class="game-screen">
             <ChessBoard v-if="displayChessBoard" :onKingTaken="onKingTaken" :attacked-location="attackedLocation" />
             <DividedFrance v-if="displayDividedFrance" :onAttackLocation="onAttackLocation" />
-            <div class="music-control-box">
-                <MusicControl />
-            </div>
             <DialogOverlay />
         </div>
         <TranslationBar :translatedWord="gameState.translatedWord" :fromLanguage="gameState.translatedWordFromLanguage"
@@ -114,7 +109,6 @@ html {
 }
 
 .music-control-box {
-    position: absolute;
-    top: 40px;
+    margin-top: 40px;
 }
 </style>
